@@ -1,0 +1,87 @@
+<template>
+    <div class="stats-item">
+
+        <div v-if="amount > goal" class="stats-item__round">
+            <p class="goal-achived">+ {{ surplus }} </p>
+            <font-awesome-icon class="fa-icon" :icon="['fa', 'check']" />
+        </div>
+
+        <div v-else class="stats-item__round">
+            <div class="stats-info">
+                <h3>Goal</h3>
+                <p>{{ amount }} / {{ goal }} </p>
+            </div>
+      
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    props:{
+        amount: {
+            type: Number,
+            default: 0
+        },
+        goal: {
+            type: Number,
+            default: 0
+        },
+        surplus: {
+            type: Number,
+            default: 0
+        }
+    },
+}
+</script>
+
+<style lang="scss">
+@import '@/assets/scss/_variables.scss';
+.stats-item__round{
+    width: 200px;
+    height: 200px;
+    border: 1rem solid $secondary;
+    border: $secondary double 10px;
+    //border-right: $secondary 10px solid;
+    //transform: rotate(-45deg);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 5rem 0;
+    color: black;
+    font-weight: 900 ;
+    .stats-info{
+        //transform: rotate(45deg);
+    }
+    h3{
+        border-bottom: 2px solid $secondary;
+        width: 100px;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        margin-left: .1rem;
+        text-transform: uppercase;
+        font-weight: 900;
+    }
+    p{
+        width: 100%;
+        padding-left: 5px;
+    }
+    .goal-achived{
+        padding: 0 5px 0 0;
+        color: $success;
+        font-size: 20px;
+        border-bottom: 2px solid $secondary;
+        width: 70px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+    .fa-icon{
+        transform: scale(1.5);
+        padding-left: 2px;
+        color: $success;
+    }
+}
+</style>

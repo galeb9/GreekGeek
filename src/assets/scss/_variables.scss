@@ -1,0 +1,63 @@
+//$bg:  linear-gradient(180deg, #282829 0%, #8280EB 100%);
+$bg: #2d2642;
+
+$secondary : rgba(0, 0, 0, 0.651);
+$fontColor: white;
+$navActive: rgb(31, 10, 48);
+
+
+$greyColor : #1f1b1b2c;
+$grey : rgba( $greyColor, 0.4);
+
+$fontColorInvert: white;
+$success: #56F59E;
+$error: red;
+
+$radius: 20px;
+$dark: #484256;
+$purple: #8280EB;
+$black: black;
+
+
+
+// move-in-top
+.move-in-top-enter-active{
+  animation: move-in-top .3s ease-in-out 
+}
+.move-in-top-leave-active {
+  animation: move-in-top .3s ease-in-out reverse
+}
+
+@keyframes move-in-top {
+  from{
+    transform: translateY(-50vh);
+    opacity: 0;
+  }
+  50%{
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+// body {
+// 	background: linear-gradient(-45deg, black, $purple, $greyColor);
+// 	background-size: 400% 400%;
+// 	animation: gradient 15s ease infinite;
+// 	height: 100vh;
+// }
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
