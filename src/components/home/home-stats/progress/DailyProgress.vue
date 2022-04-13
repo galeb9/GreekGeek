@@ -20,14 +20,19 @@ export default {
 @import '@/assets/scss/_variables.scss';
 
     .daily-progress{
-        margin-top: 2.5rem;
+        margin-top: 0.5rem;
         gap: 1rem;
         padding: .5rem 0;
+        border-bottom: 8px double $grey;
+
         h3{
+            color: $secondary;
             font-size: 1rem;
-            margin-bottom: 1rem;
             padding-bottom: .5rem;
-            border-bottom: 2px dotted $secondary;
+            // border-bottom: 2px dashed $secondary;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
             text-align: center;
         }
     }

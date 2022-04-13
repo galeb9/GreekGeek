@@ -47,8 +47,10 @@ export default {
         font-size: 1rem;
         margin-bottom: 1rem;
         padding-bottom: .5rem;
-        border-bottom: 2px dotted $secondary;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         text-align: center;
+        color: $secondary;
       }
     }
     .types__list{

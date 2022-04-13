@@ -22,18 +22,19 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/assets/scss/_variables.scss';
  .welcome-container{
-    // display: flex;
     margin-top: 2rem;
-
+    padding-bottom: 1rem;
+    border-bottom: 8px double $grey;
     .welcome__item{
       display: flex;
-      align-items: center;
       gap: 1.5rem;
       .welcome__img{
         max-width: 100%;
-        width: 10rem;
-        border-radius: 50%;
+        width: 6rem;
+        //border-radius: 50%;
+        border-radius: 5px;
       }
     }
 

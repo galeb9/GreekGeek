@@ -100,13 +100,15 @@ export default {
   display: flex;
   justify-content: space-between;  
   gap: 8px;
+  border-bottom: 8px double $grey;
+  padding-bottom: 3rem;
   .calendar-item{
     flex-basis: 15%;
     flex-grow: 1;
     background: $secondary;
     text-align: center;
     padding: 1.2rem 0;
-    border-radius: 50px;
+    //border-radius: 50px;
     .char{
       margin-bottom: .2rem;
       color: rgba(255, 255, 255, 0.664);
@@ -126,7 +128,8 @@ export default {
       content: '';
       width: 12px;
       height: 12px;
-      border-radius: 50%;
+      // border-radius: 50%;
+      transform: rotate(45deg);
       background: black;
       position: absolute;
       bottom: -20px;

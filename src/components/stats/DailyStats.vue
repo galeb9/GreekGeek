@@ -169,14 +169,14 @@ export default {
     .stats__calories,
     .stats__pushups,
     .stats-attempts{
+      color: black;
+      font-weight: 900;
       pointer-events: none;
       display: flex;
       gap: 20px;
       margin: 1rem 0;
-      background: $grey;
-   
       padding: 1.5rem;
-      border-radius: $radius;
+      border: 2px solid $secondary;
       img{
         width: 2rem;
       }
