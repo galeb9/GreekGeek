@@ -80,6 +80,11 @@ export default {
       margin-top: 4rem;
       color: black;
       letter-spacing: 2px;
+      transition: all .3s ease-in-out;
+      &:hover{
+          background: $black;
+          color: white;
+      }
     }
   }
 }

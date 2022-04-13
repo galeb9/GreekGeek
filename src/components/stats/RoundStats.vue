@@ -42,20 +42,15 @@ export default {
     height: 200px;
     border: 1rem solid $secondary;
     border: $secondary double 10px;
-    //border-right: $secondary 10px solid;
-    //transform: rotate(-45deg);
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin: 5rem 0;
+    margin: 3rem 0;
     color: black;
     font-weight: 900 ;
-    .stats-info{
-        //transform: rotate(45deg);
-    }
     h3{
         border-bottom: 2px solid $secondary;
         width: 100px;

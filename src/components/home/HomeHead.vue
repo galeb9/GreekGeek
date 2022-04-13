@@ -52,8 +52,8 @@ export default {
       .fa-icon{
         transform: scale(2);
         padding-right: 0.4rem;
-        color: $fontColor;
-        opacity: .7;
+        color: rgba( $secondary, 0.6 );
+        
         transition: all .3s ease-in ;
         &:hover{
           opacity: 1;

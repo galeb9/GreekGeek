@@ -109,6 +109,11 @@ export default {
             padding: 1.5rem 3rem;
             margin-top: 4rem;
             border-radius: 0;
+            transition: all .3s ease-in-out;
+            &:hover{
+                background: $black;
+                color: white;
+            }
         }
     }
 }

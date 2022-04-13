@@ -1,7 +1,7 @@
 <template>
     <div class="welcome__greet">
-      <h4>Hello {{ username }} 👋</h4>
-      <h3>Welcome Back!</h3>
+      <h3>Hello {{ username }} 👋</h3>
+      <h2>Welcome Back!</h2>
     </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
     name: 'TheHome',
     data(){
         return{
-            username: "Matej"
+            username: "Matthaios"
         }
     }
 }
@@ -18,8 +18,9 @@ export default {
 
 <style lang="scss">
     .welcome__greet{
-        h3{
-            margin: .2rem 0 1.2rem 0;
+        margin-top: 1rem;
+        h2{
+            margin: .2rem  0;
         }
     }
 </style>

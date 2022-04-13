@@ -1,8 +1,7 @@
 <template>
   <div class="pushup-types">
     <div class="types__head">
-      <h4>Pushup Types</h4>
-      <router-link class="types__link" to="/">View All ></router-link>
+      <h3>Pushup Types</h3>
     </div>
     <div class="types__list">
       <TypeItem
@@ -38,12 +37,19 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/assets/scss/variables';
   .pushup-types{
-    margin-top: 2rem;
-    height: 60vh;
+    margin-top: 1rem;
+    height: 35vh;
+    padding-bottom: 100px;
     .types__head{
-      display: flex;
-      justify-content: space-between;
+      h3{
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        padding-bottom: .5rem;
+        border-bottom: 2px dotted $secondary;
+        text-align: center;
+      }
     }
     .types__list{
       margin-top: 1.2rem;

@@ -198,18 +198,19 @@ export default {
   }
   .stats-item{
     &__button{
-      padding: 1.2rem 2rem;
-      background: $grey;
-      color: white;
-      border:none;
+      padding: 1.5rem 3rem;
+      background: none;
+      border: 5px double $secondary;
+      color: black;
       outline: none;
       text-transform: uppercase;
-      letter-spacing: .5px;
+      letter-spacing: 1px;
       font-weight: 900;
-      border-radius: 30px;
+      margin-top: 1rem;
       transition: all .3s ease-in-out;
       &:hover{
         background: $black;
+        color: white;
       }
     }
   }

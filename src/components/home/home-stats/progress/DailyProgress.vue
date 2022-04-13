@@ -21,12 +21,14 @@ export default {
 
     .daily-progress{
         margin-top: 2.5rem;
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px solid $secondary;
+        gap: 1rem;
         padding: .5rem 0;
         h3{
-            margin-right: .4rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: .5rem;
+            border-bottom: 2px dotted $secondary;
+            text-align: center;
         }
     }
 </style>
