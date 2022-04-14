@@ -48,7 +48,7 @@ export default {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin: 3rem 0;
+    margin: 3rem ;
     color: black;
     font-weight: 900 ;
     h3{

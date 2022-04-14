@@ -47,8 +47,9 @@ export default {
         width: 100%;
         display: flex;
         justify-content: center;
-        position: absolute;
-        bottom: 0;
+        position: fixed;
+        // top: 90vh;
+        bottom: -2vh;
         left: 0;
         .bg-blur{
             position: absolute;
@@ -56,14 +57,15 @@ export default {
             backdrop-filter: blur(10px);
             border-radius: 20px 20px 0px 0px;
             width: 100%;
-            height: 90px;            
+            height: 100%;            
         }
         nav{
             width: 100%;
-            height: 90px;
+            height: 100px;
             display: flex;
             justify-content: space-around;
               .header__link{
+                -webkit-tap-highlight-color: transparent; 
                 position: relative;
                 width: 100%;
                 height: 100%;
@@ -75,19 +77,21 @@ export default {
                     transform: scale(1.5);
                 }
                 &.router-link-active{
+                    -webkit-tap-highlight-color: transparent; 
                     &>.fa-icon{
                         color: black;
+
                     }
-                    &::after{
-                    content: '';
-                    width: 10px;
-                    height: 10px;
-                    border-radius: 50%;
-                    background: black;
-                    position: absolute;
-                    bottom: 14px;
-                    left: 47%;
-                    }
+                    // &::after{
+                    // content: '';
+                    // width: 10px;
+                    // height: 10px;
+                    // border-radius: 50%;
+                    // background: black;
+                    // position: absolute;
+                    // bottom: 14px;
+                    // left: 47%;
+                    // }
                 }
               
             }

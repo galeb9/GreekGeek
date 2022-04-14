@@ -40,8 +40,7 @@ export default {
 @import '@/assets/scss/variables';
   .pushup-types{
     margin-top: 1rem;
-    height: 35vh;
-    padding-bottom: 100px;
+    padding-bottom: 3rem;
     .types__head{
       h3{
         font-size: 1rem;
@@ -55,8 +54,6 @@ export default {
     }
     .types__list{
       margin-top: 1.2rem;
-      height: 100%;
-      overflow-y: scroll;
     }
   }
 </style>

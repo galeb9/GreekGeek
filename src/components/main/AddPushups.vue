@@ -5,7 +5,7 @@
 
                 <transition name="fade-in">
                     <div class="notification-container">
-                        <p class="notification-success notification" v-if="showNotification" >DONE Some NICEEE pushups</p>
+                        <p class="notification-success notification" v-if="showNotification" >DONE {{ pushupsToShow }} NICEEE {{ Number(pushupsToShow) > 1 ? 'PUSHUPS' : 'PUSHUP' }}</p>
                         <p class="notification-error notification" v-if="showErrorNotif" >Incorrect input, try again</p>
                     </div>
                 </transition>
@@ -43,6 +43,7 @@ export default {
             newPushups: null,
             showNotification: false,
             showErrorNotif: false,
+            pushupsToShow: null
         }
     },
     methods: {
@@ -61,6 +62,7 @@ export default {
                     newPushups: Number(this.newPushups)
                 })
                 this.showHideInterval();
+                this.pushupsToShow = this.newPushups
                 this.newPushups = null;
             }else{
                 this.showErrorNotif = true;
@@ -82,7 +84,7 @@ export default {
     justify-content: center;
     align-items: center;
     .add-component{
-        height: 50%;
+        //height: 50%;
         margin-top: 2rem;
         border-radius: 10px;
         display: flex;
@@ -121,16 +123,15 @@ export default {
     .notification{
         border-radius: $radius;
         font-weight: 700 ;
-        padding: 1rem 0 ;
-        margin-top: 1rem;
+        padding: 1rem 2rem;
         position: absolute;
-        bottom: -50px;
+        top: -60px;
         left: 0;
         right: 0;
     }
     .notification-success{
         background: $success;
-        color: black;
+        color: white;
     }
     .notification-error{
         background: $error;

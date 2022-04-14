@@ -1,6 +1,6 @@
 <template>
     <div class="welcome__greet">
-      <h3>Hello {{ username }} 👋</h3>
+      <h3>Hello {{ username }} 🌿</h3>
       <h2>Welcome Back!</h2>
     </div>
 </template>

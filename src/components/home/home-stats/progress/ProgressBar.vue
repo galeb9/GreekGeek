@@ -103,4 +103,22 @@ export default {
     color: rgba(black, 0.9);
   }
 }
+@media only screen and (max-width: 540px) {
+  .progress{
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    .bar-container{
+      flex-direction: column-reverse;
+      gap: 1rem;
+      .progress-bar{
+        margin-right: 0;
+        max-width: 400px;
+      }
+      p{
+        transform: translateX(0.5rem);
+      }
+    }
+  }
+}
 </style>

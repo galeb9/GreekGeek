@@ -30,7 +30,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   position: relative;
   background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;

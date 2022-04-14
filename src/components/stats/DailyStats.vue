@@ -157,15 +157,18 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/_variables.scss';
 .stats{
-  min-height: 70vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 5rem;
   .stats-row{
     width: 100%;
+    max-width: 350px;
     display: flex;
     justify-content: space-around;
+    gap: 20px;
     .stats__calories,
     .stats__pushups,
     .stats-attempts{
@@ -173,6 +176,7 @@ export default {
       font-weight: 900;
       pointer-events: none;
       display: flex;
+      align-items: center;
       gap: 20px;
       margin: 1rem 0;
       padding: 1.5rem;
@@ -212,6 +216,13 @@ export default {
         background: $black;
         color: white;
       }
+    }
+  }
+}
+@media only screen and (max-width: 390px) {
+  .stats-row{
+    .stats__info h4{
+      display: none;
     }
   }
 }
