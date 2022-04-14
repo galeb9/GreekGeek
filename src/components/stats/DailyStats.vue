@@ -177,9 +177,9 @@ export default {
       pointer-events: none;
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 12px;
       margin: 1rem 0;
-      padding: 1.5rem;
+      padding: 1rem;
       border: 2px solid $secondary;
       img{
         width: 2rem;
@@ -219,10 +219,13 @@ export default {
     }
   }
 }
-@media only screen and (max-width: 390px) {
+@media only screen and (max-width: 340px) {
   .stats-row{
     .stats__info h4{
       display: none;
+    }
+    .stats__calories{
+      flex-grow: 1;
     }
   }
 }
