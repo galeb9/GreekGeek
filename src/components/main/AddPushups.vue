@@ -98,6 +98,7 @@ export default {
             width: 200px;
             height: 200px;
             border-radius: 50%;
+            outline: none;
             &::placeholder{
                 color: $secondary;
             }

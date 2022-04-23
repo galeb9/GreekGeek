@@ -2,11 +2,6 @@ import { createApp } from 'vue'
 import router from './scripts/router.js'
 import App from './App.vue'
 
-
-
-
-
-
 const app = createApp(App)
 
 // component imports
@@ -18,7 +13,7 @@ import BaseNotification from './components/UI/BaseNotification.vue'
 
 //fontawsome
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBullseye, faHouse, faFireFlameCurved, faChartPie, faGear, faCircleCheck, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faBullseye, faHouse, faFireFlameCurved, faChartPie, faGear, faCircleCheck, faCheck, faArrowRightToBracket, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faBullseye);
@@ -28,7 +23,8 @@ library.add(faChartPie);
 library.add(faGear);
 library.add(faCircleCheck);
 library.add(faCheck);
-
+library.add(faArrowRightToBracket);
+library.add(faRightFromBracket);
 
 
 // add components

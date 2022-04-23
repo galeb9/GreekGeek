@@ -1,64 +1,70 @@
 <template>
-    <div class="home__head">
-      <h2>{{ getToday() }}</h2>
-      <div>
-        <BaseIconLink 
-          :icon="['fa', 'gear']" 
-          url="settings"
-          size="lg"
-        />
-      </div>
+  <div class="home__head">
+    <BaseDate />
+    <div class="home__head__icons">
+      <BaseIconLink 
+        :icon="['fa', 'gear']" 
+        url="settings"
+        size="lg"
+        class="icon-link"
+      />
+      <BaseIconLink 
+        :icon="['fa', 'right-from-bracket']" 
+        url="login"
+        size="lg"
+        class="icon-link"
+        @click="logout"
+      />
     </div>
+  </div>
 </template>
 
 <script>
+import BaseDate from '@/components/UI/BaseDate.vue'
+import { auth } from '@/components/firebaseInit.js'
+
 export default {
- data(){
+  components: {
+    BaseDate
+  },
+  data(){
     return{
-      today: new Date()
+      isLoggedIn: false,
+      currentUser: false
     }
   },
   methods: {
-    getDayStr(num){
-      const days = ["Sun", "Mon", "Tue","Sat", "Wed", "Fri", "Sat"];
-      return days[num];
-    },
-    getMonthStr(num){
-      const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-      return months[num]
-    },
-    getToday(){
-      let day = this.today;
-      let dayStr = this.getDayStr(day.getDay());
-      let dayNum = this.today.getDate();
-      let monthStr = this. getMonthStr(day.getMonth())
-      return `${dayStr} ${dayNum} ${monthStr} `;
-    },
+    logout(){
+      auth.signOut().then(() => {
+        this.$router.push('/login');
+      })
+    }
   }
 }
 </script>
 
 <style lang="scss">
 @import '@/assets/scss/_variables.scss';
-
-    .home__head{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      h2{
-        letter-spacing: 1px;
-        font-weight: 400;
-      }
-      .fa-icon{
-        transform: scale(2);
-        padding-right: 0.4rem;
-        color: rgba( $secondary, 0.6 );
-        
-        transition: all .3s ease-in ;
-        &:hover{
-          opacity: 1;
-        }
+  .home__head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .icon-link:last-child{
+      margin-left: 2rem;
+    }
+    h2{
+      letter-spacing: 1px;
+      font-weight: 400;
+    }
+    .fa-icon{
+      transform: scale(1.8);
+      padding-right: 0.4rem;
+      color: rgba( $secondary, 0.6 );
+      
+      transition: all .3s ease-in ;
+      &:hover{
+        opacity: 1;
       }
     }
-
+  }
 </style>

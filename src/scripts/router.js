@@ -5,6 +5,11 @@ import AddPushups from '@/components/main/AddPushups';
 import TheStats from '@/components/stats/TheStats';
 import TheHome from '@/components/home/TheHome';
 import TheSettings from '@/components/settings/TheSettings.vue'
+import LoginForm from '@/components/LoginForm'
+import RegisterForm from '@/components/RegisterForm'
+
+import { auth } from '@/components/firebaseInit.js'
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -15,24 +20,96 @@ const router = createRouter({
         },
         { 
             path: '/home',
-            component: TheHome
+            name: 'Home',
+            component: TheHome,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        { 
+            path: '/login',
+            component: LoginForm,
+            meta: {
+                requiresGuest: true
+            }
+        },
+        { 
+            path: '/register',
+            component: RegisterForm,
+            meta: {
+                requiresGuest: true
+            }
         },
         {
             path: '/add',
-            component: AddPushups
+            component: AddPushups,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/stats',
-            component: TheStats
+            component: TheStats,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/goal',
-            component: TheGoal
+            component: TheGoal,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/settings',
-            component: TheSettings
+            component: TheSettings,
+            meta: {
+                requiresAuth: true
+            }
         }
     ]
 })
+
+// nav guards -> this is why we must be logged in to use
+router.beforeEach((to, from, next) => {
+    //Check for requiredAuth guard
+    if(to.matched.some(record => record.meta.requiresAuth)) {
+        // Check if NOT logged in
+        if(!auth.currentUser){
+            // Go to Login page
+            next({
+                path: '/login',
+                query: {
+                    redirect: to.fullPath
+                }
+            });
+        } else {
+            // Procced to route
+            next();
+        }
+    } else if(to.matched.some(record => record.meta.requiresGuest)){
+        //Check for requiredAuth guard
+        if(to.matched.some(record => record.meta.requiresAuth)) {
+            // Check if logged in
+            if(auth.currentUser){
+                // Go to home page
+                next({
+                    path: '/',
+                    query: {
+                        redirect: to.fullPath
+                    }
+                });
+            } else {
+                // Procced to route
+                next();
+            }
+        } else {
+            // Procced to route
+            next();
+        }
+    }
+})
+
+
 export default router;

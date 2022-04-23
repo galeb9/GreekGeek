@@ -1,0 +1,116 @@
+<template>
+  <div class="login">
+    <div class="login-container">
+        <h4>OR</h4>
+        <router-link to="/register">
+            <h3> Register for an account</h3>
+        </router-link>
+        <form class="login-form">
+            <div class="input-field">
+                <label for="email">Email:</label>
+                <input type="email" id="email" v-model="email">
+            </div>
+            <div class="input-field">
+                <label for="password">Password:</label>
+                <input type="password" id="password" v-model="password">
+            </div>
+            <button class="login__button" @click="login">LOGIN</button>
+        </form>
+    </div>
+  </div>
+</template>
+
+<script>
+import { auth } from '@/components/firebaseInit.js'
+
+export default {
+    name: 'LoginForm',
+    data() {
+        return {
+            email: '',
+            password: ''
+        }
+    },
+    methods: {
+        login(e){
+            auth.signInWithEmailAndPassword(this.email, this.password)
+                .then(user => {
+                    alert(`Ste logirani not kot ${user.email}`)
+                    this.$router.push('/');
+                },
+                err => {
+                    alert(err.message)
+                }
+            )
+            e.preventDefault();
+        }
+    }
+}
+</script>
+
+<style lang="scss">
+@import '@/assets/scss/_variables.scss';
+
+.login{
+    max-width: 500px;
+    min-width: 300px;
+    margin: 0 auto;
+    color: $secondary;
+    .login-container{
+        padding-top: 2rem;
+        width: 80%;
+        margin: 0 auto;
+        h3{
+            text-align: center;
+            color: white;
+            background: $secondary;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
+        h4{
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .login-form{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            .input-field{
+                display: flex;
+                flex-direction: column;
+                margin-top: 1rem;
+                label{
+                    font-weight: 700;
+                    font-size: 1.2rem;
+                    letter-spacing: 2px;
+                }
+                input{
+                    border: none;
+                    border-bottom: 2px solid $secondary;
+                    background: transparent;
+                    margin-top: .3rem;
+                    padding: .5rem 1rem;
+                }
+            }
+        }
+      
+        .login__button{
+            padding: .7rem 0;
+            width: 80%;
+            margin: 2rem auto 0;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            font-weight: 900;
+            color: $secondary;
+            background: transparent;
+            border: 10px double $secondary;
+            &:focus{
+                background: black;
+                color: white;
+            }
+        }
+    }
+
+}
+</style>

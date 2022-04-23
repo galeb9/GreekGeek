@@ -8,6 +8,7 @@
           v-model="goal"
           placeholder="Today's goal goes here" 
           class="goal__input"
+          type="number"
         />
         <BaseButton 
         class="goal__button"
