@@ -20,17 +20,16 @@ $black: black;
 
 
 
-// move-in-top
-.move-in-top-enter-active{
-  animation: move-in-top .3s ease-in-out 
+// move-in-bottom
+.move-in-bottom-enter-active{
+  animation: move-in-bottom .5s ease-in-out 
 }
-.move-in-top-leave-active {
-  animation: move-in-top .3s ease-in-out reverse
+.move-in-bottom-leave-active {
+  animation: move-in-bottom .5s ease-in-out reverse
 }
-
-@keyframes move-in-top {
+@keyframes move-in-bottom {
   from{
-    transform: translateY(-50vh);
+    transform: translateY(10vh);
     opacity: 0;
   }
   50%{

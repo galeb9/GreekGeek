@@ -2,6 +2,7 @@
     <router-link 
         :to="'/' + url" 
     >
+        <!-- should look like this :icon="['fa', 'right-from-bracket']" -->
         <font-awesome-icon class="fa-icon" :icon="icon" :size="size"/>
     </router-link>
 </template>
@@ -20,7 +21,7 @@ export default {
         size: {
             type: String,
             default: () => {}
-        }
+        },
     }
 }
 </script>

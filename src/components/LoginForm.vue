@@ -36,7 +36,7 @@ export default {
             auth.signInWithEmailAndPassword(this.email, this.password)
                 .then(user => {
                     alert(`Ste logirani not kot ${user.email}`)
-                    this.$router.push('/');
+                    this.$router.go({path : this.$router.path});
                 },
                 err => {
                     alert(err.message)

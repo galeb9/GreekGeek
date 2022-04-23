@@ -1,10 +1,12 @@
 <template>
   <div class="login">
     <div class="login-container">
-        <h4>OR</h4>
-        <router-link to="/login">
-            <h3>Already have an account</h3>
-        </router-link>
+        <div class="or">
+            <h4>OR</h4>
+            <router-link to="/login">
+                <h3>Already have an account</h3>
+            </router-link>
+        </div>
         <form class="login-form">
             <div class="input-field">
                 <label for="email">Email:</label>
@@ -36,7 +38,7 @@ export default {
             auth.createUserWithEmailAndPassword(this.email, this.password)
                 .then(user => {
                     alert(`Račun narejen za ${user.email}`)
-                    this.$router.push('/');
+                    this.$router.go({path : this.$router.path});
                 },
                 err => {
                     alert(err.message)

@@ -1,0 +1,39 @@
+<template>
+  <div class="work-in-progress">
+    <h1>Settings</h1>
+    <svg class="hammer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 10L20.383 17.418C21.206 18.238 21.206 19.566 20.383 20.385C19.9876 20.7783 19.4527 20.999 18.895 20.999C18.3373 20.999 17.8024 20.7783 17.407 20.385L10 13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6.29297 15.2928L3.70697 12.7068C3.5195 12.5193 3.41418 12.265 3.41418 11.9998C3.41418 11.7347 3.5195 11.4804 3.70697 11.2928L11.293 3.70685C11.4805 3.51938 11.7348 3.41406 12 3.41406C12.2651 3.41406 12.5194 3.51938 12.707 3.70685L15.293 6.29285C15.4804 6.48038 15.5858 6.73468 15.5858 6.99985C15.5858 7.26501 15.4804 7.51932 15.293 7.70685L7.70697 15.2928C7.51944 15.4803 7.26514 15.5856 6.99997 15.5856C6.73481 15.5856 6.4805 15.4803 6.29297 15.2928V15.2928Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <p>Work in progress...</p>
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style lang="scss">
+.work-in-progress{
+
+    .hammer{
+        margin-top: 2rem;
+        transform: scale(2);
+        animation: hammer 1.3s ease-in infinite alternate;
+    }
+    p{
+        margin-top: 2rem;
+        margin-left: 1rem;
+    }
+}
+@keyframes hammer{
+    from{
+        transform: rotate(0deg) scale(2);
+    }
+    to{
+        transform: rotate(-45deg) scale(2);
+    }
+}
+</style>

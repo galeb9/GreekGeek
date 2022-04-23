@@ -8,13 +8,6 @@
         size="lg"
         class="icon-link"
       />
-      <BaseIconLink 
-        :icon="['fa', 'right-from-bracket']" 
-        url="login"
-        size="lg"
-        class="icon-link"
-        @click="logout"
-      />
     </div>
   </div>
 </template>
@@ -36,10 +29,11 @@ export default {
   methods: {
     logout(){
       auth.signOut().then(() => {
-        this.$router.push('/login');
+        // this.$router.push('/login');
+        this.$router.go({path : this.$router.path});
       })
     }
-  }
+  },
 }
 </script>
 
