@@ -19,7 +19,7 @@ export default {
         return {
             routes: [
                 { 
-                    url: '', 
+                    url: 'home', 
                     icon: ['fa', 'house'],
                 },
                 { 
@@ -48,7 +48,6 @@ export default {
         display: flex;
         justify-content: center;
         position: fixed;
-        // top: 90vh;
         z-index: 1;
         bottom: -2vh;
         left: 0;

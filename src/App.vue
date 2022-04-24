@@ -3,16 +3,21 @@
     <BaseBg />
     <router-view class="router-view" v-slot="{ Component }">
       <transition name="fade-in" mode="out-in">
-        <component :is="logComponent(Component, Component.type.name)" />
+        <!-- <component :is="logComponent(Component, Component.type.name)" /> -->
+        <component :is="Component" />
+
       </transition>
     </router-view>
-    <TheHeader v-if="headerVisible" class="header" />
+    <!-- <TheHeader v-if="headerVisible" class="header" /> -->
+    <TheHeader v-if="false" class="header" />
+
   </main>
 </template>
 
 <script>
-import TheHeader from './components/layout/TheHeader.vue'
+import TheHeader from '@/components/layout/TheHeader.vue'
 import BaseBg from '@/components/UI/BaseBg'
+
 export default {
   name: 'App',
   components: { 
@@ -26,12 +31,12 @@ export default {
   },
   methods: {
     logComponent(comp, val) {
+      console.logv(val)
       if (val === 'LoginForm' || val === 'RegisterForm'){
         this.headerVisible = false
       } else {
         this.headerVisible = true
       }
-      console.log(this.headerVisible)
       return comp
     }
   }

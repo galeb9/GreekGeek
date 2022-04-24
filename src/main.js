@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 // firebase
 import { auth } from '@/components/firebaseInit.js'
 import './components/firebaseInit'
+
 // component imports
 import BaseButton from './components/UI/BaseButton.vue'
 import BaseContainer from './components/UI/BaseContainer.vue'
@@ -14,6 +15,7 @@ import BaseInput from './components/UI/BaseInput.vue'
 import BaseIconLink from './components/UI/BaseIconLink.vue'
 import BaseNotification from './components/UI/BaseNotification.vue'
 import WorkInProgress from './components/UI/WorkInProgress.vue'
+import TheHeader from '@/components/layout/TheHeader.vue'
 
 
 let app;
@@ -29,6 +31,7 @@ auth.onAuthStateChanged( user => {
             .component("BaseIconLink", BaseIconLink)
             .component("BaseNotification", BaseNotification)
             .component("WorkInProgress", WorkInProgress)
+            .component("TheHeader", TheHeader)
             
         app.use(router);
         app.mount('#app')

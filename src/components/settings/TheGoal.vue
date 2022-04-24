@@ -16,13 +16,18 @@
           type="submit"
         />
       </form>
+      <TheHeader />
     </div>
 </template>
 
 <script>
 import { db } from '@/components/firebaseInit.js';
+import TheHeader from '@/components/layout/TheHeader.vue'
 
 export default {
+  components: {
+    TheHeader
+  },
   data(){
     return{
       goal: null,

@@ -27,6 +27,7 @@
                     />
                 </form>
             </BaseContainer>
+            <TheHeader />
         </div>
      
     </transition>
@@ -36,8 +37,12 @@
 
 <script>
 import { db } from '@/components/firebaseInit.js';
+import TheHeader from '@/components/layout/TheHeader.vue'
 
 export default {
+    components: {
+        TheHeader
+    },
     data(){
         return{
             newPushups: null,
