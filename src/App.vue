@@ -3,10 +3,10 @@
     <BaseBg />
     <router-view class="router-view" v-slot="{ Component }">
       <transition name="fade-in" mode="out-in">
-        <component :is="Component" />
+        <component :is="logComponent(Component, Component.type.name)" />
       </transition>
     </router-view>
-    <TheHeader class="header" />
+    <TheHeader v-if="headerVisible" class="header" />
   </main>
 </template>
 
@@ -19,6 +19,22 @@ export default {
     TheHeader,
     BaseBg
   },
+  data(){
+    return{
+      headerVisible: true
+    }
+  },
+  methods: {
+    logComponent(comp, val) {
+      if (val === 'LoginForm' || val === 'RegisterForm'){
+        this.headerVisible = false
+      } else {
+        this.headerVisible = true
+      }
+      console.log(this.headerVisible)
+      return comp
+    }
+  }
 }
 </script>
 

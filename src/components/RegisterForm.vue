@@ -71,6 +71,7 @@ export default {
     min-width: 300px;
     margin: 0 auto;
     color: $secondary;
+    min-height: 120vh;
     .login__container{
         z-index: 1;
 

@@ -36,7 +36,8 @@ export default {
             auth.signInWithEmailAndPassword(this.email, this.password)
                 .then(user => {
                     alert(`Ste logirani not kot ${user.email}`)
-                    this.$router.go({path : this.$router.path});
+                    //this.$router.go({path : this.$router.path});
+                    this.$router.push('/')
                 },
                 err => {
                     alert(err.message)
@@ -56,6 +57,7 @@ export default {
     min-width: 300px;
     margin: 0 auto;
     color: $secondary;
+    min-height: 120vh;
     .login-container{
         padding-top: 2rem;
         width: 80%;
