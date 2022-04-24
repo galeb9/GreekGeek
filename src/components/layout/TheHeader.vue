@@ -49,6 +49,7 @@ export default {
         justify-content: center;
         position: fixed;
         // top: 90vh;
+        z-index: 1;
         bottom: -2vh;
         left: 0;
         .bg-blur{

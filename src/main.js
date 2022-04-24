@@ -29,7 +29,6 @@ auth.onAuthStateChanged( user => {
             .component("BaseIconLink", BaseIconLink)
             .component("BaseNotification", BaseNotification)
             .component("WorkInProgress", WorkInProgress)
-
             
         app.use(router);
         app.mount('#app')
