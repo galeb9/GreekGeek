@@ -1,24 +1,25 @@
 <template>
-  <div class="past-stats">
-       <div
+    <div class="past-stats">
+        <div
             class="quote"
         >
             <p>{{ message }}</p>
             <p>Total: <span>{{ totalPushups }}</span> </p>
            
         </div>
-      <div class="past-list">
-        <PastStatsItem 
-            v-for="(item, index) in pastData"
-            :key="index"
-            :dateNum="item.dateNum"
-            :day="item.day"
-            :num="item.num"
-            :status="item.status"
-        />
-       
-      </div>
-  </div>
+        <transition name="list">
+            <div class="past-list" v-if="pastData.length">
+                <PastStatsItem 
+                    v-for="(item, index) in pastData"
+                    :key="index"
+                    :dateNum="item.dateNum"
+                    :day="item.day"
+                    :num="item.num"
+                    :status="item.status"
+                />
+            </div>
+        </transition>
+     </div>
 </template>
 
 <script>
@@ -59,9 +60,13 @@ export default {
             })
         }
     },
-    created(){
+    mounted(){
         this.getPast()
         this.getTotalPushups()
+    },
+    created(){
+        // this.getPast()
+        // this.getTotalPushups()
 
         //const sortedPast = this.pastData.sort((a, b) => a.num - b.num) 
     }
@@ -75,11 +80,11 @@ export default {
 .past-stats{
     padding: 0 1rem;
     margin-top: 3rem;
-    height: 90vh;
+    min-height: 90vh;
     .past-list{
         height: 100%;
         overflow-y: scroll;
-        padding: 0 20px 200px 20px
+        padding: 0 20px 140px 20px
     }
     .quote{
         color: black;
@@ -103,5 +108,15 @@ export default {
             margin: 2rem auto;
         }
     }
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>
