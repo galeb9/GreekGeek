@@ -22,6 +22,7 @@ let app;
 //const app = createApp(App)
 auth.onAuthStateChanged( user => {
     console.log(user)
+    // console.log(user.uid)
     if(!app) {
         app = createApp(App)
         app.component("font-awesome-icon", FontAwesomeIcon)

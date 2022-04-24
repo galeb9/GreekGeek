@@ -46,10 +46,14 @@ export default {
 
 <style lang="scss">
 .the-stats{
+  position: relative;
   .stats__menu{
     display: flex;
     justify-content: space-evenly;
     margin-bottom: 2rem;
+    // position: fixed;
+    // top: 0;
+    // background: rgb(231, 231, 231);
     // padding-bottom: 1.5rem;
     .stats__menu-item{
       color: black;

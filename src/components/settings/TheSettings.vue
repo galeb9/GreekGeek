@@ -2,23 +2,29 @@
   <div class="settings">
     <div class="container">
       <!--<WorkInProgress />-->
-      
-      <SettingsItem
-        title="Main Info"
-        :dropItem="'Logged in as: ' + email"
-      />
-
-      <SettingsItem 
-        title="Logout"
-      >
-        <BaseIconLink 
-          :icon="['fa', 'right-from-bracket']" 
-          url="login"
-          size="lg"
-          class="icon-link"
-          @click="logout"
+      <div class="settings__items">
+        <SettingsItem
+          title="Main Info"
+          :dropItem="'Logged in as: ' + email"
         />
-      </SettingsItem>
+
+        <SettingsItem 
+          title="Logout"
+        >
+          <BaseIconLink 
+            :icon="['fa', 'right-from-bracket']" 
+            url="login"
+            size="lg"
+            class="icon-link"
+            @click="logout"
+          />
+        </SettingsItem>
+        <SettingsItem
+          title="Go Home"
+          :dropItem="'Logged in as: ' + email"
+          @click="goHome"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +49,9 @@ export default {
         // this.$router.push('/login');
         this.$router.go({path : this.$router.path});
       })
+    },
+    goHome(){
+      this.$router.push("/")
     }
   },
   created(){

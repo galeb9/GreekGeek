@@ -1,9 +1,7 @@
 <template>
   <div class="login">
     <div class="login__container">
-
         <img class="auth-img" src="@/assets/img/greek-body.png" alt="">
-
         <div class="login__main">
             <div class="app-title">
                 <h2>GreeK GeeK</h2> 
@@ -44,14 +42,18 @@ export default {
     methods: {
         register(e){
             auth.createUserWithEmailAndPassword(this.email, this.password)
-                .then(user => {
-                    alert(`Račun narejen za ${user.email}`)
-                    this.$router.go({path : this.$router.path});
-                    return db.collection('users').doc(user.uid).set({
+                .then(cred => {
+                    alert(`Račun narejen za ${cred.user.email}`)
+                    console.log('User: ' + cred.user.uid)
+                    // this.$router.go({path : this.$router.path});
+                    this.$router.push("/")
+
+                    db.collection('users').doc(cred.user.uid).set({
                         goal: 100,
                         days: [],
                         pushupsToday: 0 // does not work??
                     })
+                    console.log("New user registered")
                 },
                 err => {
                     alert(err.message)
@@ -59,6 +61,9 @@ export default {
             )
             e.preventDefault();
         }
+    },
+    created(){
+        // console.log("data: " + auth.currentUser.uid)
     }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="goal">
       <form 
-          @submit.prevent="editNewGoal"
+          @submit.prevent="changeUserGoal"
           class="goal__form"
       >
         <BaseInput 
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { db } from '@/components/firebaseInit.js';
+import { db, auth } from '@/components/firebaseInit.js';
 import TheHeader from '@/components/layout/TheHeader.vue'
 
 export default {
@@ -31,25 +31,51 @@ export default {
   data(){
     return{
       goal: null,
+      userId: auth.currentUser.uid
     }
   },
   methods:{
-    async editNewGoal(){
-      let newGoal = this.goal;
-      if(this.goalAmount !== null && this.goalAmount !== '' ){
-        db.collection("goal").get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            doc.ref.update({
-              goalPushups: Number(newGoal)
-            })
+    // async editNewGoal(){ // old code
+    //   let newGoal = this.goal;
+    //   if(this.goalAmount !== null && this.goalAmount !== '' ){
+    //     db.collection("goal").get()
+    //     .then(snapshot => {
+    //       snapshot.forEach(doc => {
+    //         doc.ref.update({
+    //           goalPushups: Number(newGoal)
+    //         })
+    //       })
+    //     })
+    //     this.goal = ''
+    //   }else{
+    //     console.log("You need to enter something")
+    //   }
+    // },
+
+    getUserData(){
+      db.collection("users").doc(this.userId).get()
+      .then(user => {
+        console.log(user.data())
+      })
+    },
+
+    changeUserGoal(){
+      let g = Number(this.goal)
+      if(g !== null && g !== '' && g > 0 ){
+        db.collection("users").doc(this.userId).get()
+        .then(user => {
+          user.ref.update({
+            goal: g
           })
         })
-        this.goal = ''
-      }else{
-        console.log("You need to enter something")
+        this.goal = null;
+      } else{
+        console.log("Enter you goal dumb dumb...")
       }
-    },
+    }
+  },
+  created(){
+    this.getUserData();
   }
 }
 </script>

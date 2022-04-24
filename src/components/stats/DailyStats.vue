@@ -3,8 +3,8 @@
     <div class="stats daily">
       <p class="stats__date">{{ `${today.getDate()} / ${today.getMonth() + 1}  / ${today.getFullYear()}` }}</p>
       <RoundStats
-        :amount="currentAmount"
-        :goal="currentGoal"
+        :amount="userPushups"
+        :goal="userGoal"
         :surplus="surplus"
        />
 
@@ -21,7 +21,7 @@
             <img src="@/assets/icons/Strong.svg" alt="">
             <div class="stats__info">
               <h4>Pushups</h4>
-              <p >{{ currentAmount }}</p>
+              <p >{{ userPushups }}</p>
             </div>
           </div>
             <div class="stats-attempts">
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { db } from '@/components/firebaseInit.js'
+import { db, auth } from '@/components/firebaseInit.js'
 import RoundStats from '@/components/stats//RoundStats.vue'
 
 export default {
@@ -51,20 +51,26 @@ export default {
   },
   data(){
     return{
+      daysChar: ["Sun", "Mon", "Tue","Wed", "Thu", "Fri", "Sat"],
       pushupsList: [],
       today: new Date(),
       currentAmount: 0,
       currentGoal: 100,
-      rate: 0, 
-      attempts: 0,
-      calories: 0,
+
+      userGoal: null,
+      userPushups: null,
+      userId: auth.currentUser.uid,
+
       surplus: 0,
-      daysChar: ["Sun", "Mon", "Tue","Wed", "Thu", "Fri", "Sat"],
+      rate: 0, 
+      attempts: 0, // will have to add a counter of inputs into add pushups comp.
+      calories: 0,
+      
 
     }
   },
   watch: {
-    currentAmount(){ // updates current pushups 
+    currentAmount(){ // updates current pushups // NOT NEEDED 
       db.collection("currentPushups").get()
       .then(snapshot => {
         snapshot.forEach(doc => {
@@ -84,25 +90,7 @@ export default {
         status: this.isTodayWin()
       }
       db.collection("days").add(currentDay)
-      console.log(currentDay)
-    },
-    getChar(num){
-      return this.daysChar[num]
-    },
-    isTodayWin(){
-      if(this.currentAmount >= this.currentGoal){
-        return 'pos'
-      }else{
-        return 'neg'
-      }
-    },
-
-    successRate(){ // not used
-      this.rate =  Math.floor((Number(this.currentAmount) / Number(this.currentGoal)) * 100)  
-      return this.rate + "%"
-    },
-    getBurntCalories(){
-      this.calories = Math.ceil(this.currentAmount * 0.45)
+      //console.log(currentDay)
     },
     deletePushups(){
       this.saveDayStats();
@@ -111,12 +99,32 @@ export default {
           doc.ref.delete()
         })
       })
+
       this.currentAmount = 0;
       this.attempts = 0;
       this.calories = 0;
-
     },
+
+    getChar(num){
+      return this.daysChar[num]
+    },
+    isTodayWin(){
+      if(this.userPushups >= this.userGoal){
+        return 'pos'
+      }else{
+        return 'neg'
+      }
+    },
+    successRate(){ // NOT NEEDED
+      this.rate =  Math.floor((Number(this.userPushups) / Number(this.userGoal)) * 100)  
+      return this.rate + "%"
+    },
+    getBurntCalories(){
+      this.calories = Math.ceil(this.currentAmount * 0.45)
+    },
+ 
     currentPushupsMade(){ // get currentAmount, attempts, burntCalories
+    // NOT NEEDED
       this.currentAmount = this.pushupsList 
         .map(item => item.newPushups)
         .reduce((sum, num) => sum += Number(num), 0);
@@ -126,7 +134,10 @@ export default {
       this.surplus = this.currentAmount - this.currentGoal
       this.attempts = this.pushupsList.length;
     },
+
+
     getPushupsFB(){
+    // NOT NEEDED
       db.collection('donePushups').get().then(snapshot => {
         snapshot.forEach(doc => {
           const data = {
@@ -138,16 +149,52 @@ export default {
         this.currentPushupsMade();
       })
     },
+
     getGoal(){
+    // NOT NEEDED
       db.collection('goal').get().then(snapshot => {
         snapshot.forEach(doc => {
           this.currentGoal = doc.data().goalPushups
         })
       })
     },
+
+    //new user firebase code
+    getUserData(){
+      db.collection("users").doc(this.userId).get()
+      .then(user => {
+        console.log(user.data())
+          this.userPushups = user.data().pushupsToday // users pushups today
+          this.userGoal = user.data().goal // users pushups today
+          // console.log('P: ' + this.userPushups)
+          // console.log('G: ' + this.userGoal)
+      })
+    },
+    saveUserDay(){
+      const day = {
+        dateNum: this.today.getDate(),
+        day: this.getChar(this.today.getDay()),
+        num: this.userPushups,
+        status: this.isTodayWin()
+      }
+
+      console.log(day) // ????? how to update an array with an object
+      db.collection("users").doc(this.userId).get()
+      .then(user => {
+        console.log('Day: ' + user.data().days)
+        // user.ref.update({
+        //   days:  user.data().days[0] = day
+        // })
+      })
+    }
+
+
   },
   created(){
     this.getPushupsFB();
+
+    this.getUserData();
+    this.saveUserDay();
   }
 }
 </script>

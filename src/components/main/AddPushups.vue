@@ -10,8 +10,12 @@
                     </div>
                 </transition>
 
+                <div class="user-pushups">
+                    {{ 'P: ' + userPushups }} || {{ 'G: ' + userGoal }}
+                </div>
+
                 <form 
-                    @submit.prevent="saveNewPushups"
+                    @submit.prevent="saveUserPushups"
                     class="add-component"
                 >
                     <BaseInput 
@@ -36,7 +40,7 @@
 </template>
 
 <script>
-import { db } from '@/components/firebaseInit.js';
+import { db, auth } from '@/components/firebaseInit.js';
 import TheHeader from '@/components/layout/TheHeader.vue'
 
 export default {
@@ -45,10 +49,15 @@ export default {
     },
     data(){
         return{
-            newPushups: null,
             showNotification: false,
             showErrorNotif: false,
-            pushupsToShow: null
+
+            newPushups: null,
+            pushupsToShow: null,
+
+            userId: auth.currentUser.uid,
+            userPushups: null,
+            userGoal: null
         }
     },
     methods: {
@@ -59,35 +68,64 @@ export default {
                 clearInterval(notifInterval)
             }, 4000);
         },
+        // saveNewPushups(){ // the old code
+        //     if(this.newPushups !== null && this.newPushups !== '' ){
+        //         this.showErrorNotif = false;
+        //         db.collection("donePushups").add({ // this is how we make a new document in a collection
+        //             newPushups: Number(this.newPushups)
+        //         })
+        //         this.showHideInterval();
+        //         this.pushupsToShow = this.newPushups
+        //         this.newPushups = null;
+        //     }else{
+        //         this.showErrorNotif = true;
+        //     }
+        // },
+        getUserData(){
+            db.collection("users").doc(this.userId).get()
+                .then(user => {
+                    console.log(user.data())
 
-        saveNewPushups(){
-            if(this.newPushups !== null && this.newPushups !== '' ){
-                this.showErrorNotif = false;
-                db.collection("donePushups").add({
-                    newPushups: Number(this.newPushups)
+                    this.userPushups = user.data().pushupsToday // users pushups today
+                    this.userGoal = user.data().goal // users pushups today
+                })
+        },
+        saveUserPushups(){
+            let p = Number(this.newPushups)
+
+            if(p !== null && p !== '' && p > 0){
+                db.collection("users").doc(this.userId).get()
+                .then(user => {
+                    user.ref.update({
+                        pushupsToday: user.data().pushupsToday + p
+                    })
                 })
                 this.showHideInterval();
                 this.pushupsToShow = this.newPushups
                 this.newPushups = null;
             }else{
-                this.showErrorNotif = true;
+                this.showErrorNotif = true
             }
-        },
+        }
     },
     created(){
+        this.getUserData()
     }
-   
 }
 </script>
 
 <style lang="scss">
 @import  '@/assets/scss/_variables.scss';
 
-.add-pushups .content-holder{
+.add-pushups {
     height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    .user-pushups{ // test purposes only
+        background: black;
+        padding: .3rem;
+    }
     .add-component{
         //height: 50%;
         margin-top: 2rem;
