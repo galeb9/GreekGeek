@@ -5,7 +5,6 @@
         >
             <p>{{ message }}</p>
             <p>Total: <span>{{ totalPushups }}</span> </p>
-           
         </div>
         <transition name="list">
             <div class="past-list" v-if="pastData.length">
