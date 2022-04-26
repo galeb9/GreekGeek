@@ -34,8 +34,8 @@ export default {
     methods: {
         login(e){
             auth.signInWithEmailAndPassword(this.email, this.password)
-                .then(user => {
-                    alert(`Ste logirani not kot ${user.email}`)
+                .then(cred => {
+                    alert(`Ste logirani not kot ${cred.user.email}`)
                     //this.$router.go({path : this.$router.path});
                     this.$router.push('/')
                 },

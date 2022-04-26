@@ -6,61 +6,45 @@
         </div>
         <p>{{ rate }} %</p>
       </div>
-      <button class="progress__btn" @click="successRate()">Result</button>
     </div>
 </template>
 
 
 <script>
-import { db } from '@/components/firebaseInit.js'
+import { db, auth } from '@/components/firebaseInit.js'
 
 export default {
  data(){
     return{
-      list: [],
-      currentAmount: 0,
-      currentGoal: 100,
-      goal: 100,
       rate: 0, 
+
+      userId: auth.currentUser.uid,
+      userPushups: 0,
+      userGoal: 100
     }
   },
   methods: {
     successRate(){
-      this.rate =  Math.floor((this.currentAmount / this.goal) * 100)
+      this.rate =  Math.floor((this.userPushups / this.userGoal) * 100)
       if(this.rate > 100){
         return this.rate = 100 
       }
       return this.rate 
     },
-    getGoal(){ 
-      db.collection('goal').get().then(snapshot => {
-        snapshot.forEach(doc => {
-          this.goal = doc.data().goalPushups
-        })
-        console.log('current goal: ' + this.goal)
-      })
-    },
-    getAmount(){
-      db.collection('donePushups').get().then(snapshot => {
-        snapshot.forEach(doc => {
-          this.currentAmount += doc.data().newPushups
-        })
-        console.log('current amount: ' + this.currentAmount)
-      });
-      return this.currentAmount;
-    },
-  },
-  beforeCreate(){
 
+    getUserData(){
+      db.collection("users").doc(this.userId).get()
+      .then(user => {
+        console.log(user.data())
+        this.userPushups = user.data().pushupsToday;
+        this.userGoal = user.data().goal;
+      })
+    }
   },
   created(){
-    this.getGoal();
-    this.getAmount();
+    this.getUserData();
+    setTimeout(this.successRate, 300)
   },
-  beforeMount(){
-    this.successRate()
-  }
-
 }
 </script>
 

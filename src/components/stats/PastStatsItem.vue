@@ -48,9 +48,8 @@ export default {
 
     .past-item{
         margin-bottom: 1.5rem;
-        border: $secondary 5px double;
-        border-bottom: none;
-        border-right: none;
+        border-bottom: $secondary 5px double;
+        padding-bottom: .3rem;
         display: flex;
         justify-content: space-between;
         .stat-items{
@@ -67,6 +66,7 @@ export default {
             }
             .date-section{
                 background: $secondary;
+
             }
             .pushups-section{
                 color: black;
@@ -77,8 +77,8 @@ export default {
             }
         }
         .status{
-            width: 20px;
-            height: 86px;
+            width: 10px;
+            height: 90px;
             margin-right: 1%;
             align-self: center;
         }

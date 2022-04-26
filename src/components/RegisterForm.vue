@@ -62,9 +62,6 @@ export default {
             e.preventDefault();
         }
     },
-    created(){
-        // console.log("data: " + auth.currentUser.uid)
-    }
 }
 </script>
 

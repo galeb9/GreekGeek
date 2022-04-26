@@ -35,7 +35,7 @@ export default {
   },
   data(){
     return{
-      currentTab: 'PastStats',
+      currentTab: 'DailyStats',
       tabs: [ 'DailyStats', 'PastStats' ]
     }
   }

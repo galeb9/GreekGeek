@@ -28,7 +28,6 @@ export default {
             color: $secondary;
             font-size: 1rem;
             padding-bottom: .5rem;
-            // border-bottom: 2px dashed $secondary;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 1rem;

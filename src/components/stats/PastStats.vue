@@ -6,9 +6,8 @@
             <p>{{ message }}</p>
             <p>Total: <span>{{ totalPushups }}</span> </p>
         </div>
-
         <transition name="list">
-            <div class="past-list" v-if="pastData.length">
+            <div class="past-list" v-if="days.length">
                 <PastStatsItem 
                     v-for="(item, index) in days"
                     :key="index"
@@ -42,20 +41,6 @@ export default {
         }
     },
     methods: {
-        // getPast(){
-        //     db.collection('days').orderBy('dateNum', 'desc').get().then(snapshot => {
-        //         snapshot.forEach(doc => {
-        //             //console.log(doc.data())
-        //             const data = {
-        //                 'dateNum': doc.data().dateNum,
-        //                 'day': doc.data().day,
-        //                 'num': doc.data().num,
-        //                 'status': doc.data().status
-        //             }
-        //             this.pastData.push(data)
-        //         })
-        //     })
-        // },
         getTotalPushups(){
             db.collection('days').get().then(snapshot => {
                 snapshot.forEach(doc => {
@@ -65,42 +50,26 @@ export default {
         },
         
         // new firebase code
-        getUserData(){
+        getDays(){
             db.collection("users").doc(this.userId).get()
             .then(user => {
-                // console.log(user.data().days)
-                // user.data().days.forEach( day => {
-                //     console.log(day)
-                //     // this.days.push(day) // something to do with promises
-                // })
-                // return JSON.stringify(this.days)
-                return user.data().days
-
-            })
-            .then(data => { 
-                // let daysArray = []
-                console.log(data)
+                const data = user.data().days
                 for(let key in data){
-                    this.days.push(data[key])
+                    this.days.push({
+                        dateNum: data[key].dateNum,
+                        num: data[key].num,
+                        day: data[key].day,
+                        status: data[key].status
+                    })
                 }
-                // console.log("our data: " + daysArray)
-             })
-            console.log(this.days)
+            })
         },
-        getDays(){
+    },
 
-        }
-    },
-    mounted(){
-        // this.getPast()
-        // this.getTotalPushups()
-    },
     created(){
-        this.getUserData();
-        // this.getPast()
-        // this.getTotalPushups()
-
-        //const sortedPast = this.pastData.sort((a, b) => a.num - b.num) 
+        this.getDays();
+        console.log(this.days)
+        // const sortedPast = this.days.sort((a, b) =>  b.dateNum - a.dateNum) 
     }
     
 }
