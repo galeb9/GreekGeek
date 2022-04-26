@@ -35,30 +35,6 @@ export default {
     }
   },
   methods:{
-    // async editNewGoal(){ // old code
-    //   let newGoal = this.goal;
-    //   if(this.goalAmount !== null && this.goalAmount !== '' ){
-    //     db.collection("goal").get()
-    //     .then(snapshot => {
-    //       snapshot.forEach(doc => {
-    //         doc.ref.update({
-    //           goalPushups: Number(newGoal)
-    //         })
-    //       })
-    //     })
-    //     this.goal = ''
-    //   }else{
-    //     console.log("You need to enter something")
-    //   }
-    // },
-
-    getUserData(){
-      db.collection("users").doc(this.userId).get()
-      .then(user => {
-        console.log(user.data())
-      })
-    },
-
     changeUserGoal(){
       let g = Number(this.goal)
       if(g !== null && g !== '' && g > 0 ){
@@ -74,9 +50,6 @@ export default {
       }
     }
   },
-  created(){
-    this.getUserData();
-  }
 }
 </script>
 

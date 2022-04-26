@@ -4,6 +4,12 @@
       <!--<WorkInProgress />-->
       <div class="settings__items">
         <SettingsItem
+          title="Go Home"
+          :dropItem="'Logged in as: ' + email"
+          @click="goHome"
+        />
+        
+        <SettingsItem
           title="Main Info"
           :dropItem="'Logged in as: ' + email"
         />
@@ -19,11 +25,8 @@
             @click="logout"
           />
         </SettingsItem>
-        <SettingsItem
-          title="Go Home"
-          :dropItem="'Logged in as: ' + email"
-          @click="goHome"
-        />
+
+
       </div>
     </div>
   </div>

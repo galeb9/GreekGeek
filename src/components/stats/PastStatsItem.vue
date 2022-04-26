@@ -40,11 +40,6 @@ export default {
             default: 'neg'
         },
     },
-    data(){
-        return{
-            
-        }
-    }
 }
 </script>
 

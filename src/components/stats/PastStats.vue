@@ -6,11 +6,13 @@
             <p>{{ message }}</p>
             <p>Total: <span>{{ totalPushups }}</span> </p>
         </div>
+
         <transition name="list">
             <div class="past-list" v-if="pastData.length">
                 <PastStatsItem 
-                    v-for="(item, index) in pastData"
+                    v-for="(item, index) in days"
                     :key="index"
+
                     :dateNum="item.dateNum"
                     :day="item.day"
                     :num="item.num"
@@ -23,7 +25,7 @@
 
 <script>
 import PastStatsItem from '@/components/stats/PastStatsItem'
-import { db } from '@/components/firebaseInit.js'
+import { db, auth } from '@/components/firebaseInit.js'
 
 export default {
     components: {
@@ -33,37 +35,68 @@ export default {
         return{
             pastData: [],
             message: "\"Quality is not an act, It is a habit.\"",
-            totalPushups: 0
+            totalPushups: 0,
+
+            userId: auth.currentUser.uid,
+            days: []
         }
     },
     methods: {
-        getPast(){
-            db.collection('days').orderBy('dateNum', 'desc').get().then(snapshot => {
-                snapshot.forEach(doc => {
-                    //console.log(doc.data())
-                    const data = {
-                        'dateNum': doc.data().dateNum,
-                        'day': doc.data().day,
-                        'num': doc.data().num,
-                        'status': doc.data().status
-                    }
-                    this.pastData.push(data)
-                })
-            })
-        },
+        // getPast(){
+        //     db.collection('days').orderBy('dateNum', 'desc').get().then(snapshot => {
+        //         snapshot.forEach(doc => {
+        //             //console.log(doc.data())
+        //             const data = {
+        //                 'dateNum': doc.data().dateNum,
+        //                 'day': doc.data().day,
+        //                 'num': doc.data().num,
+        //                 'status': doc.data().status
+        //             }
+        //             this.pastData.push(data)
+        //         })
+        //     })
+        // },
         getTotalPushups(){
             db.collection('days').get().then(snapshot => {
                 snapshot.forEach(doc => {
                     this.totalPushups += doc.data().num
                 })
             })
+        },
+        
+        // new firebase code
+        getUserData(){
+            db.collection("users").doc(this.userId).get()
+            .then(user => {
+                // console.log(user.data().days)
+                // user.data().days.forEach( day => {
+                //     console.log(day)
+                //     // this.days.push(day) // something to do with promises
+                // })
+                // return JSON.stringify(this.days)
+                return user.data().days
+
+            })
+            .then(data => { 
+                // let daysArray = []
+                console.log(data)
+                for(let key in data){
+                    this.days.push(data[key])
+                }
+                // console.log("our data: " + daysArray)
+             })
+            console.log(this.days)
+        },
+        getDays(){
+
         }
     },
     mounted(){
-        this.getPast()
-        this.getTotalPushups()
+        // this.getPast()
+        // this.getTotalPushups()
     },
     created(){
+        this.getUserData();
         // this.getPast()
         // this.getTotalPushups()
 

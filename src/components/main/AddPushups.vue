@@ -10,9 +10,6 @@
                     </div>
                 </transition>
 
-                <div class="user-pushups">
-                    {{ 'P: ' + userPushups }} || {{ 'G: ' + userGoal }}
-                </div>
 
                 <form 
                     @submit.prevent="saveUserPushups"
@@ -56,8 +53,6 @@ export default {
             pushupsToShow: null,
 
             userId: auth.currentUser.uid,
-            userPushups: null,
-            userGoal: null
         }
     },
     methods: {
@@ -68,31 +63,9 @@ export default {
                 clearInterval(notifInterval)
             }, 4000);
         },
-        // saveNewPushups(){ // the old code
-        //     if(this.newPushups !== null && this.newPushups !== '' ){
-        //         this.showErrorNotif = false;
-        //         db.collection("donePushups").add({ // this is how we make a new document in a collection
-        //             newPushups: Number(this.newPushups)
-        //         })
-        //         this.showHideInterval();
-        //         this.pushupsToShow = this.newPushups
-        //         this.newPushups = null;
-        //     }else{
-        //         this.showErrorNotif = true;
-        //     }
-        // },
-        getUserData(){
-            db.collection("users").doc(this.userId).get()
-                .then(user => {
-                    console.log(user.data())
-
-                    this.userPushups = user.data().pushupsToday // users pushups today
-                    this.userGoal = user.data().goal // users pushups today
-                })
-        },
+  
         saveUserPushups(){
             let p = Number(this.newPushups)
-
             if(p !== null && p !== '' && p > 0){
                 db.collection("users").doc(this.userId).get()
                 .then(user => {
@@ -108,9 +81,6 @@ export default {
             }
         }
     },
-    created(){
-        this.getUserData()
-    }
 }
 </script>
 

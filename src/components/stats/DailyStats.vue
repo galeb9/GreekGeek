@@ -35,14 +35,14 @@
       </div>
 
       <div class="stats-item">
-        <button @click="deletePushups()" class="stats-item__button">Finish for today</button>
+        <button @click="resetToday()" class="stats-item__button">Finish for today</button>
       </div>
     </div>
   </BaseContainer>
 </template>
 
 <script>
-import { db, auth } from '@/components/firebaseInit.js'
+import { db, auth, firebase } from '@/components/firebaseInit.js'
 import RoundStats from '@/components/stats//RoundStats.vue'
 
 export default {
@@ -65,46 +65,85 @@ export default {
       rate: 0, 
       attempts: 0, // will have to add a counter of inputs into add pushups comp.
       calories: 0,
-      
-
     }
   },
-  watch: {
-    currentAmount(){ // updates current pushups // NOT NEEDED 
-      db.collection("currentPushups").get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          doc.ref.update({
-            current: Number(this.currentAmount)
-          })
-        })
-      })
-    },
-  },
+  // watch: {
+  //   currentAmount(){ // updates current pushups // NOT NEEDED 
+  //     db.collection("currentPushups").get()
+  //     .then(snapshot => {
+  //       snapshot.forEach(doc => {
+  //         doc.ref.update({
+  //           current: Number(this.currentAmount)
+  //         })
+  //       })
+  //     })
+  //   },
+  // },
   methods: {
-    saveDayStats(){
-      const currentDay = {
-        dateNum: this.today.getDate(),
-        day: this.getChar(this.today.getDay()),
-        num: this.currentAmount,
-        status: this.isTodayWin()
-      }
-      db.collection("days").add(currentDay)
-      //console.log(currentDay)
-    },
-    deletePushups(){
-      this.saveDayStats();
-      db.collection('donePushups').get().then(snapshot =>{
-        snapshot.forEach(doc => {
-          doc.ref.delete()
-        })
-      })
 
-      this.currentAmount = 0;
-      this.attempts = 0;
-      this.calories = 0;
-    },
+    // saveDayStats(){ // NOT NEEDED
+    //   const currentDay = {
+    //     dateNum: this.today.getDate(),
+    //     day: this.getChar(this.today.getDay()),
+    //     num: this.currentAmount,
+    //     status: this.isTodayWin()
+    //   }
+    //   db.collection("days").add(currentDay)
+    //   //console.log(currentDay)
+    // },
+    // deletePushups(){ // NOT NEEDED
+    //   this.saveDayStats();
+    //   db.collection('donePushups').get().then(snapshot =>{
+    //     snapshot.forEach(doc => {
+    //       doc.ref.delete()
+    //     })
+    //   })
 
+    //   this.currentAmount = 0;
+    //   this.attempts = 0;
+    //   this.calories = 0;
+    // },
+    // successRate(){ // NOT NEEDED
+    //   this.rate =  Math.floor((Number(this.userPushups) / Number(this.userGoal)) * 100)  
+    //   return this.rate + "%"
+    // },
+    // currentPushupsMade(){ // get currentAmount, attempts, burntCalories
+    // // NOT NEEDED
+    //   this.currentAmount = this.pushupsList 
+    //     .map(item => item.newPushups)
+    //     .reduce((sum, num) => sum += Number(num), 0);
+
+    //   this.getBurntCalories();
+    //   this.getGoal();
+    //   this.surplus = this.currentAmount - this.currentGoal
+    //   this.attempts = this.pushupsList.length;
+    // },
+
+
+    // getPushupsFB(){
+    // // NOT NEEDED
+    //   db.collection('donePushups').get().then(snapshot => {
+    //     snapshot.forEach(doc => {
+    //       const data = {
+    //         'id': doc.id,
+    //         'newPushups': Number(doc.data().newPushups)
+    //       }
+    //       this.pushupsList.push(data)
+    //     })
+    //     this.currentPushupsMade();
+    //   })
+    // },
+
+    // getGoal(){
+    // // NOT NEEDED
+    //   db.collection('goal').get().then(snapshot => {
+    //     snapshot.forEach(doc => {
+    //       this.currentGoal = doc.data().goalPushups
+    //     })
+    //   })
+    // },
+
+    // make calories & attempts work
     getChar(num){
       return this.daysChar[num]
     },
@@ -115,59 +154,18 @@ export default {
         return 'neg'
       }
     },
-    successRate(){ // NOT NEEDED
-      this.rate =  Math.floor((Number(this.userPushups) / Number(this.userGoal)) * 100)  
-      return this.rate + "%"
-    },
+
     getBurntCalories(){
-      this.calories = Math.ceil(this.currentAmount * 0.45)
-    },
- 
-    currentPushupsMade(){ // get currentAmount, attempts, burntCalories
-    // NOT NEEDED
-      this.currentAmount = this.pushupsList 
-        .map(item => item.newPushups)
-        .reduce((sum, num) => sum += Number(num), 0);
-
-      this.getBurntCalories();
-      this.getGoal();
-      this.surplus = this.currentAmount - this.currentGoal
-      this.attempts = this.pushupsList.length;
+      this.calories = Math.ceil(this.userPushups * 0.45)
     },
 
-
-    getPushupsFB(){
-    // NOT NEEDED
-      db.collection('donePushups').get().then(snapshot => {
-        snapshot.forEach(doc => {
-          const data = {
-            'id': doc.id,
-            'newPushups': Number(doc.data().newPushups)
-          }
-          this.pushupsList.push(data)
-        })
-        this.currentPushupsMade();
-      })
-    },
-
-    getGoal(){
-    // NOT NEEDED
-      db.collection('goal').get().then(snapshot => {
-        snapshot.forEach(doc => {
-          this.currentGoal = doc.data().goalPushups
-        })
-      })
-    },
-
+    
     //new user firebase code
     getUserData(){
       db.collection("users").doc(this.userId).get()
       .then(user => {
-        console.log(user.data())
-          this.userPushups = user.data().pushupsToday // users pushups today
-          this.userGoal = user.data().goal // users pushups today
-          // console.log('P: ' + this.userPushups)
-          // console.log('G: ' + this.userGoal)
+        this.userPushups = user.data().pushupsToday // users pushups today
+        this.userGoal = user.data().goal // users pushups today
       })
     },
     saveUserDay(){
@@ -178,24 +176,32 @@ export default {
         status: this.isTodayWin()
       }
 
-      console.log(day) // ????? how to update an array with an object
+      db.collection("users").doc(this.userId).update({ // had to use firebase import to user .firestore.FieldValue.arrayUnion('some value')
+        days : firebase.firestore.FieldValue.arrayUnion(day)
+      })
+    },
+    resetTodaysPushups(){
       db.collection("users").doc(this.userId).get()
       .then(user => {
-        console.log('Day: ' + user.data().days)
-        // user.ref.update({
-        //   days:  user.data().days[0] = day
-        // })
+        user.ref.update({
+          pushupsToday: 0
+        })
       })
+    },
+    resetToday(){
+      this.saveUserDay();
+      this.resetTodaysPushups();
+      this.userPushups = 0; 
+      this.attempts = 0;
+      this.calories = 0;
     }
-
-
   },
   created(){
-    this.getPushupsFB();
-
+    // this.getPushupsFB();
     this.getUserData();
-    this.saveUserDay();
-  }
+
+    // this.saveUserDay();
+  },
 }
 </script>
 
