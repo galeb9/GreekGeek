@@ -82,6 +82,7 @@ export default {
 
     getBurntCalories(){
       this.calories = Math.ceil(this.userPushups * 0.45)
+      console.log(this.calories)
     },
 
     
@@ -124,6 +125,7 @@ export default {
   created(){
     // this.getPushupsFB();
     this.getUserData();
+    setTimeout(this.getBurntCalories, 300)
 
     // this.saveUserDay();
   },

@@ -50,7 +50,7 @@ export default {
         },
         
         // new firebase code
-        getDays(){
+        getUserData(){
             db.collection("users").doc(this.userId).get()
             .then(user => {
                 const data = user.data().days
@@ -61,13 +61,14 @@ export default {
                         day: data[key].day,
                         status: data[key].status
                     })
+                    this.totalPushups += data[key].num 
                 }
             })
         },
     },
 
     created(){
-        this.getDays();
+        this.getUserData();
         console.log(this.days)
         // const sortedPast = this.days.sort((a, b) =>  b.dateNum - a.dateNum) 
     }
