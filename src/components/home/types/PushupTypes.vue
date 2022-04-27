@@ -1,17 +1,14 @@
 <template>
-  <div class="pushup-types">
-    <div class="types__head">
-      <h3>Pushup Types</h3>
-    </div>
+  <HomeSection title="Pushup Types">
     <div class="types__list">
       <TypeItem
         v-for="item in types"
         :key="item.name"
         :img="item.src"
         :name="item.name"
-       />
+      />
     </div>
-  </div>
+  </HomeSection>
 </template>
 
 <script>
@@ -38,22 +35,8 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/variables';
-  .pushup-types{
-    margin-top: 1rem;
-    padding-bottom: 3rem;
-    .types__head{
-      h3{
-        font-size: 1rem;
-        margin-bottom: 1rem;
-        padding-bottom: .5rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        text-align: center;
-        color: $secondary;
-      }
-    }
-    .types__list{
-      margin-top: 1.2rem;
-    }
+  .types__list{
+    margin-top: 1.2rem;
+    padding-bottom: 50px;
   }
 </style>

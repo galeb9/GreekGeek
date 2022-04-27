@@ -8,6 +8,10 @@
             </div>
             <form class="login-form">
                 <div class="input-field">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" v-model="username">
+                </div>
+                <div class="input-field">
                     <label for="email">Email:</label>
                     <input type="email" id="email" v-model="email">
                 </div>
@@ -35,6 +39,7 @@ export default {
     name: 'LoginForm',
     data() {
         return {
+            username: '',
             email: '',
             password: ''
         }
@@ -51,7 +56,9 @@ export default {
                     db.collection('users').doc(cred.user.uid).set({
                         goal: 100,
                         days: [],
-                        pushupsToday: 0 // does not work??
+                        pushupsToday: 0, // does not work??
+                        username: this.username
+
                     })
                     console.log("New user registered")
                 },

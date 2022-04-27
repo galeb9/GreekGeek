@@ -5,11 +5,12 @@
       <transition name="fade-in" mode="out-in">
         <!-- <component :is="logComponent(Component, Component.type.name)" /> -->
         <component :is="Component" />
-
       </transition>
     </router-view>
     <!-- <TheHeader v-if="headerVisible" class="header" /> -->
-    <TheHeader v-if="false" class="header" />
+    <transition name="move-in-bottom">
+      <TheHeader v-if="false" class="header" />
+    </transition>
 
   </main>
 </template>
@@ -86,7 +87,7 @@ ul{
   list-style: none;
 }
 .router-view{
-  padding: 2rem 1rem ;
+  padding: 1.5rem 1rem ;
 }
 button, img{
   cursor: pointer
@@ -96,7 +97,7 @@ button, img{
 // fade-in
 .fade-in-enter-active,
 .fade-in-leave-active {
-transition: opacity 0.5s ease;
+transition: opacity .3s ease;
 }
 .fade-in-enter-from,
 .fade-in-leave-to {

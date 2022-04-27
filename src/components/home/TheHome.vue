@@ -3,6 +3,7 @@
     <div class="home__top">
       <HomeHead />
       <TheWelcome />
+      <HomeFriends />
       <HomeStats />
     </div>
     <PushupTypes />
@@ -16,6 +17,7 @@ import TheWelcome from '@/components/home/welcome/TheWelcome'
 import HomeStats from '@/components/home/home-stats/HomeStats'
 import PushupTypes from '@/components/home/types/PushupTypes'
 import TheHeader from '@/components/layout/TheHeader.vue'
+import HomeFriends from '@/components/home/friends/HomeFriends.vue'
 
 export default {
   name: 'TheHome',
@@ -24,7 +26,8 @@ export default {
     TheWelcome,
     HomeStats,
     PushupTypes,
-    TheHeader
+    TheHeader,
+    HomeFriends
   }
  
 }

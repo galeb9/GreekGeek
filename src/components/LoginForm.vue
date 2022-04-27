@@ -15,6 +15,8 @@
                 <input type="password" id="password" v-model="password">
             </div>
             <button class="login__button" @click="login">LOGIN</button>
+            <div class="mid-line"></div>
+            <!-- <button class="login__button" @click="loginWithGoogle">LOGIN with GOOGLE </button> -->
         </form>
     </div>
   </div>
@@ -22,6 +24,7 @@
 
 <script>
 import { auth } from '@/components/firebaseInit.js'
+// import firebase from 'firebase/compat/app';
 
 export default {
     name: 'LoginForm',
@@ -44,7 +47,15 @@ export default {
                 }
             )
             e.preventDefault();
-        }
+        },
+
+        // loginWithGoogle(){
+        //     const provider = new firebase.auth.GoogleAuthProvider()
+        //     firebase.auth().signInWithPopup(provider)
+        //         .catch(console.log)
+
+        //     this.$router.push('/')
+        // }
     }
 }
 </script>
@@ -95,18 +106,31 @@ export default {
                     padding: .5rem 1rem;
                 }
             }
+            .mid-line{
+                width: 12px;
+                height: 12px;
+                transform: rotate(45deg);
+                background: $secondary;
+                margin: 1rem auto ;
+
+            }
         }
       
         .login__button{
-            padding: .7rem 0;
+            padding: .7rem ;
+            line-height: 1.5rem;
             width: 80%;
-            margin: 2rem auto 0;
+            margin: 0 auto;
+            margin-top: 2rem;
             font-size: 1rem;
             letter-spacing: 2px;
             font-weight: 900;
             color: $secondary;
             background: transparent;
             border: 10px double $secondary;
+            &:last-child{
+                margin-top: 0;
+            }
             &:focus{
                 background: black;
                 color: white;

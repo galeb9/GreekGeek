@@ -15,6 +15,10 @@ import BaseInput from './components/UI/BaseInput.vue'
 import BaseIconLink from './components/UI/BaseIconLink.vue'
 import BaseNotification from './components/UI/BaseNotification.vue'
 import WorkInProgress from './components/UI/WorkInProgress.vue'
+import HomeSection from './components/UI/HomeSection.vue'
+import SeeMore from './components/UI/SeeMore.vue'
+
+
 import TheHeader from '@/components/layout/TheHeader.vue'
 
 
@@ -33,6 +37,9 @@ auth.onAuthStateChanged( user => {
             .component("BaseNotification", BaseNotification)
             .component("WorkInProgress", WorkInProgress)
             .component("TheHeader", TheHeader)
+            .component("HomeSection", HomeSection)
+            .component("SeeMore", SeeMore)
+
             
         app.use(router);
         app.mount('#app')

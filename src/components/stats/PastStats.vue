@@ -7,9 +7,9 @@
             <p>Total: <span>{{ totalPushups }}</span> </p>
         </div>
         <transition name="list">
-            <div class="past-list" v-if="days.length">
+            <div class="past-list" v-if="dayz.length">
                 <PastStatsItem 
-                    v-for="(item, index) in days"
+                    v-for="(item, index) in dayz"
                     :key="index"
 
                     :dateNum="item.dateNum"
@@ -37,7 +37,8 @@ export default {
             totalPushups: 0,
 
             userId: auth.currentUser.uid,
-            days: []
+            // days: [],
+            dayz: []
         }
     },
     methods: {
@@ -50,27 +51,46 @@ export default {
         },
         
         // new firebase code
-        getUserData(){
-            db.collection("users").doc(this.userId).get()
-            .then(user => {
-                const data = user.data().days
-                for(let key in data){
-                    this.days.push({
-                        dateNum: data[key].dateNum,
-                        num: data[key].num,
-                        day: data[key].day,
-                        status: data[key].status
+        // getUserData(){
+        //     db.collection("users").doc(this.userId).get()
+        //     .then(user => {
+        //         const data = user.data().days
+        //         for(let key in data){
+        //             this.days.push({
+        //                 dateNum: data[key].dateNum,
+        //                 num: data[key].num,
+        //                 day: data[key].day,
+        //                 status: data[key].status
+        //             })
+        //             this.totalPushups += data[key].num 
+        //         }
+        //     })
+        // },
+
+
+        getDayz(){
+            db.collection("users").doc(this.userId).collection("dayz")
+                .orderBy("dateNum","desc")
+                .limit(10) // max last 10
+                .get() //get the days
+                .then(snapshot => {
+                snapshot.forEach((day) => {
+                    // console.log(day.id, " => ", day.data());
+                    this.dayz.push({
+                        dateNum: day.data().dateNum,
+                        num: day.data().num,
+                        day: day.data().day,
+                        status: day.data().status
                     })
-                    this.totalPushups += data[key].num 
-                }
+                    this.totalPushups += day.data().num
+                })
             })
         },
     },
 
     created(){
-        this.getUserData();
-        console.log(this.days)
-        // const sortedPast = this.days.sort((a, b) =>  b.dateNum - a.dateNum) 
+        // this.getUserData();
+        this.getDayz()
     }
     
 }

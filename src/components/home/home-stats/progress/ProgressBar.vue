@@ -35,7 +35,7 @@ export default {
     getUserData(){
       db.collection("users").doc(this.userId).get()
       .then(user => {
-        console.log(user.data())
+        // console.log(user.data())
         this.userPushups = user.data().pushupsToday;
         this.userGoal = user.data().goal;
       })
@@ -53,13 +53,17 @@ export default {
 .progress{
   min-width: 200px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 1rem;
   align-items: center;
+  margin-bottom: 1rem;
   .bar-container{
     display: flex;
     align-items: center;
+    flex-direction: column-reverse;
     flex: 1;
+    gap: 1rem;
+
     .progress-bar{
       display: flex;
       max-width:70%;
@@ -89,12 +93,8 @@ export default {
 }
 @media only screen and (max-width: 540px) {
   .progress{
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 1rem;
     .bar-container{
-      flex-direction: column-reverse;
-      gap: 1rem;
+      
       .progress-bar{
         margin-right: 0;
         max-width: 400px;

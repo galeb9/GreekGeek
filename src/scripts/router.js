@@ -7,7 +7,7 @@ import TheHome from '@/components/home/TheHome';
 import TheSettings from '@/components/settings/TheSettings.vue'
 import LoginForm from '@/components/LoginForm'
 import RegisterForm from '@/components/RegisterForm'
-
+import TheFriends from '@/components/home/friends/TheFriends.vue'
 import { auth } from '@/components/firebaseInit.js'
 
 
@@ -64,6 +64,13 @@ const router = createRouter({
         {
             path: '/settings',
             component: TheSettings,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/friends',
+            component: TheFriends,
             meta: {
                 requiresAuth: true
             }

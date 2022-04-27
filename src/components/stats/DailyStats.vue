@@ -42,7 +42,9 @@
 </template>
 
 <script>
-import { db, auth, firebase } from '@/components/firebaseInit.js'
+// import { db, auth, firebase } from '@/components/firebaseInit.js'
+
+import { db, auth } from '@/components/firebaseInit.js'
 import RoundStats from '@/components/stats//RoundStats.vue'
 
 export default {
@@ -52,10 +54,7 @@ export default {
   data(){
     return{
       daysChar: ["Sun", "Mon", "Tue","Wed", "Thu", "Fri", "Sat"],
-      pushupsList: [],
       today: new Date(),
-      currentAmount: 0,
-      currentGoal: 100,
 
       userGoal: null,
       userPushups: null,
@@ -68,7 +67,7 @@ export default {
     }
   },
   methods: {
-    // make calories & attempts work
+    //attempts work
     getChar(num){
       return this.daysChar[num]
     },
@@ -79,12 +78,13 @@ export default {
         return 'neg'
       }
     },
-
     getBurntCalories(){
       this.calories = Math.ceil(this.userPushups * 0.45)
       console.log(this.calories)
     },
-
+    getTodaysDate(){
+      return `${this.today.getDate()}-${this.today.getMonth() + 1}-${this.today.getFullYear()}`
+    },
     
     //new user firebase code
     getUserData(){
@@ -94,18 +94,18 @@ export default {
         this.userGoal = user.data().goal // users pushups today
       })
     },
-    saveUserDay(){
-      const day = {
-        dateNum: this.today.getDate(),
-        day: this.getChar(this.today.getDay()),
-        num: this.userPushups,
-        status: this.isTodayWin()
-      }
+    // saveUserDay(){ // not used, maybe later 
+    //   const day = {
+    //     dateNum: this.today.getDate(),
+    //     day: this.getChar(this.today.getDay()),
+    //     num: this.userPushups,
+    //     status: this.isTodayWin()
+    //   }
 
-      db.collection("users").doc(this.userId).update({ // had to use firebase import to user .firestore.FieldValue.arrayUnion('some value')
-        days : firebase.firestore.FieldValue.arrayUnion(day)
-      })
-    },
+    //   db.collection("users").doc(this.userId).update({ // had to use firebase import to user .firestore.FieldValue.arrayUnion('some value')
+    //     days : firebase.firestore.FieldValue.arrayUnion(day)
+    //   })
+    // },
     resetTodaysPushups(){
       db.collection("users").doc(this.userId).get()
       .then(user => {
@@ -114,20 +114,32 @@ export default {
         })
       })
     },
+
+    saveUserDayz(){
+      db.collection("users").doc(this.userId)
+        .collection("dayz")
+        .doc(this.getTodaysDate())
+        .set({
+          dateNum: this.today.getDate(),
+          day: this.getChar(this.today.getDay()),
+          num: this.userPushups,
+          status: this.isTodayWin()
+        })
+    },
+
     resetToday(){
-      this.saveUserDay();
+      // this.saveUserDay();
+      this.saveUserDayz();
       this.resetTodaysPushups();
       this.userPushups = 0; 
       this.attempts = 0;
       this.calories = 0;
     }
+
   },
   created(){
-    // this.getPushupsFB();
     this.getUserData();
     setTimeout(this.getBurntCalories, 300)
-
-    // this.saveUserDay();
   },
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="home__head">
-    <BaseDate />
+    <h2>Greek Geek</h2>
     <div class="home__head__icons">
       <BaseIconLink 
         :icon="['fa', 'gear']" 
@@ -13,13 +13,9 @@
 </template>
 
 <script>
-import BaseDate from '@/components/UI/BaseDate.vue'
 import { auth } from '@/components/firebaseInit.js'
 
 export default {
-  components: {
-    BaseDate
-  },
   data(){
     return{
       isLoggedIn: false,
@@ -39,22 +35,29 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/_variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
   .home__head{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    // border-bottom: 1px solid $secondary;
+    // padding-bottom: .3rem;
     .icon-link:last-child{
       margin-left: 2rem;
     }
     h2{
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       font-weight: 400;
+      font-size: 30px;
+      color: #161515e7;
+      font-family: 'Staatliches', cursive;
     }
     .fa-icon{
       transform: scale(1.8);
       padding-right: 0.4rem;
       color: rgba( $secondary, 0.6 );
-      
+      // padding-bottom: .3rem;
       transition: all .3s ease-in ;
       &:hover{
         opacity: 1;

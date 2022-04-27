@@ -5,8 +5,8 @@
     >
         <div class="settings__item__info">
             <h3>{{ title }}</h3>
-            <div>
-            <font-awesome-icon class="fa-settings" :icon="['fa', 'angle-down']"/>
+            <div class="fa-container">
+                <font-awesome-icon class="fa-settings" :icon="['fa', 'angle-down']"/>
             </div>
         </div>
         <transition name="move-in-bottom">
@@ -53,7 +53,7 @@ export default {
     .settings__item{
         background: transparent;
         width: 90%;
-        padding: 1rem 2rem ;
+        padding: 1rem 0;
         margin: 0 auto;
         .settings__item__info{
           display: flex;
@@ -61,28 +61,32 @@ export default {
           align-items: center;
           border-bottom: 1px solid $secondary;
           padding-bottom: .3rem;
+          h3,
+          .fa-settings{
+            margin: 0 5px;
+          }
+          .fa-container{
+            width: 10%;
+            // border: 1px solid black;
+            text-align: center;
+          }
+          
         }
         .settings__item__dropdown{
           padding-top: 1rem;
           .drop-item{
             letter-spacing: 1px;
+            white-space: pre-line;
           }
-
         }
       }
     .dropdownActive{
         transition: all ease-in-out .2s;
-        background: $secondary;
-        color: white;
+        //background: $secondary;
+        //color: white;
         .fa-settings{
           transition: all ease-in-out .2s;
           transform: rotate(180deg);
-        }
-        .icon-link{
-            color: white;
-        }
-        .settings__item__info{
-            border-bottom: 1px solid white;
         }
     }
 </style>
