@@ -105,18 +105,16 @@ export default {
   .calendar-item{
     flex-basis: 15%;
     flex-grow: 1;
-    background: $secondary;
+    border: 2px solid $secondary;
     text-align: center;
     padding: 1.2rem 0;
+    color: $secondary;
     //border-radius: 50px;
     .char{
       margin-bottom: .2rem;
-      color: rgba(255, 255, 255, 0.664);
       font-weight: 900;
     }
-    .num{
-      color: rgba(255, 255, 255, 0.664);
-    }
+  
   }
   .active{
     background: black;

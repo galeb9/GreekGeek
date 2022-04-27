@@ -55,9 +55,9 @@ export default {
   min-height: 100vh;
   width: 100%;
   position: relative;
-  background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
-
-  background: linear-gradient(151deg, rgb(231, 231, 231) 0%, rgba(255,255,255,1) 50%, rgba(147,189,164,1) 100%);
+  // background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
+  // background: linear-gradient(151deg, rgb(231, 231, 231) 0%, rgba(255,255,255,1) 50%, rgba(147,189,164,1) 100%);
+  background-color: $bg;
   color: $fontColor;
   overflow: hidden;
   main{

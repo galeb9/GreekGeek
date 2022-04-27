@@ -15,12 +15,20 @@
 
         <div class="user-card__info">
             <p class="user-card__name">{{ name }}</p>
-            <button class="user-card__add-btn">+</button>
+            <button class="user-card__add-btn" @click="togglePopup" >+</button>
+        </div>
+        <div class="add-friend-popup" v-show="popupVisible">
+            <p>Send friend request to {{ name }}?</p>
+            <div class="popup__btns">
+                <button @click="addFriend">Yes</button>
+                <button @click="closePopup">No</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import { db, auth } from '@/components/firebaseInit.js'
 
 export default {
     props: {
@@ -35,21 +43,36 @@ export default {
     },
     data(){
       return{
-          dummyImg: 'greek-geek5.jpg'
+        popupVisible: false,
+        username: null,
+        img: null
       }
     },
     methods: {
         getImgUrl(pic) {
             return require('@/assets/img/avatars/' + pic)
         },
-        setProp(prop, val){
-            console.log(val)
-            val = prop
+        togglePopup(){
+            return this.popupVisible = !this.popupVisible
+        },
+        closePopup(){
+            return this.popupVisible = false
+        },
+        addFriend(){
+            db.collection("users").doc(auth.currentUser.uid)
+                .collection("friends")
+                .doc(this.username)
+                .set({
+                    username: this.username,
+                    userImg: this.img
+                })
+            console.log("New Friend added!")
+            this.popupVisible = false
         }
     },
     created(){
-        // setTimeout( this.setProp(this.userImg, this.dummyImg) , 1000) 
-        
+        this.username = this.name;
+        this.img = this.userImg;
     }
 }
 </script>
@@ -65,6 +88,42 @@ export default {
     border: 5px double $secondary;
     padding: .5rem;
     max-height: 100px;
+    // background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
+
+    .add-friend-popup{
+        border: 10px double white;
+        position: absolute;
+        top: 50vh;
+        left: 5vw;
+        right: 5vw;
+        margin: 0 auto;
+        background: rgba(#000000, .9);
+        color: white;
+        padding: 2rem ;
+        text-align: center;
+        p{
+            margin-bottom: 1rem;
+            font-weight:600;
+            letter-spacing: 1px;
+        }
+        .popup__btns{
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            button{
+                padding: .6rem 1.8rem;
+                text-transform: uppercase;
+                font-weight: 700;
+                border: none;
+                border: 8px double black;
+                outline: none;
+                &:last-child{
+
+                }
+            }
+        }
+
+    }
     .user-card__img{
         max-width: 100%;
         width: 4rem;
@@ -76,7 +135,9 @@ export default {
         gap: 1rem;
         width: 100%;
         .user-card__name{
-            font-weight: 700;
+            padding-top: .5rem;
+            font-weight: 900;
+            letter-spacing: 1px;
             max-width: 30vw; // need to ajust is so it cannot have long name
         }
         .user-card__add-btn{
@@ -86,7 +147,7 @@ export default {
             // padding: .5rem 1rem;
             // margin-top: .2rem;
             color: white;
-            border-radius: 5px;
+            border-radius: 3px;
             background: $secondary;
             border: none;
             font-size: 1.5rem;

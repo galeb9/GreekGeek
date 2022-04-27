@@ -4,6 +4,7 @@
       <HomeHead />
       <TheWelcome />
       <HomeFriends />
+      <HomeProfile />
       <HomeStats />
     </div>
     <PushupTypes />
@@ -18,6 +19,7 @@ import HomeStats from '@/components/home/home-stats/HomeStats'
 import PushupTypes from '@/components/home/types/PushupTypes'
 import TheHeader from '@/components/layout/TheHeader.vue'
 import HomeFriends from '@/components/home/friends/HomeFriends.vue'
+import HomeProfile from '@/components/profile/HomeProfile.vue'
 
 export default {
   name: 'TheHome',
@@ -27,14 +29,14 @@ export default {
     HomeStats,
     PushupTypes,
     TheHeader,
-    HomeFriends
+    HomeFriends,
+    HomeProfile
   }
  
 }
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
 
   .home{
     color: black;

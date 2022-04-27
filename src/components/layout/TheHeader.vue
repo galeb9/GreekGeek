@@ -53,9 +53,10 @@ export default {
         left: 0;
         .bg-blur{
             position: absolute;
-            background: rgba(86, 69, 121, 0.281);
-            backdrop-filter: blur(10px);
-            border-radius: 10px 10px 0px 0px;
+            background: rgba($bg, .4);
+            border-top: 3px solid $secondary;
+            backdrop-filter: blur(3px);
+            // border-radius: 10px 10px 0px 0px;
             width: 100%;
             height: 100%;            
         }
@@ -73,14 +74,17 @@ export default {
                 text-align: center;
                 flex-grow: 1;
                 transition: all .5s ease-in-out;
+                color: $secondary;
                 .fa-icon{
                     transform: scale(1.5);
                 }
                 &.router-link-active{
                     -webkit-tap-highlight-color: transparent; 
+
                     &>.fa-icon{
                         color: black;
-
+                        border-bottom: 1px solid black;
+                        padding-bottom: 10px;
                     }
                     // &::after{
                     // content: '';

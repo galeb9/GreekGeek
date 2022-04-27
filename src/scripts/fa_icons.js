@@ -11,7 +11,10 @@ import {
     faRightFromBracket,
     faAngleDown,
     faEye,
-    faMagnifyingGlass
+    faMagnifyingGlass,
+    faUser,
+    faArrowLeft,
+    faDove
 } from "@fortawesome/free-solid-svg-icons";
 // import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
@@ -29,6 +32,9 @@ library.add(faRightFromBracket);
 library.add(faAngleDown);
 library.add(faEye);
 library.add(faMagnifyingGlass)
+library.add(faUser)
+library.add(faArrowLeft)
+library.add(faDove)
 
 // library.add(faGoogle);
 
