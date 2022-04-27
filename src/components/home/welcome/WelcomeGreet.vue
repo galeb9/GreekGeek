@@ -19,7 +19,7 @@ export default {
         getUsername(){
             db.collection("users").doc(auth.currentUser.uid).get()
                 .then(user => {
-                this.username = user.data().username;
+                    this.username = user.data().username;
                 })
         }
     },

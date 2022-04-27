@@ -84,11 +84,13 @@ export default {
                     max-width: 50%;
                     text-align: center;
                     overflow-x: hidden;
+                    font-weight: 700;
+
                 }
                 .scoreboard__item__name{
                     font-size: 1.2rem;
-                    font-weight: 600;
                     max-width: 50vw;
+                    font-weight: 600;
                 }
             }
             .first--item{
@@ -98,6 +100,10 @@ export default {
                     font-size: 1rem;
                     font-weight: 400;
                 }
+                .scoreboard__item__num{
+                    font-weight: 400;
+                }
+
             }
         }
     }

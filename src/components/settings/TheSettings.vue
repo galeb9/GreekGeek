@@ -5,15 +5,11 @@
       <h3>Home</h3>
     </div>
     <div class="container">
-      <!--<WorkInProgress />-->
-          
-  
       <div class="settings__items">
         <SettingsItem
           title="Main Info"
           :dropItem="'User: ' + username + '\nEmail: ' + email"
         />
-
             
         <div class="logout settings__item" @click="logout">
           <div class="settings__item__info">
@@ -23,9 +19,8 @@
             </div>
           </div>
         </div>
-   
-
       </div>
+
     </div>
   </div>
 </template>

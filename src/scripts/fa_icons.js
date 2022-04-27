@@ -10,7 +10,8 @@ import {
     faArrowRightToBracket, 
     faRightFromBracket,
     faAngleDown,
-    faEye
+    faEye,
+    faMagnifyingGlass
 } from "@fortawesome/free-solid-svg-icons";
 // import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
@@ -27,6 +28,7 @@ library.add(faArrowRightToBracket);
 library.add(faRightFromBracket);
 library.add(faAngleDown);
 library.add(faEye);
+library.add(faMagnifyingGlass)
 
 // library.add(faGoogle);
 

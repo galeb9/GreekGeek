@@ -2,7 +2,13 @@
     <div class="welcome-container">
       <div class="welcome__item">
         <div class="img-container">
-          <img class="welcome__img" src="@/assets/img/greek-geek.png" alt="">
+
+          <img else
+            class="welcome__img" 
+            :src="getImgUrl(userImg)" 
+            alt=""
+          >
+
           <div :class="['dot', { 'online' : isLoggedIn }]"></div>
         </div>
         <WelcomeGreet />
@@ -14,7 +20,7 @@
 <script>
 import WelcomeGreet from '@/components/home/welcome/WelcomeGreet'
 //import KillStreak from '@/components/home/welcome/KillStreak'
-import { auth } from '@/components/firebaseInit.js'
+import { db, auth } from '@/components/firebaseInit.js'
 
 export default {
   name: 'TheHome',
@@ -24,13 +30,28 @@ export default {
   },
   data(){
     return{
-      isLoggedIn: false
+      isLoggedIn: false,
+      userImg: "greek-geek.png"
+    }
+  },
+  methods: {
+    getUserImg(){
+      db.collection("users").doc(auth.currentUser.uid).get()
+      .then(user => {
+          this.userImg = user.data().userImg
+      })
+    },
+    getImgUrl(pic) {
+      return require('@/assets/img/avatars/' + pic)
     }
   },
   created(){
     if(auth.currentUser) {
       this.isLoggedIn = true;
     }
+
+    this.getUserImg()
+
   }
 }
 </script>
@@ -64,6 +85,8 @@ export default {
         .online{
           background: rgb(48, 199, 43);
           //animation: breathe 1s infinite alternate ease-in-out;
+          animation: rotate 10s infinite alternate ease-in-out;
+
         }
       }
     }
@@ -74,6 +97,14 @@ export default {
     }
     to{
       transform: scale(1) rotate(45deg);
+    }
+  }
+  @keyframes rotate {
+    from{
+      transform: rotate(45deg);
+    }
+    to{
+      transform: rotate(410deg);
     }
   }
 </style>

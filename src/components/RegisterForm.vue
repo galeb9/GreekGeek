@@ -45,20 +45,36 @@ export default {
         }
     },
     methods: {
+        chooseRandomAvatar(){
+            const avatarList = [
+                "greek-geek.png",
+                "greek-geek2.png",
+                "greek-geek3.png",
+                "greek-geek4.png",
+                "greek-geek5.png",
+                "homer.jpg",
+                "idiocrates.jpg",
+                "polibo.jpg",
+                "thucydides.jpg",
+                "xenophanes.jpg",
+                "xenophanes2.jpg",
+            ]
+            let randomNum = Math.floor(Math.random() * avatarList.length)
+            return avatarList[randomNum]
+        },
         register(e){
             auth.createUserWithEmailAndPassword(this.email, this.password)
                 .then(cred => {
                     alert(`Račun narejen za ${cred.user.email}`)
-                    console.log('User: ' + cred.user.uid)
                     // this.$router.go({path : this.$router.path});
                     this.$router.push("/")
 
                     db.collection('users').doc(cred.user.uid).set({
+                    // db.collection('users').doc(this.username).set({
                         goal: 100,
-                        days: [],
                         pushupsToday: 0, // does not work??
-                        username: this.username
-
+                        username: this.username,
+                        userImg: this.chooseRandomAvatar()
                     })
                     console.log("New user registered")
                 },
@@ -69,6 +85,9 @@ export default {
             e.preventDefault();
         }
     },
+    created(){
+        this.chooseRandomAvatar()
+    }
 }
 </script>
 
