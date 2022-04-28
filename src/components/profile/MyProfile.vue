@@ -8,7 +8,7 @@
     <div class="go__messages" @click="goMessages" >
         <font-awesome-icon class="messages-icon" :icon="['fa', 'dove']"/>
         <div class="messge-status">
-            <p>7</p>
+            <p>!</p>
         </div>
     </div>
     
@@ -71,17 +71,18 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/assets/scss/_variables.scss';
 
+.router-view{
+  padding:0 !important ;
+}
 .my-profile{
-
+    position: relative;
     .go__back,
     .go__messages{
         position: absolute;
-        top: 10px;
-        width: 50px;
-        height: 50px;
+      
         border-radius: 3px;
         background: $bg;
         z-index: 3;
@@ -92,52 +93,55 @@ export default {
             font-size: 1.1rem;
         }
     }
+    .go__back{
+        top: 15px;
+
+        left: 10px;
+        width: 50px;
+        height: 50px;
+    }
     .go__messages{
+        top: 10px;
         right: 10px;
-        border-radius: 50%;
         width: 60px;
         height: 60px;
+        border-radius: 50%;
         .messages-icon{
             font-size: 1.2rem;
         }
         .messge-status{
+            animation: breathe 1s infinite alternate ease-in-out;
             position: absolute;
             bottom: 0;
             right: 0;
             background: $error;
-            width: 25px;
-            height: 25px;
-            // text-align: center;
-            color: $bg;
+            width: 22px;
+            height: 22px;
+            border-radius: 2px;
             color: white;
-            transform: rotate(45deg);
             display: flex;
             justify-content: center;
             align-items: center;
             p{
                 transform: rotate(-45deg);
+                font-size: .8rem;
             }
         }
     }
     .bg-image{
-        position: absolute;
+        // position: absolute;
         top: 0;
         left: 0;
-        width: 100vw;
         z-index: 1;
+        width: 100vw;
     }
     .my-profile__info{
-        margin-top: 30vh;
         display: flex;
         justify-content: space-around;
         align-items: flex-end;
         text-align: center;
         z-index: 2;
-
-        position: absolute;
-        top: -14%;
-        left: 0;
-        right: 0;
+        transform: translateY(-100px);
         .my-profile__info-item{
             padding-bottom: 1.5rem;
             .info-item__name{
@@ -159,6 +163,14 @@ export default {
 
             }
         }
+    }
+}
+@keyframes breathe {
+    from{
+        transform: scale(1) rotate(45deg);
+    }
+    to{
+        transform: scale(1.1) rotate(45deg);
     }
 }
 </style>

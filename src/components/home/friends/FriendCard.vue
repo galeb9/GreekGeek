@@ -15,30 +15,50 @@
 
         <div class="user-card__info">
             <p class="user-card__name">{{ name }}</p>
-            <button class="user-card__add-btn" @click="togglePopup" >+</button>
+            <button class="user-card__add-btn" @click="togglePopup" >
+              <font-awesome-icon class="fa-eye" :icon="['fa', 'eye']"/>
+            </button>
         </div>
-        <div class="add-friend-popup" v-show="popupVisible">
+        <transition name="move-in-bottom">
+            <div class="user-profile__popup" v-show="popupVisible">
+                <UserProfile
+                    @close-popup="closePopup"
+                    :img="userImg"
+                    :name="name"
+                    :goal="goal"
+                />
+            </div>
+        </transition>
+
+        <!-- <div class="add-friend-popup" v-show="popupVisible">
             <p>Send friend request to {{ name }}?</p>
             <div class="popup__btns">
                 <button @click="addFriend">Yes</button>
                 <button @click="closePopup">No</button>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
 import { db, auth } from '@/components/firebaseInit.js'
-
+import UserProfile from '@/components/profile/UserProfile.vue'
 export default {
+    components: {
+        UserProfile
+    },
     props: {
         name: {
             type: String,
-            default: ''
+            default: 'user'
         },
         userImg: {
             type: String,
             default: 'greek-geek.png'
+        },
+        goal: {
+            type: Number,
+            default: 100
         }
     },
     data(){
@@ -83,13 +103,15 @@ export default {
 .user-card{
     display: flex;
     gap: 1rem;
-    // width: 45%;
-    // max-width: 45%;
-    border: 5px double $secondary;
-    padding: .5rem;
+    // border-radius: 3px;
+    // border-bottom: 1px solid $secondary;
     max-height: 100px;
-    // background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
-
+    padding-bottom: .3rem;
+    .user-profile__popup{
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
     .add-friend-popup{
         border: 10px double white;
         position: absolute;
@@ -117,9 +139,6 @@ export default {
                 border: none;
                 border: 8px double black;
                 outline: none;
-                &:last-child{
-
-                }
             }
         }
 
@@ -127,7 +146,7 @@ export default {
     .user-card__img{
         max-width: 100%;
         width: 4rem;
-        border-radius: 5px;
+        // border-radius: 50%;
     }
     .user-card__info{
         display: flex;
@@ -144,13 +163,14 @@ export default {
             width: 50px;
             height: 50px;
             align-self: center;
-            // padding: .5rem 1rem;
-            // margin-top: .2rem;
-            color: white;
-            border-radius: 3px;
-            background: $secondary;
+            background: transparent;
+            // border: 1px solid $secondary;
             border: none;
             font-size: 1.5rem;
+            border-radius: 5px;
+            .fa-eye{
+                color: $secondary;
+            }
         }
     }
 }

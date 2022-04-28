@@ -84,21 +84,13 @@ export default {
         }
         .online{
           background: rgb(48, 199, 43);
-          //animation: breathe 1s infinite alternate ease-in-out;
           animation: rotate 10s infinite alternate ease-in-out;
 
         }
       }
     }
   }
-  @keyframes breathe {
-    from{
-      transform: scale(0.9) rotate(45deg);
-    }
-    to{
-      transform: scale(1) rotate(45deg);
-    }
-  }
+
   @keyframes rotate {
     from{
       transform: rotate(45deg);

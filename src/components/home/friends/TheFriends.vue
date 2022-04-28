@@ -22,6 +22,7 @@
           :key="index" 
           :name="el.username"
           :user-img="el.userImg"
+          :goal="el.goal"
         />
       </div>
     </div>
@@ -59,7 +60,8 @@ export default {
         querySnapshot.forEach((user) => {
           this.usersList.push({
             username: user.data().username,
-            userImg: user.data().userImg
+            userImg: user.data().userImg,
+            goal: user.data().goal
           })
         });
         // console.log(this.usersList[6].userImg)
