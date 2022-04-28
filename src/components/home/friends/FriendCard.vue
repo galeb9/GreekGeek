@@ -116,8 +116,10 @@ export default {
         border: 10px double white;
         position: absolute;
         top: 50vh;
-        left: 5vw;
+
+        left: 1.5rem;
         right: 5vw;
+
         margin: 0 auto;
         background: rgba(#000000, .9);
         color: white;

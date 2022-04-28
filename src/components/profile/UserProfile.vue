@@ -32,9 +32,8 @@
                 <transition name="move-in-bottom">
                     <p class="notification__suceess" v-if="notifVisible">
                         Friend request sent to {{ name }}
-                     </p>
+                    </p>
                 </transition>
-            
             </div>
         </div>
 
@@ -45,7 +44,7 @@
 </template>
 
 <script>
-// import { db, auth } from '@/components/firebaseInit.js'
+import { db,auth } from '@/components/firebaseInit.js'
 
 export default {
     props: {
@@ -66,7 +65,14 @@ export default {
         return{
             userImg: 'greek-geek.png',
             username: 'user',
-            notifVisible: false
+            notifVisible: false,
+            friendId: '',
+            friendProfilePic: '',
+            currentFriend: '',
+
+            myName: null,
+            myImg: null,
+            myId: null
         }
     },
     methods: {
@@ -76,23 +82,75 @@ export default {
         closePopup(){
             this.$emit('close-popup')
         },
-        sendFriendRequest(){
-            // db.collection("users").doc(auth.currentUser.uid)
-            //     .collection("friendRequests")
-            //     .doc(this.username)
-            //     .set({
-            //         username: this.username,
-            //         userImg: this.img
-            //     })
-            console.log("Requset sent!")
-
+        useNotification(){
             this.notifVisible = true
             setTimeout(() => {
                 this.notifVisible = false
             },3000)
-        }
+        },
+        getPotentialFirendData(){
+            console.log("getPotentialFirendData")
 
+            db.collection("users").doc(this.friendId).get()
+                .then(user => {
+                    console.log("Potential Friend")
+                    console.log(user.data())
+                })
+        },
+        getUserData(){
+            db.collection("users").doc(auth.currentUser.uid).get()
+                .then(user => {
+                    this.myName = user.data().username
+                    this.myImg = user.data().userImg
+                    this.myId = user.id
+                    console.log(this.myName, this.myImg, this.myId)
+                })
+        },
+
+        findFriendId(){
+            console.log("findFriendId")
+            const users = db.collection("users")
+            users.where("username", "==", this.username).get()
+                .then(snapshot => {
+                    snapshot.forEach(user => {
+                        console.log('UserID:' + user.id + '\nusername: ' + user.data().username )
+                        this.friendId = user.id
+                        // this.friendProfilePic = user.data().userImg
+                        // this.currentFriend = user.data().username
+                        // console.log("id: " + this.friendId)
+                        // console.log("pic: " + this.friendProfilePic)
+                        // console.log("sender: " + this.currentFriend)
+
+                    })
+                })
+        },
+        saveMessageToFriend(){
+            db.collection("users").doc(this.friendId)
+                .collection("friend-requests")
+                .doc(this.myName)
+                .set({
+                    friends: false,
+                    profileImage: this.myImg,
+                    username : this.myName,
+                    friendID: this.myId
+                })
+        },
+        sendFriendRequest(){
+
+            this.findFriendId()
+            setTimeout(this.saveMessageToFriend, 1000)
+            setTimeout(this.getPotentialFirendData, 1000)
+            
+
+            console.log("Requset sent!")
+            this.useNotification()
+        }
     },
+    created(){
+        this.getUserData()
+        this.username = this.name
+        // console.log("potential friend: " + this.username)
+    }
 }
 </script>
 
@@ -121,7 +179,7 @@ export default {
             background: $success;
             padding: 1rem 3rem;
             border-radius: 4px;
-            margin-left: 1rem;
+            // margin-left: 1rem;
 
         }
     }
@@ -131,10 +189,9 @@ export default {
         justify-content: center;
         .profile__btn{
             padding: 1rem 3rem;
-            margin-left: 1rem;
+            // margin-left: 1rem;
             border: none;
             outline: none;
-            background: $secondary;
             color: white;
             background: black;
             border-radius: 4px;
