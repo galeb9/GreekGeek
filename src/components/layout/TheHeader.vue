@@ -74,7 +74,8 @@ export default {
                 position: relative;
                 width: 100%;
                 height: 100%;
-                padding: 2em ;
+                // padding: 2em ;
+                padding: 2em 5vw;
                 text-align: center;
                 flex-grow: 1;
                 transition: all .5s ease-in-out;
