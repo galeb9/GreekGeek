@@ -25,6 +25,7 @@
                         class="add__button" 
                         text="ADD" 
                         type="submit"
+                        kind="kind2"
                     />
                 </form>
             </BaseContainer>
@@ -117,19 +118,7 @@ export default {
             }
         }
         .add__button{
-            color: black;
-            background: transparent;
-            // border: black solid 1px;
-            border: black double 10px;
-            font-size: 20px;
-            padding: 1.5rem 3rem;
             margin-top: 4rem;
-            border-radius: 0;
-            transition: all .3s ease-in-out;
-            &:hover{
-                background: $black;
-                color: white;
-            }
         }
     }
 }

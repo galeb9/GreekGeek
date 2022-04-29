@@ -6,15 +6,17 @@
       >
         <BaseInput 
           v-model="goal"
-          placeholder="Today's goal goes here" 
+          placeholder="New goal goes here" 
           class="goal__input"
           type="number"
         />
-        <BaseButton 
-        class="goal__button"
+        <button
+          class="goal__button"
           text="ADD"
           type="submit"
-        />
+        >
+          Change
+        </button>
       </form>
       <TheHeader />
     </div>
@@ -69,6 +71,7 @@ export default {
     margin: 50px 0;
     .goal__input{
       width: max-content;
+      background: transparent;
       text-align:center;
       padding: 1rem 1.5rem;
       font-size: 20px;
@@ -80,7 +83,9 @@ export default {
     .goal__button{
       background: transparent;
       border: 8px $secondary double;
-      font-size: 25px;
+      font-size: 20px;
+      text-transform: uppercase;
+      font-weight: 700;
       padding: 1.5rem 2.5rem;
       margin-top: 4rem;
       color: black;

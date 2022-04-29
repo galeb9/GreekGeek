@@ -1,93 +1,105 @@
 <template>
   <div class="my-profile">
 
-    <div class="go__back" @click="goHome" >
+    <div class="go__back" @click="goToHome" >
         <font-awesome-icon class="back-icon" :icon="['fa', 'arrow-left']"/>
     </div>
     <!-- messages -->
     <div class="go__messages" @click="toggleMessageVisibility"  >
-        <font-awesome-icon class="messages-icon" :icon="['fa', 'dove']"/>
-        <div class="messge-status">
+        <font-awesome-icon v-if="!messagesVisible" class="messages-icon" :icon="['fa', 'dove']"/>
+        <font-awesome-icon v-if="messagesVisible" class="messages-icon" :icon="['fa', 'xmark']"/>
+        <div v-if="requests.length != 0" class="messge-status">
             <p>!</p>
         </div>
     </div>
-    <div class="notifications-container" v-if="messagesVisible">
-        <h2>Notifications</h2>
-        <div class="messages-list">
 
-            <div 
-                class="message__item"
-                v-for="(el,index) in requests"
-                :key="index"
-                @click="togglemessageBtnsVisible"
-            >
-                <div class="message__main">
-                    <img 
-                        class="message__img" 
-                        :src="getImgUrl(el.messagePic)" 
-                        alt=""
-                    >
-                    <div>
-                        <p>
-                            <span>{{ el.username }}</span> sent you a friend request. 
-                        </p>
-                        <transition name="move-in-bottom">
-                            <div class="message__btns" v-if="messageBtnsVisible">
-                                <BaseButton text="Confirm" />
-                                <BaseButton text="Deny" @click="denyRequest(key)"/>
-                            </div>
-                        </transition>
-                    </div>
-                </div>
-    
-            </div>
-           
+    <transition name="move-in-bottom">
+        <div class="notifications-container" v-if="messagesVisible">
+            <h2>Notifications</h2>
+            <transition-group tag="ul" name="fade" class="messages-list">
+                <MessageItem 
+                    v-for="(el,index) in requests"
+                    :key="index"
+                    :img="el.messagePic"
+                    :username="el.username"
+                    :friendID="el.friendID"
+
+                    :data="requests"
+                    @confirm="acceptFriendship(index, el.friendID, el.username, el.messagePic)"
+                    @deny="denyFriendship(index, el.username)"
+
+                />
+                <div v-if="requests.length == 0">No more messages</div>
+            </transition-group>
         </div>
-    </div>
-    
-
+    </transition>
 
 
     <img src="@/assets/img/profile-bg.png" alt="" class="bg-image">
+    
+    <ProfileInfo 
+        v-if="!messagesVisible"
+        :username="username"
+        :goal="goal"
+        :img="getImgUrl(userImg)"
+        :friends="friendCount"
+    />
+    <BaseButton 
+        text="Change Goal" 
+        align="center" 
+        @click="goToGoal"
+    />
+    <TheHeader />
 
-    <!-- profile info -->
-    <div class="my-profile__info">
-        <div class="my-profile__info-item">
-            <h3 class="info-item__num">69</h3>
-            <p class="info-item__name">Friends</p>
-        </div>
-        <div class="my-profile__info-avatar">
-            <img 
-                class="avatar__img" 
-                :src="getImgUrl(userImg)" 
-                alt=""
-            >
-            <h2 class="avatar__name">{{ username }}</h2>
-        </div>
-        <div class="my-profile__info-item">
-            <h3 class="info-item__num">{{ goal }}</h3>
-            <p class="info-item__name">Goal</p>
-        </div>
-    </div>
   </div>
+
 </template>
 
 <script>
 import { db, auth } from '@/components/firebaseInit.js'
+import MessageItem from '@/components/profile/MessageItem.vue'
+import ProfileInfo from '@/components/profile/ProfileInfo.vue'
+import TheHeader from '@/components/layout/TheHeader.vue'
+
 
 export default {
+    components: {
+        MessageItem,
+        ProfileInfo, 
+        TheHeader
+    },
     data(){
         return{
+            user: db.collection("users").doc(auth.currentUser.uid),
             userImg: 'greek-geek.png',
             username: 'user',
             goal: 100,
-            messagesVisible: true,
             requests: [],
-            messageBtnsVisible: false
+            messagesVisible: false,
+            friendCount: 0,
+
         }
     },
     methods: {
-        getUserData(){
+        getImgUrl(pic) {
+            return require('@/assets/img/avatars/' + pic)
+        },
+        goToHome(){
+            this.$router.push("/home")
+        },
+        goToGoal(){
+            this.$router.push("/goal")
+        },
+        toggleMessageVisibility(){
+            this.messagesVisible = !this.messagesVisible
+        },
+        removeOne(arr, index){
+            const oldArr = arr;
+            oldArr.splice(index, 1)
+            return oldArr
+        },
+        // firebase code 
+        getUserData(){ // for profile info
             db.collection("users").doc(auth.currentUser.uid).get()
             .then(user => {
                 this.userImg = user.data().userImg
@@ -95,6 +107,7 @@ export default {
                 this.goal = user.data().goal
             })
         },
+
         getMessages(){
             db.collection("users").doc(auth.currentUser.uid).collection("friend-requests").get()
                 .then(snapshot=> {
@@ -102,33 +115,52 @@ export default {
                         this.requests.push({
                             username: doc.id,
                             status: doc.data().friends,
-                            messagePic: doc.data().profileImage
+                            messagePic: doc.data().profileImage,
+                            friendID: doc.data().friendID
                         })
-                        console.log(this.requests)
                     })
                 })
         },
-        getImgUrl(pic) {
-            return require('@/assets/img/avatars/' + pic)
+        acceptFriendship(index, id, name, img){ // add some notification
+            const user = db.collection("users").doc(auth.currentUser.uid) 
+            // add to friends collection
+            user.collection("friends")
+                .doc(name)
+                .set({
+                    friends: true,
+                    profileImage: img,
+                    username : name,
+                    friendID: id
+                })
+
+            // remove from friends collection 
+            user.collection("friend-requests")
+                .doc(name)
+                .delete()
+
+            this.removeOne(this.requests, index)
+
         },
-        goHome(){
-            this.$router.push("/home")
+        // remove from friends collection 
+        denyFriendship(index, name){ 
+            const user = db.collection("users").doc(auth.currentUser.uid) 
+            user.collection("friend-requests")
+                .doc(name)
+                .delete()
+            this.removeOne(this.requests, index)
         },
-        toggleMessageVisibility(){
-            this.messagesVisible = !this.messagesVisible
-        },
-        togglemessageBtnsVisible(){
-            this.messageBtnsVisible = !this.messageBtnsVisible
-        },
-        confirmRequset(){
-            
-        },
-        denyRequest(i){
-            this.requests = this.requests.slice(i, 1) // make this work
+        getFriends(){
+
+            this.user.collection("friends").get()
+                .then(snapshot => {
+                    snapshot.forEach(() => {
+                        this.friendCount++
+                    })
+                })
         }
-        
     },
     created(){
+        this.getFriends();
         this.getUserData();
         this.getMessages(); 
     }
@@ -143,6 +175,9 @@ export default {
 }
 .my-profile{
     position: relative;
+    .border{
+        border: 1px solid black;
+    }
     .notifications-container{
         padding: 1rem;
         // height: 100%;
@@ -155,34 +190,6 @@ export default {
         z-index: 4;
         h2{
             margin-bottom: 1rem;
-        }
-
-        .messages-list{
-
-            .message__item{
-           
-                .message__main{
-                    display: flex;
-                    align-items: center;
-                    gap: 2rem;
-                    span{
-                        font-weight: 700;
-                    }
-                    .message__img{
-                        width: 4rem;
-                        height: 4rem;
-                        border-radius: 50%;
-                        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.42);
-                    }
-                }
-                .message__btns{
-                    // padding: 1rem 0;
-                    padding-top: .8rem;
-                    display: flex;
-                    gap: 1rem;
-                    // border-bottom: 1px solid black;
-                }
-            }
         }
     }
     .go__back,
@@ -248,38 +255,9 @@ export default {
         width: 100vw;
 
     }
-    .my-profile__info{
-        display: flex;
-        justify-content: space-around;
-        align-items: flex-end;
-        text-align: center;
-        z-index: 2;
-        transform: translateY(-100px);
-        .my-profile__info-item{
-            padding-bottom: 1.5rem;
-            .info-item__name{
-                padding-top: 1rem;
-            }
-            .info-item__num{
-                color: black;
-            }
-        }
-        .my-profile__info-avatar{
-            padding-top: 1rem;
-            .avatar__img{
-                width: 8rem;
-                border: 4px solid white;
-                border-radius: 4px;
-                box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.42);
-            }
-            .avatar__name{
-                padding-top: 1rem;
-                color: black;
-
-            }
-        }
-    }
 }
+
+
 @keyframes breathe {
     from{
         transform: scale(.95) rotate(45deg);
@@ -287,5 +265,21 @@ export default {
     to{
         transform: scale(1.05) rotate(45deg);
     }
+}
+.fade-move,
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+/* 2. declare enter from and leave to state */
+.fade-enter-from{
+    opacity: 0;
+    transform:  translate(-30px, 0);
+
+}
+.fade-leave-to {
+    opacity: 0;
+    transform:  translate(30px, 0);
 }
 </style>

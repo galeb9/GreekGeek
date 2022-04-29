@@ -23,8 +23,12 @@ export default {
                     icon: ['fa', 'house'],
                 },
                 { 
-                    url: 'goal', 
-                    icon: ['fa', 'bullseye'],
+                    url: 'friends', 
+                    icon: ['fa', 'magnifying-glass'],
+                },  
+                { 
+                    url: 'profile', 
+                    icon: ['fa', 'user'],
                 },  
                 { 
                     url: 'add', 
