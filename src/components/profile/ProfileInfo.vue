@@ -2,7 +2,9 @@
       <div class="my-profile__info">
         <div class="my-profile__info-item">
             <h3 class="info-item__num">{{ friends }}</h3>
-            <p class="info-item__name">Friends</p>
+            <p class="info-item__name">
+                Friends 
+            </p>
         </div>
         <div class="my-profile__info-avatar">
             <img 
@@ -10,7 +12,11 @@
                 :src="img" 
                 alt=""
             >
-            <h2 class="avatar__name">{{ username }}</h2>
+            <h2 :class="['avatar__name',  { 'success' : areFriends }]">
+                <span>{{ username }}</span>
+                <font-awesome-icon v-if="areFriends" class="friends-icon" :icon="['fa', 'circle-check']"/>
+                
+            </h2>
         </div>
         <div class="my-profile__info-item">
             <h3 class="info-item__num">{{ goal }}</h3>
@@ -37,7 +43,11 @@ export default {
         friends: {
             type: Number,
             default: 69
-        }
+        },
+        areFriends: {
+            type: Boolean,
+            default: false
+        },
 
     },
     methods: {
@@ -47,6 +57,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/assets/scss/_variables.scss';
+
     .my-profile__info{
         display: flex;
         justify-content: space-around;
@@ -63,6 +75,7 @@ export default {
             .info-item__num{
                 color: black;
             }
+ 
         }
         .my-profile__info-avatar{
             padding-top: 1rem;
@@ -79,6 +92,14 @@ export default {
             .avatar__name{
                 padding-top: 1rem;
                 color: black;
+
+ 
+            }
+            .success{
+                color: $success;
+                display: flex;
+                align-items: center;
+                gap: .8rem;
             }
         }
     }

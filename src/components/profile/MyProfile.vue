@@ -107,9 +107,10 @@ export default {
                 this.goal = user.data().goal
             })
         },
-
         getMessages(){
-            db.collection("users").doc(auth.currentUser.uid).collection("friend-requests").get()
+            db.collection("users").doc(auth.currentUser.uid)
+                .collection("friend-requests")
+                .get()
                 .then(snapshot=> {
                     snapshot.forEach(doc => {
                         this.requests.push({
@@ -121,9 +122,10 @@ export default {
                     })
                 })
         },
+
         acceptFriendship(index, id, name, img){ // add some notification
             const user = db.collection("users").doc(auth.currentUser.uid) 
-            // add to friends collection
+            // add to my friends collection
             user.collection("friends")
                 .doc(name)
                 .set({
@@ -131,6 +133,17 @@ export default {
                     profileImage: img,
                     username : name,
                     friendID: id
+                })
+
+            // add to new friend, friends collection
+            db.collection("users").doc(id)
+                .collection("friends")
+                .doc(this.username)
+                .set({
+                    friends: true,
+                    profileImage: this.userImg,
+                    username : this.username,
+                    friendID: auth.currentUser.uid
                 })
 
             // remove from friends collection 
@@ -150,7 +163,6 @@ export default {
             this.removeOne(this.requests, index)
         },
         getFriends(){
-
             this.user.collection("friends").get()
                 .then(snapshot => {
                     snapshot.forEach(() => {

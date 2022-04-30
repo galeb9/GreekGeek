@@ -65,8 +65,8 @@ export default {
                 }
             }
             .date-section{
-                background: $secondary;
-
+                background: black;
+                color: white;
             }
             .pushups-section{
                 color: black;

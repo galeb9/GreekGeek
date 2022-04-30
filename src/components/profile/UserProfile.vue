@@ -7,27 +7,17 @@
         
         <img src="@/assets/img/profile-bg.png" alt="" class="bg-image">
 
-        <div class="user-profile__info">
-            <div class="user-profile__info-item">
-                <h3 class="info-item__num">69</h3>
-                <p class="info-item__name">Friends</p>
-            </div>
-            <div class="user-profile__info-avatar">
-                <img 
-                    class="avatar__img" 
-                    :src="getImgUrl(img)" 
-                    alt=""
-                >
-                <h2 class="avatar__name">{{ name }}</h2>
-            </div>
-            <div class="user-profile__info-item">
-                <h3 class="info-item__num">{{ goal }}</h3>
-                <p class="info-item__name">Goal</p>
-            </div>
-        </div>
+        <ProfileInfo 
+            :username="name"
+            :goal="goal"
+            :img="getImgUrl(img)"
+            :friends="friendCount"
+            :areFriends="isFriend"
+        />
 
         <div class="profile__btns">
-            <button class="profile__btn" @click="sendFriendRequest">Send Friend Request</button>
+            <button class="profile__btn" v-if="!isFriend" @click="sendFriendRequest">Send Friend Request</button>
+            <button class="profile__btn remove-friend__btn" v-else  @click="RemoveFriend(name)">Remove Friend</button>
             <div class="notification-container">
                 <transition name="move-in-bottom">
                     <p class="notification__suceess" v-if="notifVisible">
@@ -37,16 +27,18 @@
             </div>
         </div>
 
-   
-
     </div>
 
 </template>
 
 <script>
 import { db,auth } from '@/components/firebaseInit.js'
+import ProfileInfo from '@/components/profile/ProfileInfo.vue'
 
 export default {
+    components: {
+        ProfileInfo
+    },
     props: {
         img: {
             type: String,
@@ -66,16 +58,22 @@ export default {
             userImg: 'greek-geek.png',
             username: 'user',
             notifVisible: false,
+            friendCount: 0,
+
             friendId: '',
             friendProfilePic: '',
             currentFriend: '',
 
             myName: null,
             myImg: null,
-            myId: null
+            myId: null,
+
+            isFriend: false
         }
     },
     methods: {
+        //this shuould only hold data the logic should be in the parent or we get the data to many times
+
         getImgUrl(pic) {
             return require('@/assets/img/avatars/' + pic)
         },
@@ -88,39 +86,45 @@ export default {
                 this.notifVisible = false
             },3000)
         },
-        getPotentialFirendData(){
-            console.log("getPotentialFirendData")
 
-            db.collection("users").doc(this.friendId).get()
+        removeFriend(username){
+            db.collection("users")
+                .doc(auth.currentUser.uid)
+                .collection("friends")
+                .doc(username)
+                .delete()
+        },
+        areFriends(username){
+            // const friendId;
+            db.collection("users")
+                .doc(auth.currentUser.uid)
+                .collection("friends")
+                .doc(username)
+                .get()
                 .then(user => {
-                    console.log("Potential Friend")
-                    console.log(user.data())
+                    if(user.data() === undefined){
+                        return null
+                    }else{
+                        // console.log(user.data())
+                        this.isFriend = user.data().friends
+                    }
                 })
         },
-        getUserData(){
+        getUserData(){ //this account data
             db.collection("users").doc(auth.currentUser.uid).get()
                 .then(user => {
                     this.myName = user.data().username
                     this.myImg = user.data().userImg
                     this.myId = user.id
-                    console.log(this.myName, this.myImg, this.myId)
+                    // console.log(this.myName, this.myImg, this.myId)
                 })
         },
-
         findFriendId(){
-            console.log("findFriendId")
             const users = db.collection("users")
             users.where("username", "==", this.username).get()
                 .then(snapshot => {
                     snapshot.forEach(user => {
-                        console.log('UserID:' + user.id + '\nusername: ' + user.data().username )
                         this.friendId = user.id
-                        // this.friendProfilePic = user.data().userImg
-                        // this.currentFriend = user.data().username
-                        // console.log("id: " + this.friendId)
-                        // console.log("pic: " + this.friendProfilePic)
-                        // console.log("sender: " + this.currentFriend)
-
                     })
                 })
         },
@@ -136,20 +140,17 @@ export default {
                 })
         },
         sendFriendRequest(){
-
             this.findFriendId()
             setTimeout(this.saveMessageToFriend, 1000)
-            setTimeout(this.getPotentialFirendData, 1000)
-            
-
-            console.log("Requset sent!")
             this.useNotification()
-        }
+        },
     },
     created(){
+        this.findFriendId()
         this.getUserData()
         this.username = this.name
-        // console.log("potential friend: " + this.username)
+        this.areFriends(this.name)
+
     }
 }
 </script>
@@ -164,10 +165,12 @@ export default {
     background: $bg;
     width: 100vw;
     min-height: 100vh;
+    overflow: hidden;
     position: relative;
     .notification-container{
         position: absolute;
-        bottom: 14vh;
+        // bottom: 14vh;
+        bottom: -15vh;
         left: 0;
         right: 0;
         color: white;
@@ -187,6 +190,8 @@ export default {
         position: relative;
         display: flex;
         justify-content: center;
+        transform: translate(0,-90px);
+   
         .profile__btn{
             padding: 1rem 3rem;
             // margin-left: 1rem;
@@ -201,6 +206,10 @@ export default {
                 transform: translateY(3px);
                 box-shadow: 0 0 0  rgba(0, 0, 0, 0.42);
             }
+        }
+        .remove-friend__btn{
+            background: $error;
+            color: white;
         }
     }
     .go__back,

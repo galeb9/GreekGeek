@@ -2,11 +2,6 @@
     <div
         class="user-card"
     >
-        <!-- <img 
-            class="user-card__img" 
-            :src="getImgUrl(userImg)" 
-            alt=""
-        > -->
         <img 
             class="user-card__img" 
             :src="getImgUrl(userImg)" 
@@ -29,19 +24,10 @@
                 />
             </div>
         </transition>
-
-        <!-- <div class="add-friend-popup" v-show="popupVisible">
-            <p>Send friend request to {{ name }}?</p>
-            <div class="popup__btns">
-                <button @click="addFriend">Yes</button>
-                <button @click="closePopup">No</button>
-            </div>
-        </div> -->
     </div>
 </template>
 
 <script>
-import { db, auth } from '@/components/firebaseInit.js'
 import UserProfile from '@/components/profile/UserProfile.vue'
 export default {
     components: {
@@ -78,17 +64,6 @@ export default {
         closePopup(){
             return this.popupVisible = false
         },
-        addFriend(){
-            db.collection("users").doc(auth.currentUser.uid)
-                .collection("friends")
-                .doc(this.username)
-                .set({
-                    username: this.username,
-                    userImg: this.img
-                })
-            console.log("New Friend added!")
-            this.popupVisible = false
-        }
     },
     created(){
         this.username = this.name;
@@ -103,8 +78,6 @@ export default {
 .user-card{
     display: flex;
     gap: 1rem;
-    // border-radius: 3px;
-    // border-bottom: 1px solid $secondary;
     max-height: 100px;
     padding-bottom: .3rem;
     .user-profile__popup{

@@ -15,7 +15,7 @@ import {
     faUser,
     faArrowLeft,
     faDove,
-    faXmark
+    faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 // import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
@@ -35,7 +35,7 @@ const icons = [    faBullseye,
     faUser,
     faArrowLeft,
     faDove,
-    faXmark
+    faXmark,
 ]
 
 for(let i = 0; i < icons.length; i++){
