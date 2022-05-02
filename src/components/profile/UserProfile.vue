@@ -16,15 +16,40 @@
         />
 
         <div class="profile__btns">
-            <button class="profile__btn" v-if="!isFriend" @click="sendFriendRequest">Send Friend Request</button>
-            <button class="profile__btn remove-friend__btn" v-else  @click="RemoveFriend(name)">Remove Friend</button>
+            <button 
+                class="profile__btn" 
+                v-if="isFriend == false && isRequestSent == false " 
+                @click="sendFriendRequest"
+            >
+                Send Friend Request
+            </button>
+
+            <button 
+                class="profile__btn remove-friend__btn" 
+                v-if="isFriend"  
+                @click="removeFriend(name)"
+            >
+                Remove Friend
+            </button>
+
+            <button 
+                class="profile__btn sent-friend__btn" 
+                v-if="isRequestSent"
+                @click="cancelRequest(name)"
+            >
+                <span>Friend Request Sent</span> 
+                <font-awesome-icon v-if="areFriends" class="sent-icon" :icon="['fa', 'circle-check']"/>
+            </button>
+
             <div class="notification-container">
                 <transition name="move-in-bottom">
-                    <p class="notification__suceess" v-if="notifVisible">
-                        Friend request sent to {{ name }}
+                    <p :class="['notification__item', type]" v-if="notifVisible">
+                        {{ message }}
                     </p>
                 </transition>
             </div>
+
+
         </div>
 
     </div>
@@ -57,8 +82,11 @@ export default {
         return{
             userImg: 'greek-geek.png',
             username: 'user',
-            notifVisible: false,
             friendCount: 0,
+
+            message: '',
+            type: '',
+            notifVisible: false,
 
             friendId: '',
             friendProfilePic: '',
@@ -68,7 +96,9 @@ export default {
             myImg: null,
             myId: null,
 
-            isFriend: false
+            isFriend: false,
+            isRequestSent: false,
+            
         }
     },
     methods: {
@@ -80,19 +110,33 @@ export default {
         closePopup(){
             this.$emit('close-popup')
         },
-        useNotification(){
+        useNotification(message, type){
             this.notifVisible = true
+            this.message = message
+            
+            if(type === "success"){
+                this.type = "notification__success"
+            }else if( type === "error"){
+                this.type = "notification__error"
+            }else if(type === "warning"){
+                this.type = "notification__warning"
+            }
+
             setTimeout(() => {
                 this.notifVisible = false
             },3000)
         },
 
-        removeFriend(username){
+        removeFriend(name){
             db.collection("users")
                 .doc(auth.currentUser.uid)
                 .collection("friends")
-                .doc(username)
+                .doc(name)
                 .delete()
+
+            this.useNotification(this.name + " removed from friend list.", "error")
+            this.isFriend = false
+                
         },
         areFriends(username){
             // const friendId;
@@ -139,10 +183,59 @@ export default {
                     friendID: this.myId
                 })
         },
+        addFriendRequestYouSent(name){
+            db.collection("users").doc(auth.currentUser.uid)
+                .collection("requests-sent")
+                .doc(name)
+                .set({
+                    friendRequst: true
+                })
+        },
+        cancelRequest(name){
+            this.findFriendId()
+
+            // remove friend request from myself
+            db.collection("users").doc(auth.currentUser.uid)
+                .collection("requests-sent")
+                .doc(name)
+                .delete()
+
+            // remove friend request from user
+            setTimeout(() => {
+                db.collection("users")
+                .doc(this.friendId)
+                .collection("friend-requests")
+                .doc(this.myName)
+                .delete()
+            }, 1000)
+
+            this.isRequestSent = false
+            this.useNotification("Friend request CANCELED", "warning")
+        },
         sendFriendRequest(){
             this.findFriendId()
+            this.addFriendRequestYouSent(this.name)
             setTimeout(this.saveMessageToFriend, 1000)
-            this.useNotification()
+
+            this.isRequestSent = true
+            this.useNotification("Friend request sent to " + this.name, "success")
+        },
+
+
+        isFriendRequestSent(name){
+            db.collection("users")
+                .doc(auth.currentUser.uid)
+                .collection("requests-sent")
+                .doc(name)
+                .get()
+                .then(user => {
+                    if(user.data() != undefined){
+                        this.isRequestSent = true
+                    }
+                    else{
+                        this.isRequestSent = false
+                    }
+                })
         },
     },
     created(){
@@ -150,7 +243,8 @@ export default {
         this.getUserData()
         this.username = this.name
         this.areFriends(this.name)
-
+        this.isFriendRequestSent(this.name)
+        
     }
 }
 </script>
@@ -177,13 +271,19 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        .notification__suceess{
-            width: max-content;
-            background: $success;
+        .notification__item{
             padding: 1rem 3rem;
             border-radius: 4px;
-            // margin-left: 1rem;
-
+            width: max-content;
+        }
+        .notification__success{
+            background: $success;
+        }
+        .notification__error{
+            background: $error;
+        }
+        .notification__warning{
+            background: $orange;
         }
     }
     .profile__btns{
@@ -210,6 +310,12 @@ export default {
         .remove-friend__btn{
             background: $error;
             color: white;
+        }
+        .sent-friend__btn{
+            background: $success;
+            .sent-icon{
+                margin-left: 1rem;
+            }
         }
     }
     .go__back,

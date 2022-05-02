@@ -62,17 +62,19 @@ export default {
         })
     },
     getUsers(){
-      db.collection("users").where("username", "!=", this.username ).orderBy("username","asc")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((user) => {
-          this.usersList.push({
-            username: user.data().username,
-            userImg: user.data().userImg,
-            goal: user.data().goal
-          })
-        });
-        // console.log(this.usersList[6].userImg)
+      db.collection("users")
+        .where("username", "!=", this.username )
+        .orderBy("username","asc")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((user) => {
+            this.usersList.push({
+              username: user.data().username,
+              userImg: user.data().userImg,
+              goal: user.data().goal
+            })
+          });
+          // console.log(this.usersList[6].userImg)
       });
     }
   },

@@ -1,0 +1,12 @@
+02.05.2022
+- Pending friend request (if sent and not yet accepted)
+- Cancel friend request
+
+- Make a BaseNotif component work
+- Automatic day finish or have the option to finish for yesterday or today
+- Users in db be by username as id 
+- Incorporate vuex
+- Make friends be seen if you tap on friends on user/your profile
+- change of goal somewhere else and also on your profile tap on goal
+- learn async await & promises
+- in Word diploma change the pics pri opisu tehnologij in dodaj besedilo in nove opise novih tehnologij

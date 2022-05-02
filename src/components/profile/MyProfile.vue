@@ -122,7 +122,12 @@ export default {
                     })
                 })
         },
-
+        removeFriendRequestYouSent(name){
+            db.collection("users").doc(auth.currentUser.uid)
+                .collection("requests-sent")
+                .doc(name)
+                .delete()
+        },
         acceptFriendship(index, id, name, img){ // add some notification
             const user = db.collection("users").doc(auth.currentUser.uid) 
             // add to my friends collection
@@ -151,15 +156,21 @@ export default {
                 .doc(name)
                 .delete()
 
+            // removes friend request that was sent to you
+            this.removeFriendRequestYouSent(name)
+
             this.removeOne(this.requests, index)
 
         },
         // remove from friends collection 
         denyFriendship(index, name){ 
-            const user = db.collection("users").doc(auth.currentUser.uid) 
-            user.collection("friend-requests")
+            db.collection("users").doc(auth.currentUser.uid)
+                .collection("friend-requests")
                 .doc(name)
                 .delete()
+
+            this.removeFriendRequestYouSent(name)
+            
             this.removeOne(this.requests, index)
         },
         getFriends(){
