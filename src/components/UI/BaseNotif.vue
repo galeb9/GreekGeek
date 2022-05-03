@@ -1,7 +1,7 @@
 <template>
     <div class="notification-container">
         <transition name="move-in-bottom">
-            <p :class="['notification__item', notificationType]" v-if="notifVisible">
+            <p :class="['notification__item', type]" v-if="notifVisible">
                 {{ text }}
             </p>
         </transition>
@@ -19,37 +19,39 @@ export default {
             type: String,
             default: ''
         },
-        // notifVisible: {
-        //     type: String,
-        //     default: ''
-        // }
+        notifVisible: {
+            type: Boolean,
+            default: false
+        },
     },
     data(){
         return{
-            message: null,
-            notificationType: null,
-            notifVisible: false 
+            // isVisible: false,
+            // message: '',  // need these three
+            // type: '',
+            // notifVisible: false,
         }
     },
-    methods: {
-        useNotification(message, type){
-            this.notifVisible = true
-            this.message = message
+    methods: { 
+        // copy paste this method ⬇ to use the notif
+
+        // useNotification(message, type){ 
+        //     this.notifVisible = true
+        //     this.message = message
             
-            if(this.type === "success"){
-                this.notificationType = "notification__success"
-            }else if( type === "error"){
-                this.notificationType = "notification__error"
-            }
+        //     if(type === "success"){
+        //         this.type = "notification__success"
+        //     }else if( type === "error"){
+        //         this.type = "notification__error"
+        //     }else if(type === "warning"){
+        //         this.type = "notification__warning"
+        //     }
 
-            setTimeout(() => {
-                this.notifVisible = false
-            }, 3000)
-        },
+        //     setTimeout(() => {
+        //         this.notifVisible = false
+        //     },3000)
+        // },
     },
-    created(){
-
-    }
 }
 </script>
 
@@ -76,6 +78,9 @@ export default {
         }
         .notification__error{
             background: $error;
+        }
+        .notification__warning{
+            background: $orange;
         }
     }
 </style>

@@ -41,14 +41,19 @@
                 <font-awesome-icon v-if="areFriends" class="sent-icon" :icon="['fa', 'circle-check']"/>
             </button>
 
-            <div class="notification-container">
+            <!-- <div class="notification-container">
                 <transition name="move-in-bottom">
                     <p :class="['notification__item', type]" v-if="notifVisible">
                         {{ message }}
                     </p>
                 </transition>
-            </div>
+            </div> -->
 
+            <BaseNotif
+                :text="message"
+                :type="type"
+                :notif-visible="notifVisible"
+            />
 
         </div>
 
@@ -57,12 +62,14 @@
 </template>
 
 <script>
-import { db,auth } from '@/components/firebaseInit.js'
+import { db, auth } from '@/components/firebaseInit.js'
 import ProfileInfo from '@/components/profile/ProfileInfo.vue'
+import BaseNotif from '@/components/UI/BaseNotif.vue'
 
 export default {
     components: {
-        ProfileInfo
+        ProfileInfo,
+        BaseNotif
     },
     props: {
         img: {
@@ -103,13 +110,16 @@ export default {
     },
     methods: {
         //this shuould only hold data the logic should be in the parent or we get the data to many times
-
+        activateNotification(){
+            console.log("Sure is active...")
+        },
         getImgUrl(pic) {
             return require('@/assets/img/avatars/' + pic)
         },
         closePopup(){
             this.$emit('close-popup')
         },
+        
         useNotification(message, type){
             this.notifVisible = true
             this.message = message
@@ -291,7 +301,6 @@ export default {
         display: flex;
         justify-content: center;
         transform: translate(0,-90px);
-   
         .profile__btn{
             padding: 1rem 3rem;
             // margin-left: 1rem;
