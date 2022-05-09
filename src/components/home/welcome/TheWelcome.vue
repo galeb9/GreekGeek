@@ -3,30 +3,31 @@
       <div class="welcome__item">
         <div class="img-container">
 
-          <img else
+          <!-- <img 
             class="welcome__img" 
             :src="getImgUrl(userImg)" 
             alt=""
+          > -->
+          <img 
+            class="welcome__img" 
+            :src="getImgUrl(avatarImg)" 
+            alt="avatar-img"
           >
-
           <div :class="['dot', { 'online' : isLoggedIn }]"></div>
         </div>
         <WelcomeGreet />
-        <!--<KillStreak />-->
       </div> 
     </div>
 </template>
 
 <script>
 import WelcomeGreet from '@/components/home/welcome/WelcomeGreet'
-//import KillStreak from '@/components/home/welcome/KillStreak'
-import { db, auth } from '@/components/firebaseInit.js'
+import { auth } from '@/components/firebaseInit.js'
 
 export default {
   name: 'TheHome',
   components:{
     WelcomeGreet,
-    //KillStreak,
   },
   data(){
     return{
@@ -34,24 +35,27 @@ export default {
       userImg: "greek-geek.png"
     }
   },
+  computed: {
+    avatarImg(){
+      return this.$store.getters.ourAvatar;
+    }
+  },
   methods: {
     getUserImg(){
-      db.collection("users").doc(auth.currentUser.uid).get()
-      .then(user => {
-          this.userImg = user.data().userImg
-      })
+      this.$store.dispatch("getAvatarImg") 
+      console.log("db gets user img")
     },
     getImgUrl(pic) {
       return require('@/assets/img/avatars/' + pic)
     }
   },
   created(){
+    //this.getUserImg()
+
     if(auth.currentUser) {
       this.isLoggedIn = true;
     }
-
-    this.getUserImg()
-
+    
   }
 }
 </script>

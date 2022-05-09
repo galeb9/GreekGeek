@@ -36,12 +36,12 @@
 
 
     <img src="@/assets/img/profile-bg.png" alt="" class="bg-image">
-    
+    <!-- used vuex for avatar img -->
     <ProfileInfo 
         v-if="!messagesVisible"
         :username="username"
         :goal="goal"
-        :img="getImgUrl(userImg)"
+        :img="getImgUrl($store.state.avatarImg)" 
         :friends="friendCount"
     />
     <BaseButton 

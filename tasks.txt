@@ -4,13 +4,21 @@ x Cancel friend request
 
 03.05.2022
 x Make a BaseNotif component work
-- Incorporate vuex
+
+09.05.2022
+x Incorporate vuex
+- poglej kako word diplomo spisat [ Jure template ]
+- Users in db be by username as id 
+
+10.05.2022
+- Udemy vuex 
 
 - reformat add friend component to not be used for each user but onClick
 - Automatic day finish or have the option to finish for yesterday or today
-- Users in db be by username as id 
+- learn async await & promises
+
 - Make friends be seen if you tap on friends on user/your profile
 - change of goal somewhere else and also on your profile tap on goal (maybe ... btn)
-- learn async await & promises
+
 - in Word diploma change the pics pri opisu tehnologij in dodaj besedilo in nove opise novih tehnologij
 - PastData should be by months

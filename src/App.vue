@@ -37,6 +37,10 @@ export default {
       }
       return comp
     }
+  }, 
+  created(){
+    this.$store.dispatch("getAvatarImg") // use $store to load only once the most esential stuff in here
+    console.log("db gets user img")
   }
 }
 </script>

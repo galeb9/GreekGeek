@@ -1,12 +1,50 @@
 import { createApp } from 'vue'
 import router from './scripts/router.js'
 import App from './App.vue'
-// fontawsome
+// fontawesome
 import './scripts/fa_icons.js'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+
 // firebase
-import { auth } from '@/components/firebaseInit.js'
+import { db, auth } from '@/components/firebaseInit.js'
 import './components/firebaseInit'
+
+
+//Vuex
+import { createStore } from 'vuex';
+const store = createStore({
+    state() {
+        return {
+            avatarImg: 'greek-geek.png'
+        };
+    },
+    mutations: { // for functions
+        
+        getAvatarImg(state){
+            try {
+                db.collection("users").doc(auth.currentUser.uid).get()
+                .then(user => {
+                  state.avatarImg = user.data().userImg
+                })    
+            } catch (error) {
+                console.log(error)
+            }
+ 
+        },
+    },
+    actions: {
+        getAvatarImg(context){
+            context.commit('getAvatarImg')
+        }
+    },
+    getters: { // same as computed
+        ourAvatar(state) {
+            return state.avatarImg
+        }
+    }, 
+
+})
 
 // component imports
 import BaseButton from './components/UI/BaseButton.vue'
@@ -37,7 +75,7 @@ auth.onAuthStateChanged( user => {
             .component("TheHeader", TheHeader)
             .component("HomeSection", HomeSection)
             .component("BaseNotif", BaseNotif)
-            
+        app.use(store)
         app.use(router);
         app.mount('#app')
     }
