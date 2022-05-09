@@ -64,12 +64,10 @@
 <script>
 import { db, auth } from '@/components/firebaseInit.js'
 import ProfileInfo from '@/components/profile/ProfileInfo.vue'
-import BaseNotif from '@/components/UI/BaseNotif.vue'
 
 export default {
     components: {
         ProfileInfo,
-        BaseNotif
     },
     props: {
         img: {
@@ -110,6 +108,14 @@ export default {
     },
     methods: {
         //this shuould only hold data the logic should be in the parent or we get the data to many times
+        useNotification(message, type){
+            this.notifVisible = true
+            this.message = message
+            this.type = type
+            setTimeout(() => {
+                this.notifVisible = false
+            },3000)
+        },
         activateNotification(){
             console.log("Sure is active...")
         },
@@ -119,24 +125,6 @@ export default {
         closePopup(){
             this.$emit('close-popup')
         },
-        
-        useNotification(message, type){
-            this.notifVisible = true
-            this.message = message
-            
-            if(type === "success"){
-                this.type = "notification__success"
-            }else if( type === "error"){
-                this.type = "notification__error"
-            }else if(type === "warning"){
-                this.type = "notification__warning"
-            }
-
-            setTimeout(() => {
-                this.notifVisible = false
-            },3000)
-        },
-
         removeFriend(name){
             db.collection("users")
                 .doc(auth.currentUser.uid)
@@ -254,7 +242,6 @@ export default {
         this.username = this.name
         this.areFriends(this.name)
         this.isFriendRequestSent(this.name)
-        
     }
 }
 </script>

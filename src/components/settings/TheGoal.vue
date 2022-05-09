@@ -15,9 +15,14 @@
           text="ADD"
           type="submit"
         >
-          Change
+          Change goal
         </button>
       </form>
+      <BaseNotif 
+        :text="message"
+        :type="type"
+        :notif-visible="notifVisible"
+      />
       <TheHeader />
     </div>
 </template>
@@ -28,15 +33,29 @@ import TheHeader from '@/components/layout/TheHeader.vue'
 
 export default {
   components: {
-    TheHeader
+    TheHeader,
   },
   data(){
     return{
       goal: null,
-      userId: auth.currentUser.uid
+      userId: auth.currentUser.uid,
+
+      message: '',  
+      successMessage: `Goal changed to ${this.goal}`,
+      warningMessage: 'Please type in your goal...',
+      type: '',
+      notifVisible: false,
     }
   },
   methods:{
+    useNotification(message, type){
+      this.notifVisible = true
+      this.message = message
+      this.type = type
+      setTimeout(() => {
+          this.notifVisible = false
+      },3000)
+    },
     changeUserGoal(){
       let g = Number(this.goal)
       if(g !== null && g !== '' && g > 0 ){
@@ -46,9 +65,10 @@ export default {
             goal: g
           })
         })
+        this.useNotification(this.successMessage, "success")
         this.goal = null;
       } else{
-        console.log("Enter you goal dumb dumb...")
+        this.useNotification(this.warningMessage, "warning")
       }
     }
   },
@@ -59,7 +79,7 @@ export default {
 @import '@/assets/scss/_variables.scss';
 
 .goal{
-  min-height: 70vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

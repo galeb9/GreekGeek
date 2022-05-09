@@ -26,8 +26,9 @@ export default {
     },
     data(){
         return{
-            // isVisible: false,
-            // message: '',  // need these three
+            // need these three ⬇
+            
+            // message: '',  
             // type: '',
             // notifVisible: false,
         }
@@ -38,15 +39,7 @@ export default {
         // useNotification(message, type){ 
         //     this.notifVisible = true
         //     this.message = message
-            
-        //     if(type === "success"){
-        //         this.type = "notification__success"
-        //     }else if( type === "error"){
-        //         this.type = "notification__error"
-        //     }else if(type === "warning"){
-        //         this.type = "notification__warning"
-        //     }
-
+        //     this.type = type
         //     setTimeout(() => {
         //         this.notifVisible = false
         //     },3000)
@@ -73,13 +66,13 @@ export default {
             border-radius: 4px;
             width: max-content;
         }
-        .notification__success{
+        .success{
             background: $success;
         }
-        .notification__error{
+        .error{
             background: $error;
         }
-        .notification__warning{
+        .warning{
             background: $orange;
         }
     }

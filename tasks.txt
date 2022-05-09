@@ -1,9 +1,9 @@
 02.05.2022
-- Pending friend request (if sent and not yet accepted)
-- Cancel friend request
+x Pending friend request (if sent and not yet accepted)
+x Cancel friend request
 
 03.05.2022
-- Make a BaseNotif component work
+x Make a BaseNotif component work
 - Incorporate vuex
 
 - reformat add friend component to not be used for each user but onClick
