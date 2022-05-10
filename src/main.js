@@ -20,7 +20,6 @@ const store = createStore({
         };
     },
     mutations: { // for functions
-        
         getAvatarImg(state){
             try {
                 db.collection("users").doc(auth.currentUser.uid).get()

@@ -62,26 +62,44 @@ export default {
             let randomNum = Math.floor(Math.random() * avatarList.length)
             return avatarList[randomNum]
         },
-        register(e){
-            auth.createUserWithEmailAndPassword(this.email, this.password)
-                .then(cred => {
-                    alert(`Račun narejen za ${cred.user.email}`)
-                    // this.$router.go({path : this.$router.path});
-                    this.$router.push("/")
+        isUsernameOk(username){
+            let count = 0;
 
-                    db.collection('users').doc(cred.user.uid).set({
-                    // db.collection('users').doc(this.username).set({
-                        goal: 100,
-                        pushupsToday: 0, // does not work??
-                        username: this.username,
-                        userImg: this.chooseRandomAvatar()
+            db.collection("users").where("username", "==", username)
+                .get()
+                .then(snapshot => {
+                    snapshot.forEach(user => {
+                        
+                        console.log(user.data())
+
+                        count = count + 1
                     })
-                    console.log("New user registered")
-                },
-                err => {
-                    alert(err.message)
-                }
-            )
+                })
+
+        },
+        register(e){
+                    
+                    //figure out promises
+                    auth.createUserWithEmailAndPassword(this.email, this.password)
+                        .then(cred => {
+                            alert(`Račun narejen za ${cred.user.email}`)
+                            // this.$router.go({path : this.$router.path});
+
+                            this.$router.push("/")
+                            db.collection('users').doc(cred.user.uid).set({
+                                goal: 100,
+                                pushupsToday: 0, 
+                                username: this.username,
+                                userImg: this.chooseRandomAvatar()
+                            })
+                            console.log("New user registered")
+
+                        },
+                        err => {
+                            alert(err.message)
+                        }
+                    )
+
             e.preventDefault();
         }
     },

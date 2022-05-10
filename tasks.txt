@@ -7,18 +7,26 @@ x Make a BaseNotif component work
 
 09.05.2022
 x Incorporate vuex
-- poglej kako word diplomo spisat [ Jure template ]
-- Users in db be by username as id 
+x Users in db be by username as id (se ne da)
 
 10.05.2022
-- Udemy vuex 
-
+- use some stuff with vuex (maybe basic functions & db get basic info in App.vue)
 - reformat add friend component to not be used for each user but onClick
 - Automatic day finish or have the option to finish for yesterday or today
-- learn async await & promises
+
+- poglej kako word diplomo spisat [ Jure template ]
+
+
 
 - Make friends be seen if you tap on friends on user/your profile
-- change of goal somewhere else and also on your profile tap on goal (maybe ... btn)
-
-- in Word diploma change the pics pri opisu tehnologij in dodaj besedilo in nove opise novih tehnologij
 - PastData should be by months
+
+- change of goal somewhere else and also on your profile tap on goal (maybe ... btn)
+- in Word diploma change the pics pri opisu tehnologij in dodaj besedilo in nove opise novih tehnologij
+
+
+Weekend Tasks:
+- Udemy vuex 
+- Composition API
+- learn async await & promises & firebase usage in vue
+- username already taken [promises]
