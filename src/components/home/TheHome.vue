@@ -25,7 +25,8 @@ export default {
     HomeStats,
     PushupTypes,
     TheHeader,
-  }
+  },
+
  
 }
 </script>

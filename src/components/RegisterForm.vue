@@ -62,29 +62,25 @@ export default {
             let randomNum = Math.floor(Math.random() * avatarList.length)
             return avatarList[randomNum]
         },
-        isUsernameOk(username){
-            let count = 0;
-
-            db.collection("users").where("username", "==", username)
+        async isUsernameOk(username){
+            const userData = await db.collection("users")
+                .where("username", "==", username)
                 .get()
                 .then(snapshot => {
+                    const arr = []
                     snapshot.forEach(user => {
-                        
-                        console.log(user.data())
-
-                        count = count + 1
+                        arr.push(user.data().username)
                     })
+                    return arr
                 })
-
+            console.log(userData)
         },
         register(e){
-                    
             //figure out promises
             auth.createUserWithEmailAndPassword(this.email, this.password)
                 .then(cred => {
                     alert(`Račun narejen za ${cred.user.email}`)
                     // this.$router.go({path : this.$router.path});
-
                     this.$router.push("/")
                     db.collection('users').doc(cred.user.uid).set({
                         goal: 100,
@@ -93,18 +89,17 @@ export default {
                         userImg: this.chooseRandomAvatar()
                     })
                     console.log("New user registered")
-
                 },
                 err => {
                     alert(err.message)
                 }
             )
-
             e.preventDefault();
         }
     },
     created(){
         this.chooseRandomAvatar()
+        // this.isUsernameOk("galeb9")
     }
 }
 </script>

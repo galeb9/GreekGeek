@@ -16,6 +16,9 @@
 
 <script>
 import TheHeader from '@/components/layout/TheHeader.vue'
+import { db } from '@/components/firebaseInit.js'
+
+
 
 export default {
   name: 'App',
@@ -36,11 +39,25 @@ export default {
         this.headerVisible = true
       }
       return comp
-    }
+    },
+    async isUsernameOk(username){
+      const userData = await db.collection("users")
+        .where("username", "==", username)
+        .get()
+        .then(snapshot => {
+            const arr = []
+            snapshot.forEach(user => {
+                arr.push(user.data().username)
+            })
+            return arr
+        })
+      console.log(userData)
+    },
   }, 
   created(){
-    this.$store.dispatch("getAvatarImg") // use $store to load only once the most esential stuff in here
-    console.log("db gets user img")
+    this.$store.dispatch("getUserData")
+    // this.isUsernameOk("medo007")
+
   }
 }
 </script>

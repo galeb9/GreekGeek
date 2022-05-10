@@ -1,34 +1,59 @@
-02.05.2022
+02.05.2022 ✅
 x Pending friend request (if sent and not yet accepted)
 x Cancel friend request
 
-03.05.2022
+------------------------------------------------------------------------
+
+03.05.2022 ✅
 x Make a BaseNotif component work
 
-09.05.2022
+------------------------------------------------------------------------
+
+09.05.2022 ✅
 x Incorporate vuex
 x Users in db be by username as id (se ne da)
 
 ------------------------------------------------------------------------
 
-10.05.2022
-- use some stuff with vuex (maybe basic functions & db get basic info in App.vue)
+10.05.2022 ✅
+x clean code with vuex
+x use some stuff with vuex (maybe basic functions & db get basic info in App.vue)
+
+
+------------------------------------------------------------------------
+
+11.05.2022
+- clean code with vuex
+- poglej kako word diplomo spisat [ Jure template ]
+- Automatic day finish or have the option to finish for yesterday or today
 - reformat add friend component to not be used for each user but onClick
 - Automatic day finish or have the option to finish for yesterday or today
 
-- poglej kako word diplomo spisat [ Jure template ]
+
+<------------------------------------------------------------------------>
+
+⭐ Functionalities:
+    ➡ Add arena option
+    ➡ Automatic day finish / Option to finish for yesterday
+    ➡ PastData be by months
+    ➡ Remove wrong day in PastData
+    ➡ Make friends be seen if you tap on friends on user/your profile
 
 
-
-- Make friends be seen if you tap on friends on user/your profile
-- PastData should be by months
-
-- change of goal somewhere else and also on your profile tap on goal (maybe ... btn)
-- in Word diploma change the pics pri opisu tehnologij in dodaj besedilo in nove opise novih tehnologij
+🐜 Bugs:
+    ➡ Username already taken [promises]
 
 
-Weekend Tasks:
-- Udemy vuex 
-- Composition API
-- learn async await & promises & firebase usage in vue
-- username already taken [promises]
+👉 Tasks:
+    ➡ Reformat add friend component (to not be used for each user but onClick)
+    ➡ Add friend component should display limit 5 users + whatever it finds on search
+    ➡ In Word diploma change the pics pri opisu tehnologij in dodaj besedilo in nove opise novih tehnologij
+    ➡ Change of goal somewhere else and also on your profile tap on goal (maybe ... btn)
+
+
+🌴 Weekend Knowledge Gain:
+    ➡ Udemy vuex 
+    ➡ Composition API
+    ➡ Learn async await & promises & firebase usage in vue
+    ➡ Check how to structure vuex files
+

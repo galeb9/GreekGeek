@@ -4,6 +4,7 @@
     <div class="go__back" @click="goToHome" >
         <font-awesome-icon class="back-icon" :icon="['fa', 'arrow-left']"/>
     </div>
+
     <!-- messages -->
     <div class="go__messages" @click="toggleMessageVisibility"  >
         <font-awesome-icon v-if="!messagesVisible" class="messages-icon" :icon="['fa', 'dove']"/>
@@ -39,9 +40,9 @@
     <!-- used vuex for avatar img -->
     <ProfileInfo 
         v-if="!messagesVisible"
-        :username="username"
-        :goal="goal"
-        :img="getImgUrl($store.state.avatarImg)" 
+        :username="myUsername"
+        :goal="myGoal"
+        :img="getImgUrl(myAvatarImg)" 
         :friends="friendCount"
     />
     <BaseButton 
@@ -77,7 +78,17 @@ export default {
             requests: [],
             messagesVisible: false,
             friendCount: 0,
-
+        }
+    },
+    computed: {
+        myUsername(){
+            return this.$store.getters.myUsername
+        },
+        myAvatarImg(){
+            return this.$store.getters.myAvatar;
+        },
+        myGoal(){
+            return this.$store.getters.myGoal
         }
     },
     methods: {
@@ -237,13 +248,12 @@ export default {
     }
     .go__back{
         top: 15px;
-
         left: 10px;
         width: 50px;
         height: 50px;
     }
     .go__messages{
-        top: 10px;
+        top: 15px;
         right: 10px;
         width: 60px;
         height: 60px;

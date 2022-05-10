@@ -35,7 +35,15 @@
       </div>
 
       <div class="stats-item">
-        <button @click="resetToday()" class="stats-item__button">Finish for today</button>
+        <!-- <button @click="resetToday()" class="stats-item__button">Finish day</button> -->
+        <button @click="togglePopup" class="stats-item__button">Finish day</button>
+
+      </div>
+      <div class="popup" v-if="popupVisible">
+        <h2>Finish for</h2>
+        <BaseButton text="Today" />
+        <p>or</p>
+        <BaseButton text="Yesterday" />
       </div>
     </div>
   </BaseContainer>
@@ -64,10 +72,15 @@ export default {
       rate: 0, 
       attempts: 0, // will have to add a counter of inputs into add pushups comp.
       calories: 0,
+
+      popupVisible: true
     }
   },
   methods: {
     //attempts work
+    togglePopup(){
+      this.popupVisible = !this.popupVisible
+    },
     getChar(num){
       return this.daysChar[num]
     },
@@ -206,6 +219,22 @@ export default {
         background: $black;
         color: white;
       }
+    }
+  }
+  .popup{
+    padding: 2rem 1rem;
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    border: 10px double $secondary;
+    backdrop-filter: blur(13px);
+    text-align: center;
+    h2{
+      margin-bottom: 1rem;
+    }
+    p{
+      margin: 1rem 0
     }
   }
 }

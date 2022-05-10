@@ -2,12 +2,6 @@
     <div class="welcome-container">
       <div class="welcome__item">
         <div class="img-container">
-
-          <!-- <img 
-            class="welcome__img" 
-            :src="getImgUrl(userImg)" 
-            alt=""
-          > -->
           <img 
             class="welcome__img" 
             :src="getImgUrl(avatarImg)" 
@@ -32,26 +26,19 @@ export default {
   data(){
     return{
       isLoggedIn: false,
-      userImg: "greek-geek.png"
     }
   },
   computed: {
     avatarImg(){
-      return this.$store.getters.ourAvatar;
+      return this.$store.getters.myAvatar;
     }
   },
   methods: {
-    getUserImg(){
-      this.$store.dispatch("getAvatarImg") 
-      console.log("db gets user img")
-    },
     getImgUrl(pic) {
       return require('@/assets/img/avatars/' + pic)
     }
   },
   created(){
-    //this.getUserImg()
-
     if(auth.currentUser) {
       this.isLoggedIn = true;
     }
