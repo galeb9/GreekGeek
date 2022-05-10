@@ -79,26 +79,26 @@ export default {
         },
         register(e){
                     
-                    //figure out promises
-                    auth.createUserWithEmailAndPassword(this.email, this.password)
-                        .then(cred => {
-                            alert(`Račun narejen za ${cred.user.email}`)
-                            // this.$router.go({path : this.$router.path});
+            //figure out promises
+            auth.createUserWithEmailAndPassword(this.email, this.password)
+                .then(cred => {
+                    alert(`Račun narejen za ${cred.user.email}`)
+                    // this.$router.go({path : this.$router.path});
 
-                            this.$router.push("/")
-                            db.collection('users').doc(cred.user.uid).set({
-                                goal: 100,
-                                pushupsToday: 0, 
-                                username: this.username,
-                                userImg: this.chooseRandomAvatar()
-                            })
-                            console.log("New user registered")
+                    this.$router.push("/")
+                    db.collection('users').doc(cred.user.uid).set({
+                        goal: 100,
+                        pushupsToday: 0, 
+                        username: this.username,
+                        userImg: this.chooseRandomAvatar()
+                    })
+                    console.log("New user registered")
 
-                        },
-                        err => {
-                            alert(err.message)
-                        }
-                    )
+                },
+                err => {
+                    alert(err.message)
+                }
+            )
 
             e.preventDefault();
         }

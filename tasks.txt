@@ -9,6 +9,8 @@ x Make a BaseNotif component work
 x Incorporate vuex
 x Users in db be by username as id (se ne da)
 
+------------------------------------------------------------------------
+
 10.05.2022
 - use some stuff with vuex (maybe basic functions & db get basic info in App.vue)
 - reformat add friend component to not be used for each user but onClick
