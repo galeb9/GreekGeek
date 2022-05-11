@@ -7,44 +7,34 @@
         :goal="userGoal"
         :surplus="surplus"
        />
-
-      <div class="stats-row">
-        <div class="stats__calories">
-            <img src="@/assets/icons/fire.svg" alt="">
-            <div class="stats__info">
-              <p >{{ calories }}</p>
-              <h4>kcal Burnt</h4>
-            </div>
-        </div>
-        <div class="stats-row-col">
-          <div class="stats__pushups">
-            <img src="@/assets/icons/Strong.svg" alt="">
-            <div class="stats__info">
-              <h4>Pushups</h4>
-              <p >{{ userPushups }}</p>
-            </div>
-          </div>
-            <div class="stats-attempts">
-              <img src="@/assets/icons/attempts-icon.svg" alt="">
-              <div class="stats__info">
-                <h4>Attempts</h4>
-                <p >{{ attempts }}</p>
-              </div>
-            </div>
-        </div>
-      </div>
+      <DailyStatsItems 
+        :attempts="attempts"
+        :calories="calories"
+        :userPushups="userPushups"
+      />
 
       <div class="stats-item">
         <!-- <button @click="resetToday()" class="stats-item__button">Finish day</button> -->
         <button @click="togglePopup" class="stats-item__button">Finish day</button>
+      </div>
 
+      <transition name="move-in-bottom">
+        <div class="popup-container" v-if="popupVisible">
+          <div class="popup" >
+            <h2>Finish for</h2>
+            <BaseButton text="Today" @click="resetToday(this.getTodaysDate())" />
+            <p>or</p>
+            <BaseButton text="Yesterday" @click="resetToday(this.getYesterdayDate())" />
+          </div>
+        </div>
+      </transition>
+      <div 
+        class="popup-bg"
+        v-if="popupVisible"
+        @click="togglePopup"
+      >
       </div>
-      <div class="popup" v-if="popupVisible">
-        <h2>Finish for</h2>
-        <BaseButton text="Today" />
-        <p>or</p>
-        <BaseButton text="Yesterday" />
-      </div>
+
     </div>
   </BaseContainer>
 </template>
@@ -53,11 +43,13 @@
 // import { db, auth, firebase } from '@/components/firebaseInit.js'
 
 import { db, auth } from '@/components/firebaseInit.js'
-import RoundStats from '@/components/stats//RoundStats.vue'
+import RoundStats from '@/components/stats/RoundStats.vue'
+import DailyStatsItems from '@/components/stats/DailyStatsItems.vue'
 
 export default {
   components: {
-    RoundStats
+    RoundStats,
+    DailyStatsItems
   },
   data(){
     return{
@@ -73,7 +65,7 @@ export default {
       attempts: 0, // will have to add a counter of inputs into add pushups comp.
       calories: 0,
 
-      popupVisible: true
+      popupVisible: false
     }
   },
   methods: {
@@ -98,7 +90,9 @@ export default {
     getTodaysDate(){
       return `${this.today.getDate()}-${this.today.getMonth() + 1}-${this.today.getFullYear()}`
     },
-    
+    getYesterdayDate(){
+      return `${this.today.getDate() - 1}-${this.today.getMonth() + 1}-${this.today.getFullYear()}`
+    },
     //new user firebase code
     getUserData(){
       db.collection("users").doc(this.userId).get()
@@ -128,10 +122,10 @@ export default {
       })
     },
 
-    saveUserDayz(){
+    saveUserDayz(day){
       db.collection("users").doc(this.userId)
         .collection("dayz")
-        .doc(this.getTodaysDate())
+        .doc(day)
         .set({
           dateNum: this.today.getDate(),
           day: this.getChar(this.today.getDay()),
@@ -140,19 +134,21 @@ export default {
         })
     },
 
-    resetToday(){
+    resetToday(day){
       // this.saveUserDay();
-      this.saveUserDayz();
+      this.saveUserDayz(day);
       this.resetTodaysPushups();
       this.userPushups = 0; 
       this.attempts = 0;
       this.calories = 0;
+      this.popupVisible = false
     }
 
   },
   created(){
     this.getUserData();
     setTimeout(this.getBurntCalories, 300)
+    console.log(this.getYesterdayDate())
   },
 }
 </script>
@@ -166,38 +162,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 5rem;
-  .stats-row{
-    width: 100%;
-    max-width: 350px;
-    display: flex;
-    justify-content: space-around;
-    gap: 20px;
-    .stats__calories,
-    .stats__pushups,
-    .stats-attempts{
-      color: black;
-      font-weight: 900;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 1rem 0;
-      padding: 1rem;
-      border: 2px solid $secondary;
-      img{
-        width: 2rem;
-      }
-    }
-    .stats__calories{
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      p{
-        margin-bottom: .3rem;
-      }
-    }
-  }
+
   .stats__date{
     color: black;
     font-weight: 900;
@@ -221,21 +186,39 @@ export default {
       }
     }
   }
-  .popup{
+  .popup-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 2rem 1rem;
     position: absolute;
-    top: 0;
+    z-index: 100;
+    bottom: 30vh;
+    height: 50vh;
     left: 10%;
     right: 10%;
     border: 10px double $secondary;
-    backdrop-filter: blur(13px);
+    backdrop-filter: blur(8px);
     text-align: center;
-    h2{
-      margin-bottom: 1rem;
+    .popup{
+      h2{
+        margin-bottom: 1rem;
+        font-weight: 900;
+      }
+      p{
+        margin: 1rem 0;
+        font-weight: 900;
+      }
     }
-    p{
-      margin: 1rem 0
-    }
+  }
+  .popup-bg{
+    position: absolute;
+    top: -150px;
+    width: 100vw;
+    height: 120vh;
+    z-index: 2;
+    opacity: 0.3;
+    background: repeating-linear-gradient( 45deg, $secondary, black 2px, $bg 2px, $bg 10px );
   }
 }
 @media only screen and (max-width: 340px) {

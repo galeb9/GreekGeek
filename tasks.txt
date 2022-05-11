@@ -25,10 +25,8 @@ x use some stuff with vuex (maybe basic functions & db get basic info in App.vue
 11.05.2022
 - clean code with vuex
 - poglej kako word diplomo spisat [ Jure template ]
-- Automatic day finish or have the option to finish for yesterday or today
-- reformat add friend component to not be used for each user but onClick
-- Automatic day finish or have the option to finish for yesterday or today
-
+- Automatic day finish or have the option to finish for yesterday or today 
+- refactor add friend component to not be used for each user but onClick
 
 <------------------------------------------------------------------------>
 
