@@ -1,13 +1,61 @@
 <template>
-  <h1>This are your arenas</h1>
+  <div class="my-arenas">
+    <GoBack text="Home" type="dark" />
+
+    <h3 class="my-arenas__title">Your Arenas</h3>
+    <div class="groups">
+      <GroupItem 
+        v-for="(group, index) in data" 
+        :key="index"
+        :img="group.img"
+        :name="group.name"
+        :members="group.members"
+      />
+    </div>
+
+
+    <AddArenaBtn />
+  </div>
 </template>
 
 <script>
+import AddArenaBtn from '@/components/arena/items/AddArenaBtn.vue'
+import GroupItem from '@/components/arena/group/GroupItem.vue'
 export default {
+  components: {
+    AddArenaBtn,
+    GroupItem
+  },
+  data() {
+    return {
+      data: [
+        { img: "group02.png", name: "Bros69", members: 12 },
+        { img: "group01.png", name: "Los Locos", members: 4 }
+      ]
+    }
+  },
+  methods: {
+  }
+
 
 }
 </script>
 
-<style>
+<style lang="scss">
+@import '@/assets/scss/_variables.scss';
+  .my-arenas{
+    min-height: 80vh;
+    margin: 65px 0.5rem 0 0.5rem;
+    .my-arenas__title{
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 22px;
+      color: rgba(0, 0, 0, 0.6);
+      margin: 1rem 0;
+    }
 
+
+
+  }
+  
 </style>

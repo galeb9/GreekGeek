@@ -38,8 +38,19 @@ x add arena functionality (design done)
  -------------------------------------------------------------------------------
 
 
-
 16.05.2022
+- add arena functionality (need to code it)
+x Composition Api 
+- vuex folders
+- poglej kako word diplomo spisat [ Jure template ]
+
+- new node course
+- clean code with vuex
+- refactor add friend component to not be used for each user but onClick
+
+----------------------------------------------------------------------------------
+
+17.05.2022
 - add arena functionality (need to code it)
 - Composition Api 
 - vuex folders
@@ -48,7 +59,7 @@ x add arena functionality (design done)
 - new node course
 - clean code with vuex
 - refactor add friend component to not be used for each user but onClick
-
+ 
 <------------------------------------------------------------------------>
 
 ⭐ Functionalities:

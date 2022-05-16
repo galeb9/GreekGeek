@@ -10,6 +10,7 @@ import RegisterForm from '@/components/RegisterForm'
 import TheFriends from '@/components/home/friends/TheFriends.vue'
 import MyProfile from '@/components/profile/MyProfile.vue'
 import MyArenas from '@/components/arena/MyArenas.vue'
+import PlayGround from '@/components/playground/PlayGround.vue'
 
 import { auth } from '@/components/firebaseInit.js'
 
@@ -88,6 +89,13 @@ const router = createRouter({
         {
             path: '/arena',
             component: MyArenas,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/playground',
+            component: PlayGround,
             meta: {
                 requiresAuth: true
             }

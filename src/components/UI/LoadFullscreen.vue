@@ -71,7 +71,7 @@ export default {
         height: 100%;
         width: 100vw;
         top: 0;
-        z-index: 2;
+        z-index: 100;
         .spinner {
             border-radius: 50%;
             margin-top: 35vh;

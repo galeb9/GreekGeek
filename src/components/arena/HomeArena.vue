@@ -2,6 +2,7 @@
   <HomeSection title="Arenas">
     <div class="home-arenas">
       <BaseButton @click="$router.push('/arena')" text="See your Arenas" />
+
     </div>
   </HomeSection>
 </template>
@@ -14,6 +15,6 @@ export default {
 
 <style lang="scss">
   .home-arenas{
-      padding-bottom: 2rem;
+    padding-bottom: 2rem;
   }
 </style>
