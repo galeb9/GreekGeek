@@ -14,7 +14,6 @@
       />
 
       <div class="stats-item">
-        <!-- <button @click="resetToday()" class="stats-item__button">Finish day</button> -->
         <button @click="togglePopup" class="stats-item__button">Finish day</button>
       </div>
 

@@ -11,10 +11,14 @@
       <TheHeader v-if="false" class="header" />
     </transition>
 
+    <transition name="fade-in" mode="out-in">
+      <Loader v-if="loadActive" />
+    </transition>
   </main>
 </template>
 
 <script>
+import Loader from '@/components/UI/LoadFullscreen.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
 import { db } from '@/components/firebaseInit.js'
 
@@ -24,10 +28,13 @@ export default {
   name: 'App',
   components: { 
     TheHeader,
+    Loader
   },
   data(){
     return{
-      headerVisible: true
+      headerVisible: true,
+      loadActive: true
+
     }
   },
   methods: {
@@ -53,11 +60,15 @@ export default {
         })
       console.log(userData)
     },
+    loadAnimation(){
+
+    }
   }, 
   created(){
     this.$store.dispatch("getUserData")
     // this.isUsernameOk("medo007")
 
+    setTimeout(() => this.loadActive = false, 1600)
   }
 }
 </script>

@@ -2,6 +2,7 @@
   <div class="home-stats">
     <HomeCalendar />
     <DailyProgress />
+    <HomeArena />
     <TheScoreboard />
   </div>
 </template>
@@ -10,13 +11,16 @@
 import HomeCalendar from '@/components/home/home-stats/HomeCalendar'
 import DailyProgress from '@/components/home/home-stats/progress/DailyProgress'
 import TheScoreboard from '@/components/home/home-stats/TheScoreboard'
+import HomeArena from '@/components/arena/HomeArena'
+
 
 
 export default {
   components:{
     HomeCalendar,
     DailyProgress,
-    TheScoreboard
+    TheScoreboard,
+    HomeArena
   }
 }
 </script>

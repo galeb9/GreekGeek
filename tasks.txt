@@ -22,15 +22,37 @@ x use some stuff with vuex (maybe basic functions & db get basic info in App.vue
 
 ------------------------------------------------------------------------
 
-11.05.2022
-- clean code with vuex
+11.05.2022 ✅
+x Automatic day finish or have the option to finish for yesterday or today 
+
+----------------------------------------------------------------------------
+
+14.05.2022 ✅
+x add home load animation
+
+-------------------------------------------------------------------------------
+
+15.05.2022 ✅
+x add arena functionality (design done)
+
+ -------------------------------------------------------------------------------
+
+
+
+16.05.2022
+- add arena functionality (need to code it)
+- Composition Api 
+- vuex folders
 - poglej kako word diplomo spisat [ Jure template ]
-- Automatic day finish or have the option to finish for yesterday or today 
+
+- new node course
+- clean code with vuex
 - refactor add friend component to not be used for each user but onClick
 
 <------------------------------------------------------------------------>
 
 ⭐ Functionalities:
+    ➡ 
     ➡ Add arena option
     ➡ Automatic day finish / Option to finish for yesterday
     ➡ PastData be by months
