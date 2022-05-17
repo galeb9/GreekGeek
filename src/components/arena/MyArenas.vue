@@ -13,28 +13,41 @@
       />
     </div>
 
+    <transition name="move-in-bottom">
+      <AddGroupPopup v-if="isPopupVisible" @close-popup="closePopup" />
+    </transition>
 
-    <AddArenaBtn />
+
+    <AddArenaBtn @click="showPopup" />
   </div>
 </template>
 
 <script>
 import AddArenaBtn from '@/components/arena/items/AddArenaBtn.vue'
 import GroupItem from '@/components/arena/group/GroupItem.vue'
+import AddGroupPopup from '@/components/arena/popup/AddGroupPopup.vue'
 export default {
   components: {
     AddArenaBtn,
-    GroupItem
+    GroupItem,
+    AddGroupPopup
   },
   data() {
     return {
       data: [
         { img: "group02.png", name: "Bros69", members: 12 },
         { img: "group01.png", name: "Los Locos", members: 4 }
-      ]
+      ],
+      isPopupVisible: true
     }
   },
   methods: {
+    showPopup(){
+      this.isPopupVisible = !this.isPopupVisible
+    },
+    closePopup(){
+      this.isPopupVisible = false
+    }
   }
 
 
@@ -53,8 +66,6 @@ export default {
       color: rgba(0, 0, 0, 0.6);
       margin: 1rem 0;
     }
-
-
 
   }
   

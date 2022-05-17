@@ -15,14 +15,14 @@
 <script>
 export default {
     props: {
-        img: { type: String, default: "group01.png" },
-        name: { type: String, default: "" },
-        members: { type: Number, default: 0 }
+      img: { type: String, default: "group01.png" },
+      name: { type: String, default: "" },
+      members: { type: Number, default: 0 }
     },
     methods: {
-        getImgUrl(pic) {
-            return require('@/assets/img/groups/' + pic)
-        },
+      getImgUrl(pic) {
+          return require('@/assets/img/groups/' + pic)
+      },
     }
 
 }
@@ -33,7 +33,7 @@ export default {
 
     .group-item{
       margin-bottom: 1rem;
-      padding: 1rem 1.8rem ;
+      padding: 0.7rem 1rem ;
       max-width: 540px;
       min-width: 250px;
       border-radius: 8px;

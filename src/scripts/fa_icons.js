@@ -16,6 +16,7 @@ import {
     faArrowLeft,
     faDove,
     faXmark,
+    faArrowUpFromBracket
 } from "@fortawesome/free-solid-svg-icons";
 // import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
@@ -36,29 +37,13 @@ const icons = [    faBullseye,
     faArrowLeft,
     faDove,
     faXmark,
+    faArrowUpFromBracket
 ]
 
 for(let i = 0; i < icons.length; i++){
     library.add(icons[i])
 }
 
-// library.add(faBullseye);
-// library.add(faHouse);
-// library.add(faFireFlameCurved);
-// library.add(faChartPie);
-// library.add(faGear);
-// library.add(faCircleCheck);
-// library.add(faCheck);
-// library.add(faArrowRightToBracket);
-// library.add(faRightFromBracket);
-// library.add(faAngleDown);
-// library.add(faEye);
-// library.add(faMagnifyingGlass)
-// library.add(faUser)
-// library.add(faArrowLeft)
-// library.add(faDove),
-// library.add(faXmark)
 
-// library.add(faGoogle);
 
 
