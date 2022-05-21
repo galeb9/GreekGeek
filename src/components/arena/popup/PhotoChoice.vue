@@ -1,6 +1,6 @@
 <template>
     <div class="photo-choice">
-        <h3 class="popup__heading">Choose Arena photo</h3>
+        <PopupHeading text="Choose Arena photo" />
         <div class="photo__list">
             <font-awesome-icon class="photo__upload" :icon="['fa', 'arrow-up-from-bracket']"/>
             <img
@@ -15,7 +15,12 @@
 </template>
 
 <script>
+import PopupHeading from './PopupHeading.vue'
+
 export default {
+    components: {
+        PopupHeading
+    },
     data() {
         return {
             pics: ["group01.png", "group02.png","group01.png", "group02.png","group01.png", "group02.png","group01.png", "group02.png"]
@@ -34,12 +39,6 @@ export default {
 
     .photo-choice{
         margin-top: 1.5rem;
-        .popup__heading{
-            font-weight: 700;
-            font-size: 18px;
-            line-height: 22px;
-            color: rgba(255, 255, 255, 0.97);
-        }
         .photo__list{
             padding: 1rem 0 1.5rem 0;
             display: flex;

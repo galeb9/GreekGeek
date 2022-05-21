@@ -2,6 +2,10 @@
   <div class="my-arenas">
     <GoBack text="Home" type="dark" />
 
+    <transition name="fade-in" mode="in-out">
+      <BaseButton align="" v-if="isPopupVisible"  @click="closePopup" text="X" />
+    </transition>
+
     <h3 class="my-arenas__title">Your Arenas</h3>
     <div class="groups">
       <GroupItem 
@@ -38,7 +42,7 @@ export default {
         { img: "group02.png", name: "Bros69", members: 12 },
         { img: "group01.png", name: "Los Locos", members: 4 }
       ],
-      isPopupVisible: true
+      isPopupVisible: false
     }
   },
   methods: {
@@ -66,7 +70,19 @@ export default {
       color: rgba(0, 0, 0, 0.6);
       margin: 1rem 0;
     }
-
+    .base-button{
+      border-radius: $main-radius;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      background: rgb(189, 17, 17) !important;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
   }
   
 </style>

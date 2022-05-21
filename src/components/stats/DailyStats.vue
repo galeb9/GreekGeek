@@ -7,15 +7,18 @@
         :goal="userGoal"
         :surplus="surplus"
        />
+
+      <div class="stats-item">
+        <button @click="togglePopup" class="stats-item__button">Finish day</button>
+      </div>
+      
       <DailyStatsItems 
         :attempts="attempts"
         :calories="calories"
         :userPushups="userPushups"
       />
 
-      <div class="stats-item">
-        <button @click="togglePopup" class="stats-item__button">Finish day</button>
-      </div>
+ 
 
       <transition name="move-in-bottom">
         <div class="popup-container" v-if="popupVisible">
@@ -55,8 +58,8 @@ export default {
       daysChar: ["Sun", "Mon", "Tue","Wed", "Thu", "Fri", "Sat"],
       today: new Date(),
 
-      userGoal: null,
-      userPushups: null,
+      userGoal: 0,
+      userPushups: 0,
       userId: auth.currentUser.uid,
 
       surplus: 0,

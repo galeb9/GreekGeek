@@ -14,7 +14,7 @@ $grey : rgba( $greyColor, 0.4);
 $fontColorInvert: white;
 $success: #2d6a4f;
 $error: red;
-
+$main-radius: 8px;
 $radius: 20px;
 $dark: #484256;
 $purple: #8280EB;
@@ -43,7 +43,6 @@ $orange: #f4a261;
     opacity: 1;
   }
 }
-
 
 // body {
 // 	background: linear-gradient(-45deg, black, $purple, $greyColor);

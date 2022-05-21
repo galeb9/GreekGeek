@@ -2,7 +2,7 @@
     <div class="group-input">
         <label for="arenaName" class="arena-name__label" >
             <img v-if="icon ==='arena' " src="@/assets/img/groups/arena.png" alt="">
-
+            <img v-if="icon ==='loupe' " src="@/assets/icons/search.svg" alt="">
         </label>
         <input 
             class="arena-name__input" 
@@ -19,10 +19,9 @@
 export default {
     props:{
         placeholder: { type: String, default: "Type here..." },
-        modelValue: { type: String, default: "" },
-        type: { type: String, default: "text" },
         icon: { type: String, default: "" },
-
+        type: { type: String, default: "text" },
+        modelValue: { type: String, default: "" }
     }, 
     methods: {
         updateValue(event){
@@ -40,18 +39,25 @@ export default {
         align-items: center;
         gap: 1rem;
         background: white;
-        border-radius: 8px;
+        border-radius: $main-radius;
         padding: .1rem;
+        min-height: 70px;
 
 
         .arena-name__label{
             padding: 0 .5rem;
+            img{
+                height: 100%;
+            }
         }
         .arena-name__input{
             background: transparent;
             border: none;
-            font-size: 20px;
             outline: none;
+            font-size: 20px;
+            &::placeholder{
+                font-size: 18px;
+            }
         }
     }
 </style>
