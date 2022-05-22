@@ -31,7 +31,7 @@
 
         <GroupInput 
             icon="loupe" 
-            placeholder="Search for memebers"
+            placeholder="Search for new members"
             v-model="memeberSearch"
         />
 

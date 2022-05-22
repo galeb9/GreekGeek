@@ -53,9 +53,7 @@ export default {
         { img: "group02.png", name: "Bros69", memebers: 12 },
         { img: "group01.png", name: "Los Locos", memebers: 4 }
       ],
-      // isPopupVisible: false
-      isPopupVisible: true
-
+      isPopupVisible: false
     }
   },
   methods: {
