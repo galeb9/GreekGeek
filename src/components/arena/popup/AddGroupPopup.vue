@@ -5,7 +5,7 @@
 
         <GroupItem 
             :img="selectedImg"
-            :name="arenaName"
+            :name="arenaName === '' ? 'Group name' : arenaName "
             :members="addedFriends.length"
         />
 
@@ -52,11 +52,22 @@
             />
         </div>
 
-        <BaseButton 
-            text="Add Arena" 
-            class="add-arena-popup__btn"
-            :shadow="false"
-        />
+        <div class="popup__btns">
+            <BaseButton 
+                text="Add Arena" 
+                class="add-arena-popup__btn"
+                :shadow="false"
+                align="" 
+                @click="CreateNewArena"
+            />
+            <BaseButton 
+                text="cancel" 
+                kind="close"
+                align="" 
+                @click="$emit('closePopup')" 
+            />
+        </div>
+
 
     </div>
    
@@ -117,19 +128,20 @@ export default {
         changeArray(selected, arr, name){
             const notInArr = arr.every( el => el !== name) // true if current name is not yet in added friends
 
-            // const inArr = arr.some(el => el === name)
-            // inArr ? isMemeber = true : isMemeber = false
-            // console.log("Is this a memeber already? " + isMemeber)
-            
-      
-
             if(selected && notInArr){
                 arr.push(name)
             }else {
                 this.removeFromArray(arr, name)
             }
         },
- 
+        CreateNewArena(){
+            const data = {
+                img: this.selectedImg,
+                name: this.arenaName,
+                memebers: this.addedFriends.length
+            }
+            this.$emit("newArenaData", data)
+        }
     },
     computed: { //somehow do so you cannot find yourself (remove from array)
         searchForUser() {
@@ -152,27 +164,27 @@ export default {
 
     .add-group-popup{
         min-width: 321px;
-        max-height: 90vh;
-        // height: 100%;
-        // overflow-y: scroll;
+        max-height: 102vh;
+        // max-height: max-height;
         background: rgba(126, 164, 220, 0.27);
+        -webkit-backdrop-filter: blur(25px);
         backdrop-filter: blur(25px);
-        border-radius: 20px 20px 0 0;
+        //border-radius: 20px 20px 0 0;
         position: fixed;
         z-index: 101;
-        bottom: -10px;
+        top: 0;
         left: 0;
         right: 0;
         color: white;
         // padding: .8rem 1.8rem;
 
         .popup-main{
-            max-height: 56vh;
+            max-height: 87vh;
             height: 100%;
             overflow-y: scroll;
             padding: .8rem 1.8rem;
 
-            padding-bottom: 2rem;
+            padding-bottom: 3rem;
             .memebers-added{
                 background: black;
                 margin: 1rem 0;
@@ -197,6 +209,11 @@ export default {
             }
             .add-arena-popup__btn .base-button{
                 border-radius: $main-radius;                
+            }
+            .popup__btns{
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
             }
         }
     }

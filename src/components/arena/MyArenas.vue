@@ -20,12 +20,16 @@
         :key="index"
         :img="group.img"
         :name="group.name"
-        :members="group.members"
+        :memebers="group.memebers"
       />
     </div>
 
     <transition name="move-from-bottom">
-      <AddGroupPopup v-if="isPopupVisible" @close-popup="closePopup" />
+      <AddGroupPopup 
+        v-if="isPopupVisible" 
+        @new-arena-data="getData" 
+        @close-popup="closePopup"  
+      />
     </transition>
 
 
@@ -46,8 +50,8 @@ export default {
   data() {
     return {
       data: [
-        { img: "group02.png", name: "Bros69", members: 12 },
-        { img: "group01.png", name: "Los Locos", members: 4 }
+        { img: "group02.png", name: "Bros69", memebers: 12 },
+        { img: "group01.png", name: "Los Locos", memebers: 4 }
       ],
       // isPopupVisible: false
       isPopupVisible: true
@@ -60,6 +64,11 @@ export default {
     },
     closePopup(){
       this.isPopupVisible = false
+    },
+    getData(newArenaData){
+      this.data.push(newArenaData)
+      console.log("new data added", newArenaData)
+      this.closePopup()
     }
   }
 
@@ -79,6 +88,15 @@ export default {
       color: rgba(0, 0, 0, 0.6);
       margin: 1rem 0;
     }
+    .base-button__close .base-button{
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 50px;
+      height: 50px;
+      padding: 0;
+    }
+
     // move-from-bottom
     .move-from-bottom-enter-active{
       animation: move-from-bottom .3s ease-in-out 
