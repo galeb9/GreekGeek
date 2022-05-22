@@ -74,7 +74,7 @@ export default {
               goal: user.data().goal
             })
           });
-          // console.log(this.usersList[6].userImg)
+          console.log(this.usersList[6].userImg)
       });
     }
   },

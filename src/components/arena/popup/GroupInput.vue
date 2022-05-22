@@ -2,7 +2,9 @@
     <div class="group-input">
         <label for="arenaName" class="arena-name__label" >
             <img v-if="icon ==='arena' " src="@/assets/img/groups/arena.png" alt="">
-            <img v-if="icon ==='loupe' " src="@/assets/icons/search.svg" alt="">
+            <div class="input-svg-container">
+                <img v-if="icon ==='loupe' " src="@/assets/icons/search.svg" alt="">
+            </div>
         </label>
         <input 
             class="arena-name__input" 
@@ -41,13 +43,18 @@ export default {
         background: white;
         border-radius: $main-radius;
         padding: .1rem;
-        min-height: 70px;
+        min-height: 60px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.42);
 
 
         .arena-name__label{
-            padding: 0 .5rem;
+            padding: 0 0 0 1rem;
             img{
                 height: 100%;
+            }
+            .input-svg-container{
+                display: flex;
+                align-items: center;
             }
         }
         .arena-name__input{
@@ -55,6 +62,7 @@ export default {
             border: none;
             outline: none;
             font-size: 20px;
+
             &::placeholder{
                 font-size: 18px;
             }

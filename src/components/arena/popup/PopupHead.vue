@@ -13,7 +13,7 @@ export default {
 
 <style lang="scss">
     .popup__head{
-        padding: 1.5rem 0.5rem 3rem 0.5rem;
+        padding: 1.5rem 0.5rem 2rem 0.5rem;
         display: flex;
         flex-direction: column;
         align-items: center;

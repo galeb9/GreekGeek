@@ -17,7 +17,7 @@
       />
     </div>
 
-    <transition name="move-in-bottom">
+    <transition name="move-from-bottom">
       <AddGroupPopup v-if="isPopupVisible" @close-popup="closePopup" />
     </transition>
 
@@ -42,7 +42,9 @@ export default {
         { img: "group02.png", name: "Bros69", members: 12 },
         { img: "group01.png", name: "Los Locos", members: 4 }
       ],
-      isPopupVisible: false
+      // isPopupVisible: false
+      isPopupVisible: true
+
     }
   },
   methods: {
@@ -83,6 +85,23 @@ export default {
       top: 1rem;
       right: 1rem;
     }
+
+    // move-from-bottom
+    .move-from-bottom-enter-active{
+      animation: move-from-bottom .3s ease-in-out 
+    }
+    .move-from-bottom-leave-active {
+      animation: move-from-bottom .3s ease-in-out reverse
+    }
+    @keyframes move-from-bottom {
+      from{
+        transform: translateY(100%);
+      }
+      to{
+        transform: translateY(0);
+      }
+    }
+
   }
   
 </style>

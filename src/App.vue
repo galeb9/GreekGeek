@@ -47,7 +47,7 @@ export default {
       }
       return comp
     },
-    async isUsernameOk(username){
+    async isUsernameOk(username){ //works
       const userData = await db.collection("users")
         .where("username", "==", username)
         .get()

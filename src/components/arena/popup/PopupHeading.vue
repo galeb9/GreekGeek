@@ -1,11 +1,16 @@
 <template>
-    <h3 class="popup__heading">{{ text }}</h3>
+    <h3 
+        class="popup__heading"
+        :style="{ margin: topMargin + ' 0 ' + bottomMargin + ' 0' }"
+    >{{ text }}</h3>
 </template>
 
 <script>
 export default {
     props: {
-        text: {type: String, default: 'Title'}
+        text: {type: String, default: 'Title'},
+        topMargin: {type: String, default: '0'},
+        bottomMargin: {type: String, default: '0'}
     }
 
 }

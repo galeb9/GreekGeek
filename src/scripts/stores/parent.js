@@ -23,12 +23,12 @@ const store = createStore({
             } catch (error) {
                 console.log(error)
             }
-        },
+        }
     },
     actions: { // best use of functions
         getUserData(context){
             context.commit('getUserData')
-        }
+        },
     },
     getters: { // same as computed
         myAvatar(state) {
