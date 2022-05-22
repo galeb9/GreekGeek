@@ -2,7 +2,10 @@
     <h3 
         class="popup__heading"
         :style="{ margin: topMargin + ' 0 ' + bottomMargin + ' 0' }"
-    >{{ text }}</h3>
+    >
+        <span>{{ text }}</span>
+        <slot></slot>
+    </h3>
 </template>
 
 <script>

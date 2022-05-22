@@ -3,7 +3,14 @@
     <GoBack text="Home" type="dark" />
 
     <transition name="fade-in" mode="in-out">
-      <BaseButton align="" v-if="isPopupVisible"  @click="closePopup" text="X" />
+      <BaseButton 
+        class="base-button__close" 
+        align="" 
+        v-if="isPopupVisible"  
+        @click="closePopup" 
+        text="X" 
+        kind="close"
+      />
     </transition>
 
     <h3 class="my-arenas__title">Your Arenas</h3>
@@ -72,20 +79,6 @@ export default {
       color: rgba(0, 0, 0, 0.6);
       margin: 1rem 0;
     }
-    .base-button{
-      border-radius: $main-radius;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      background: rgb(189, 17, 17) !important;
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-    }
-
     // move-from-bottom
     .move-from-bottom-enter-active{
       animation: move-from-bottom .3s ease-in-out 

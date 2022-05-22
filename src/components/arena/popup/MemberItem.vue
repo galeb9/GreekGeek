@@ -8,7 +8,8 @@
             <h3 class="memeber-item__name">{{ name }}</h3>
         </div>
         <!-- <div :class="['memeber-select', { 'selected' : isSelected }]"></div> -->
-        <div :class="['memeber-select', { 'selected' : isMember }]"></div>
+        <div :class="['memeber-select', { 'selected' : isSelected }]"></div>
+
     </div>
 </template>
 
@@ -22,7 +23,7 @@ export default {
     },
     data(){
         return {
-            isSelected: false
+            isSelected: this.isMember
         }
     },
     methods: {
