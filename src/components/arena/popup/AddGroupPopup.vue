@@ -1,16 +1,22 @@
 <template>
   <div class="add-group-popup">
     <PopupHead />
-
     <div class="popup-main">
+
+        <GroupItem 
+            :img="selectedImg"
+            :name="arenaName"
+            :members="addedFriends.length"
+        />
+
         <GroupInput 
             icon="arena" 
             placeholder="Arena name goes here..."
             v-model="arenaName"
         />
 
-        <PhotoChoice />
-
+        <PhotoChoice @is-selected="getSelectedImg"/>
+        <p>Selected image: {{selectedImg}}</p>
         <div class="memebers-added">
             <PopupHeading 
                 class="popup__heading--special"
@@ -61,7 +67,8 @@
 <script>
 import PopupHead from './PopupHead.vue'
 import GroupInput from './GroupInput.vue'
-import PhotoChoice from './PhotoChoice.vue'
+import PhotoChoice from './photo/PhotoChoice.vue'
+import GroupItem from '../group/GroupItem.vue'
 import PopupHeading from './PopupHeading.vue'
 import MemberItem from './MemberItem.vue'
 
@@ -72,7 +79,8 @@ export default {
         GroupInput,
         PhotoChoice,
         PopupHeading,
-        MemberItem
+        MemberItem,
+        GroupItem
     },
     data() {
         return {
@@ -88,11 +96,8 @@ export default {
                 { name: "user03", img: "greek-geek5.jpg", isMemeber: false },
                 { name: "user04", img: "greek-geek6.jpg", isMemeber: false },
             ],
-            matchingMembers: []
-            // Does work more properly than before... 
-            // have to figure out maybe add prop to memebers array added: true or false and toggle it like you toggle now x
-            // Problem: after you search through memeberSearch the previous do not stay isMemeber on ??? maybe because it does not save to db and are rerenderd?
-      
+            matchingMembers: [],
+            selectedImg: 'group01.png'
         }
     },
 
@@ -105,6 +110,9 @@ export default {
             if (index !== -1) {
                 arr.splice(index, 1);   
             }
+        },
+        getSelectedImg(img){
+            this.selectedImg=img
         },
         changeArray(selected, arr, name){
             const notInArr = arr.every( el => el !== name) // true if current name is not yet in added friends
@@ -173,12 +181,13 @@ export default {
                 .popup__heading--special{
                     display: flex;
                     justify-content: space-between;
+                    align-items: center;
                     .added-count{
                         font-weight: 400;
                         letter-spacing: 2px;
+                        font-size: 16px !important;
                     }  
                 }
-            
                 .memebers-added__list{
                     margin-top: .5rem;
                 }
