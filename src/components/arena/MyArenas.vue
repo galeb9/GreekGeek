@@ -15,23 +15,19 @@
 
     <!-- move this to new component -->
     <transition name="move-from-bottom"> 
-      <div 
+      <SelectedGroup 
+        :name="name"
+        :memebers="memebers"
+        :img="img"
+        @click-back="hideGroup"
         v-if="groupSelected"
-        class="group-item-selected"
-      >
-        <GoBack 
-          text="Back" 
-          type="dark" 
-          link="arena"
-          @click="hideGroup"  
-        />
-        <div class="group-item-selected__main">
-          <p>{{ name }}</p>
-          <p>{{ memebers }} memebers</p>
-        </div>
-      </div>
+      />
     </transition>
     <!-- end of component  -->
+
+    
+
+
 
 
 
@@ -52,11 +48,14 @@
 import AddArenaBtn from '@/components/arena/items/AddArenaBtn.vue'
 import GroupItem from '@/components/arena/group/GroupItem.vue'
 import AddGroupPopup from '@/components/arena/popup/AddGroupPopup.vue'
+import SelectedGroup from '@/components/arena/group/SelectedGroup.vue'
+
 export default {
   components: {
     AddArenaBtn,
     GroupItem,
-    AddGroupPopup
+    AddGroupPopup,
+    SelectedGroup
   },
   data() {
     return {
@@ -65,14 +64,17 @@ export default {
         { img: "group01.png", name: "Los Locos", memebers: 4 }
       ],
       isPopupVisible: false,
-      // groupSelected: false,
-      groupSelected: true,
+      groupSelected: false,
+      // groupSelected: true,
 
 
       name: null,
       img: null,
       memebers: null
     }
+  },
+  computed: {
+
   },
   methods: {
     showPopup(){
@@ -104,6 +106,7 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/_variables.scss';
+
   .my-arenas{
     min-height: 80vh;
     margin: 65px 0.5rem 0 0.5rem;
@@ -140,19 +143,19 @@ export default {
     }
 
 
-    .group-item-selected{
-      background: $bg;
-      position: fixed;
-      z-index: 3;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 1rem 1.4rem;
-      .group-item-selected__main{
-        margin-top: 5rem;
-      }
-    }
+    // .group-item-selected{
+    //   background: $bg;
+    //   position: fixed;
+    //   z-index: 3;
+    //   top: 0;
+    //   left: 0;
+    //   right: 0;
+    //   bottom: 0;
+    //   padding: 1rem 1.4rem;
+    //   .group-item-selected__main{
+    //     margin-top: 5rem;
+    //   }
+    // }
   }
   
 </style>

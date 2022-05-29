@@ -10,7 +10,7 @@ import RegisterForm from '@/components/RegisterForm'
 import TheFriends from '@/components/home/friends/TheFriends.vue'
 import MyProfile from '@/components/profile/MyProfile.vue'
 import MyArenas from '@/components/arena/MyArenas.vue'
-import SelectedGroup from '@/components/arena/group/SelectedGroup.vue'
+// import SelectedGroup from '@/components/arena/group/SelectedGroup.vue'
 import NotFound from '@/components/UI/NotFound.vue'
 
 import { auth } from '@/components/firebaseInit.js'
@@ -94,14 +94,14 @@ const router = createRouter({
                 requiresAuth: true
             }
         },
-        {
-            path: '/arena/:id',
-            name: 'SelectedGroup',
-            component: SelectedGroup,
-            meta: {
-                requiresAuth: true
-            }
-        },
+        // {
+        //     path: '/arena/:id',
+        //     name: 'SelectedGroup',
+        //     component: SelectedGroup,
+        //     meta: {
+        //         requiresAuth: true
+        //     }
+        // },
 
         // catch all
         {
