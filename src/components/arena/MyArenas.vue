@@ -1,18 +1,6 @@
 <template>
   <div class="my-arenas">
     <GoBack text="Home" type="dark" />
-
-    <transition name="fade-in" mode="in-out">
-      <BaseButton 
-        class="base-button__close" 
-        align="" 
-        v-if="isPopupVisible"  
-        @click="closePopup" 
-        text="X" 
-        kind="close"
-      />
-    </transition>
-
     <h3 class="my-arenas__title">Your Arenas</h3>
     <div class="groups">
       <GroupItem 
@@ -21,8 +9,31 @@
         :img="group.img"
         :name="group.name"
         :memebers="group.memebers"
+        @show-selected-group="showGroup"
       />
     </div>
+
+    <!-- move this to new component -->
+    <transition name="move-from-bottom"> 
+      <div 
+        v-if="groupSelected"
+        class="group-item-selected"
+      >
+        <GoBack 
+          text="Back" 
+          type="dark" 
+          link="arena"
+          @click="hideGroup"  
+        />
+        <div class="group-item-selected__main">
+          <p>{{ name }}</p>
+          <p>{{ memebers }} memebers</p>
+        </div>
+      </div>
+    </transition>
+    <!-- end of component  -->
+
+
 
     <transition name="move-from-bottom">
       <AddGroupPopup 
@@ -53,7 +64,14 @@ export default {
         { img: "group02.png", name: "Bros69", memebers: 12 },
         { img: "group01.png", name: "Los Locos", memebers: 4 }
       ],
-      isPopupVisible: false
+      isPopupVisible: false,
+      // groupSelected: false,
+      groupSelected: true,
+
+
+      name: null,
+      img: null,
+      memebers: null
     }
   },
   methods: {
@@ -67,6 +85,16 @@ export default {
       this.data.push(newArenaData)
       console.log("new data added", newArenaData)
       this.closePopup()
+    },
+
+    showGroup(name, img, memebers){
+      this.groupSelected = true;
+      this.name = name;
+      this.img = img;
+      this.memebers = memebers
+    },
+    hideGroup(){
+      this.groupSelected = false;
     }
   }
 
@@ -111,6 +139,20 @@ export default {
       }
     }
 
+
+    .group-item-selected{
+      background: $bg;
+      position: fixed;
+      z-index: 3;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 1rem 1.4rem;
+      .group-item-selected__main{
+        margin-top: 5rem;
+      }
+    }
   }
   
 </style>

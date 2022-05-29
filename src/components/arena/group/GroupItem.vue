@@ -1,15 +1,13 @@
 <template>
-    <div 
-      class="group-item" 
-    >
-      <div class="group__image">
-        <img :src="getImgUrl(img)" alt="">
-      </div>
-      <div class="group__text">
-        <h3 class="name">{{ name }}</h3>
-        <p class="memebers">{{ memebers }} memebers</p>
-      </div>
+  <div class="group-item" @click="$emit('showSelectedGroup', this.name, this.img, this.memebers)">
+    <div class="group__image">
+      <img :src="getImgUrl(img)" alt="">
     </div>
+    <div class="group__text">
+      <h3 class="name">{{ name }}</h3>
+      <p class="memebers">{{ memebers }} memebers</p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -21,7 +19,7 @@ export default {
     },
     methods: {
       getImgUrl(pic) {
-          return require('@/assets/img/groups/' + pic)
+        return require('@/assets/img/groups/' + pic)
       },
     }
 }
