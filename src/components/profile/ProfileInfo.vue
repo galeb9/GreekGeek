@@ -65,7 +65,9 @@ export default {
         align-items: flex-end;
         text-align: center;
         z-index: 2;
+        color: black;
         transform: translate(0,-100px);
+        
         .my-profile__info-item{
             padding-bottom: 1.5rem;
             min-width: 3rem;

@@ -1,20 +1,5 @@
 <template>
   <div class="friends">
-    <h2>Explore</h2>
-
-    <!-- <div class="search-user">
-      <label for="search">
-        <font-awesome-icon class="fa" :icon="['fa', 'magnifying-glass']"/>
-      </label>
-      <input 
-        type="text" 
-        name="search" 
-        id="search" 
-        placeholder="Search for a friend" 
-        v-model="search"
-      >
-    </div> -->
-
     <GroupInput 
       icon="loupe" 
       placeholder="Search for new alies"

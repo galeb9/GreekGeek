@@ -46,7 +46,6 @@ export default {
         min-height: 60px;
         box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.42);
 
-
         .arena-name__label{
             padding: 0 0 0 1rem;
             img{

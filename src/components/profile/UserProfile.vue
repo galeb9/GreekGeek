@@ -325,6 +325,7 @@ export default {
         align-items: center;
         .back-icon{
             font-size: 1.1rem;
+            color: black;
         }
     }
     .go__back{

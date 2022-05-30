@@ -1,19 +1,19 @@
 <template>
-    <div
-        class="user-card"
-    >
+    <div class="user-card">
         <img 
             class="user-card__img" 
             :src="getImgUrl(userImg)" 
-            alt=""
+            alt="profile image"
         >
-
         <div class="user-card__info">
             <p class="user-card__name">{{ name }}</p>
             <button class="user-card__add-btn" @click="togglePopup" >
               <font-awesome-icon class="fa-eye" :icon="['fa', 'eye']"/>
             </button>
         </div>
+
+
+
         <transition name="move-in-bottom">
             <div class="user-profile__popup" v-show="popupVisible">
                 <UserProfile
@@ -24,6 +24,8 @@
                 />
             </div>
         </transition>
+
+        
     </div>
 </template>
 
@@ -77,62 +79,36 @@ export default {
 
 .user-card{
     display: flex;
+    align-items: center;
+    background: black;
+    color: white;
     gap: 1rem;
     max-height: 100px;
-    padding-bottom: .3rem;
+    padding: 0.6rem;
+    border-radius: $main-radius;
+    box-shadow: 0px 8px 14px rgba(0, 0, 0, 0.22);
+
     .user-profile__popup{
         position: absolute;
         top: 0;
         left: 0;
     }
-    .add-friend-popup{
-        border: 10px double white;
-        position: absolute;
-        top: 50vh;
 
-        left: 1.5rem;
-        right: 5vw;
-
-        margin: 0 auto;
-        background: rgba(#000000, .9);
-        color: white;
-        padding: 2rem ;
-        text-align: center;
-        p{
-            margin-bottom: 1rem;
-            font-weight:600;
-            letter-spacing: 1px;
-        }
-        .popup__btns{
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            button{
-                padding: .6rem 1.8rem;
-                text-transform: uppercase;
-                font-weight: 700;
-                border: none;
-                border: 8px double black;
-                outline: none;
-            }
-        }
-
-    }
     .user-card__img{
         max-width: 100%;
-        width: 4rem;
-        // border-radius: 50%;
+        width: 3.5rem;
+        border-radius: 50%;
     }
     .user-card__info{
         display: flex;
         justify-content: space-between;
+        align-items: center;
         gap: 1rem;
         width: 100%;
         .user-card__name{
-            padding-top: .5rem;
-            font-weight: 900;
+            font-weight: 600;
             letter-spacing: 1px;
-            max-width: 30vw; // need to ajust is so it cannot have long name
+            max-width: 30vw; // need to adjust is so it cannot have long name
         }
         .user-card__add-btn{
             width: 50px;
@@ -144,7 +120,8 @@ export default {
             font-size: 1.5rem;
             border-radius: 5px;
             .fa-eye{
-                color: $secondary;
+                color: $bg;
+                width: 1.3rem;
             }
         }
     }
