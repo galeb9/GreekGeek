@@ -1,7 +1,8 @@
 <template>
   <div class="friends">
     <h2>Explore</h2>
-    <div class="search-user">
+
+    <!-- <div class="search-user">
       <label for="search">
         <font-awesome-icon class="fa" :icon="['fa', 'magnifying-glass']"/>
       </label>
@@ -12,7 +13,14 @@
         placeholder="Search for a friend" 
         v-model="search"
       >
-    </div>
+    </div> -->
+
+    <GroupInput 
+      icon="loupe" 
+      placeholder="Search for new alies"
+      v-model="search"
+    />
+
 
     <div class="all-users">
       <h3>All Users</h3>
@@ -34,12 +42,13 @@
 import { db, auth } from '@/components/firebaseInit.js';
 import FriendCard from '@/components/home/friends/FriendCard.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
-
+import GroupInput from '@/components/arena/popup/GroupInput.vue'
 
 export default {
   components:{
     FriendCard,
-    TheHeader
+    TheHeader,
+    GroupInput
   },
   data(){
     return {

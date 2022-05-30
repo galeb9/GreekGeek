@@ -16,7 +16,7 @@
         />
 
         <PhotoChoice @is-selected="getSelectedImg"/>
-        <!-- <p>Selected image: {{selectedImg}}</p> -->
+        
         <div class="memebers-added">
             <PopupHeading 
                 class="popup__heading--special"
