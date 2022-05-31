@@ -9,7 +9,7 @@
 
     <div class="all-users">
       <h3>All Users</h3>
-      <div class="users-list">
+      <div class="users-list" v-if="search !== ''">
         <FriendCard
           v-for="(el, index) in searchForUser"
           :key="index" 
@@ -18,6 +18,18 @@
           @get-friend-data="getFriendData"
         />
       </div>
+
+      <div v-else class="users-list">
+        <FriendCard
+          v-for="(el, index) in sampleUsersList"
+          :key="index" 
+          :name="el.username"
+          :user-img="el.userImg"
+          @get-friend-data="getFriendData"
+        />
+      </div>
+
+
     </div>
 
 
@@ -75,27 +87,43 @@ export default {
       isFriend: false,
       requestSent: false,
 
+      sampleUsersList: []
+
     }
   },
   computed: { //somehow do so you cannot find yourself (remove from array)
     searchForUser(){
       return this.usersList.filter(user => user.username.toLowerCase().indexOf(this.search.toLowerCase()) != -1)
     },
+    myUsername(){
+      return this.$store.getters.myUsername
+    },
   },
   methods: {
     getUsers(){
       db.collection("users")
-        .where("username", "!=", this.username )
+        .where("username", "!=", this.myUsername )
         .orderBy("username","asc")
-        .limit(5)
         .get()
         .then((querySnapshot) => {
+          let count = 0;
           querySnapshot.forEach((user) => {
-            this.usersList.push({
+            
+            this.usersList.push({ // the real list user will search for friends
               username: user.data().username,
               userImg: user.data().userImg,
               goal: user.data().goal
             })
+
+            if(count < 6){ // makes a sample list
+              this.sampleUsersList.push({
+                username: user.data().username,
+                userImg: user.data().userImg,
+                goal: user.data().goal
+              })
+              count++;
+            }
+
           });
           // console.log(this.usersList[6].userImg)
       });
