@@ -1,5 +1,5 @@
 <template>
-    <div class="user-card">
+    <div class="user-card" @click="$emit('getFriendData', this.name, this.img, this.goal)">
         <img 
             class="user-card__img" 
             :src="getImgUrl(userImg)" 
@@ -7,14 +7,14 @@
         >
         <div class="user-card__info">
             <p class="user-card__name">{{ name }}</p>
-            <button class="user-card__add-btn" @click="togglePopup" >
+            <button class="user-card__add-btn">
               <font-awesome-icon class="fa-eye" :icon="['fa', 'eye']"/>
             </button>
         </div>
 
 
 
-        <transition name="move-in-bottom">
+        <!-- <transition name="move-in-bottom">
             <div class="user-profile__popup" v-show="popupVisible">
                 <UserProfile
                     @close-popup="closePopup"
@@ -23,17 +23,17 @@
                     :goal="goal"
                 />
             </div>
-        </transition>
+        </transition> -->
 
         
     </div>
 </template>
 
 <script>
-import UserProfile from '@/components/profile/UserProfile.vue'
+// import UserProfile from '@/components/profile/UserProfile.vue'
 export default {
     components: {
-        UserProfile
+        // UserProfile
     },
     props: {
         name: {
@@ -60,12 +60,12 @@ export default {
         getImgUrl(pic) {
             return require('@/assets/img/avatars/' + pic)
         },
-        togglePopup(){
-            return this.popupVisible = !this.popupVisible
-        },
-        closePopup(){
-            return this.popupVisible = false
-        },
+        // togglePopup(){
+        //     return this.popupVisible = !this.popupVisible
+        // },
+        // closePopup(){
+        //     return this.popupVisible = false
+        // },
     },
     created(){
         this.username = this.name;
@@ -88,11 +88,7 @@ export default {
     border-radius: $main-radius;
     box-shadow: 0px 8px 14px rgba(0, 0, 0, 0.22);
 
-    .user-profile__popup{
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
+
 
     .user-card__img{
         max-width: 100%;

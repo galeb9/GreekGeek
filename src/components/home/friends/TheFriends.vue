@@ -15,11 +15,32 @@
           :key="index" 
           :name="el.username"
           :user-img="el.userImg"
-          :goal="el.goal"
+          @get-friend-data="getFriendData"
         />
       </div>
     </div>
-  <TheHeader />
+
+
+    <!-- user-profile on popup -->
+    <transition name="move-in-bottom">
+      <div 
+        class="user-profile__popup" 
+        v-show="popupVisible"
+      >
+        <UserProfile
+          @close-popup="closePopup"
+          :img="img"
+          :name="name"
+          :goal="goal"
+
+          :id="friendId"
+          :we-friends="isFriend"
+          :request-sent="requestSent"
+        />
+      </div>
+    </transition>
+
+    <TheHeader />
   </div>
 </template>
 
@@ -28,18 +49,32 @@ import { db, auth } from '@/components/firebaseInit.js';
 import FriendCard from '@/components/home/friends/FriendCard.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
 import GroupInput from '@/components/arena/popup/GroupInput.vue'
+import UserProfile from '@/components/profile/UserProfile.vue'
 
 export default {
   components:{
     FriendCard,
     TheHeader,
-    GroupInput
+    GroupInput,
+    UserProfile
   },
   data(){
     return {
       usersList: [],
       search: '',
-      username: null
+      username: null,
+
+      popupVisible: false,
+      name: null, 
+      img: "greek-geek.png",
+      goal: null,
+
+      users: db.collection("users"),
+      friendId: null,
+
+      isFriend: false,
+      requestSent: false,
+
     }
   },
   computed: { //somehow do so you cannot find yourself (remove from array)
@@ -48,17 +83,11 @@ export default {
     },
   },
   methods: {
-    getUsername(){ // important so you cannot add yourself as a friend
-      db.collection("users").doc(auth.currentUser.uid).get()
-        .then(user => {
-          // console.log(user.data().username)
-          this.username = user.data().username
-        })
-    },
     getUsers(){
       db.collection("users")
         .where("username", "!=", this.username )
         .orderBy("username","asc")
+        .limit(5)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((user) => {
@@ -68,12 +97,73 @@ export default {
               goal: user.data().goal
             })
           });
-          console.log(this.usersList[6].userImg)
+          // console.log(this.usersList[6].userImg)
       });
-    }
+    },
+    openPopup(){
+      this.popupVisible = true;
+      document.body.style.overflow = "hidden";
+
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    },
+    closePopup(){
+      this.popupVisible = false
+      document.body.style.overflow = ""
+    },
+    findFriendId(name){
+      this.users.where("username", "==", name).get()
+        .then(snapshot => {
+            snapshot.forEach(user => {
+              this.friendId = user.id
+              console.log(this.friendId)
+            })
+        })
+    },
+
+    areFriends(username){ // Checks if we are friends 
+      db.collection("users")
+        .doc(auth.currentUser.uid)
+        .collection("friends")
+        .doc(username)
+        .get()
+        .then(user => {
+          if(user.data() === undefined){
+            return null
+          }else{
+            // console.log(user.data())
+            this.isFriend = user.data().friends
+          }
+        })
+    },
+    isFriendRequestSent(name){ // Checks if friend request is sent 
+      db.collection("users")
+        .doc(auth.currentUser.uid)
+        .collection("requests-sent")
+        .doc(name)
+        .get()
+        .then(user => {
+          if(user.data() != undefined){
+            this.requestSent = true
+          }
+          else{
+            this.requestSent = false
+          }
+          // console.log("is friend request sent? " + this.requestSent)
+        })
+    },
+    getFriendData(name, img, goal){
+      this.name = name
+      this.img = img
+      this.goal = goal
+
+      this.openPopup()
+      this.findFriendId(name)
+      this.areFriends(name)
+      this.isFriendRequestSent(name)
+    },
   },
   created(){
-    this.getUsername() // rabiš naštudirat async await !!! pa promises
     setTimeout(this.getUsers(), 3000)
   }
 }
@@ -110,6 +200,11 @@ export default {
         flex-wrap: wrap;
         gap: 1rem;
       }
+    }
+    .user-profile__popup{
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   }
 </style>

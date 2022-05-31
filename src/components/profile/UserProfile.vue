@@ -14,6 +14,8 @@
             :friends="friendCount"
             :areFriends="isFriend"
         />
+        <!-- <p>{{ id }}</p>
+        <p>{{ weFriends }}</p> -->
 
         <div class="profile__btns">
             <button 
@@ -38,16 +40,12 @@
                 @click="cancelRequest(name)"
             >
                 <span>Friend Request Sent</span> 
-                <font-awesome-icon v-if="areFriends" class="sent-icon" :icon="['fa', 'circle-check']"/>
+                <font-awesome-icon 
+                    v-if="isFriend" 
+                    class="sent-icon" 
+                    :icon="['fa', 'circle-check']"
+                />
             </button>
-
-            <!-- <div class="notification-container">
-                <transition name="move-in-bottom">
-                    <p :class="['notification__item', type]" v-if="notifVisible">
-                        {{ message }}
-                    </p>
-                </transition>
-            </div> -->
 
             <BaseNotif
                 :text="message"
@@ -74,6 +72,10 @@ export default {
             type: String,
             default: 'greek-geek.png'
         },
+        id: {
+            type: String,
+            default: ""
+        },
         name: {
             type: String,
             default: ''
@@ -81,33 +83,49 @@ export default {
         goal: {
             type: Number,
             default: 100
+        },
+        weFriends: {
+            type: Boolean,
+            default: false
+        },
+        requestSent: {
+            type: Boolean,
+            default: false
         }
     },
     data(){
         return{
             userImg: 'greek-geek.png',
-            username: 'user',
+            username: 'user404',
             friendCount: 0,
 
             message: '',
             type: '',
             notifVisible: false,
 
-            friendId: '',
+            myName: null, 
+
+            friendId: this.id,
             friendProfilePic: '',
             currentFriend: '',
 
-            myName: null,
-            myImg: null,
-            myId: null,
-
             isFriend: false,
-            isRequestSent: false,
+            isRequestSent: null,
             
         }
     },
+    computed: {
+        myUsername(){
+            return this.$store.getters.myUsername
+        },
+        myAvatarImg(){
+            return this.$store.getters.myAvatar;
+        },
+        myGoal(){
+            return this.$store.getters.myGoal
+        },
+    },
     methods: {
-        //this shuould only hold data the logic should be in the parent or we get the data to many times
         useNotification(message, type){
             this.notifVisible = true
             this.message = message
@@ -125,6 +143,38 @@ export default {
         closePopup(){
             this.$emit('close-popup')
         },
+
+        addFriendRequestYouSent(name){
+            db.collection("users").doc(auth.currentUser.uid)
+                .collection("requests-sent")
+                .doc(name)
+                .set({
+                    friendRequst: true
+                })
+                console.log("friend Request gets sent")
+        },
+        saveMessageToFriend(){
+            db.collection("users").doc(this.id)
+                .collection("friend-requests")
+                .doc(this.myName)
+                .set({
+                    friends: false,
+                    profileImage: this.myUsername,
+                    username : this.myAvatarImg,
+                    friendID: auth.currentUser.uid
+                })
+        },
+        sendFriendRequest(){
+            // console.log("is it null? ", this.friendId, this.id)
+            // console.log("id: " + this.friendId) 
+            // console.log("my name: " + this.myName)
+
+
+            this.addFriendRequestYouSent(this.name)
+            setTimeout(this.saveMessageToFriend, 2000)
+            this.isRequestSent = true
+            this.useNotification("Friend request sent to " + this.name, "success")
+        },
         removeFriend(name){
             db.collection("users")
                 .doc(auth.currentUser.uid)
@@ -134,63 +184,10 @@ export default {
 
             this.useNotification(this.name + " removed from friend list.", "error")
             this.isFriend = false
-                
         },
-        areFriends(username){
-            // const friendId;
-            db.collection("users")
-                .doc(auth.currentUser.uid)
-                .collection("friends")
-                .doc(username)
-                .get()
-                .then(user => {
-                    if(user.data() === undefined){
-                        return null
-                    }else{
-                        // console.log(user.data())
-                        this.isFriend = user.data().friends
-                    }
-                })
-        },
-        getUserData(){ //this account data
-            db.collection("users").doc(auth.currentUser.uid).get()
-                .then(user => {
-                    this.myName = user.data().username
-                    this.myImg = user.data().userImg
-                    this.myId = user.id
-                    // console.log(this.myName, this.myImg, this.myId)
-                })
-        },
-        findFriendId(){
-            const users = db.collection("users")
-            users.where("username", "==", this.username).get()
-                .then(snapshot => {
-                    snapshot.forEach(user => {
-                        this.friendId = user.id
-                    })
-                })
-        },
-        saveMessageToFriend(){
-            db.collection("users").doc(this.friendId)
-                .collection("friend-requests")
-                .doc(this.myName)
-                .set({
-                    friends: false,
-                    profileImage: this.myImg,
-                    username : this.myName,
-                    friendID: this.myId
-                })
-        },
-        addFriendRequestYouSent(name){
-            db.collection("users").doc(auth.currentUser.uid)
-                .collection("requests-sent")
-                .doc(name)
-                .set({
-                    friendRequst: true
-                })
-        },
-        cancelRequest(name){
-            this.findFriendId()
+
+
+        cancelRequest(name){ // cancels friend request
 
             // remove friend request from myself
             db.collection("users").doc(auth.currentUser.uid)
@@ -203,45 +200,19 @@ export default {
                 db.collection("users")
                 .doc(this.friendId)
                 .collection("friend-requests")
-                .doc(this.myName)
+                .doc(this.myUsername)
                 .delete()
             }, 1000)
 
             this.isRequestSent = false
             this.useNotification("Friend request CANCELED", "warning")
         },
-        sendFriendRequest(){
-            this.findFriendId()
-            this.addFriendRequestYouSent(this.name)
-            setTimeout(this.saveMessageToFriend, 1000)
-
-            this.isRequestSent = true
-            this.useNotification("Friend request sent to " + this.name, "success")
-        },
-
-
-        isFriendRequestSent(name){
-            db.collection("users")
-                .doc(auth.currentUser.uid)
-                .collection("requests-sent")
-                .doc(name)
-                .get()
-                .then(user => {
-                    if(user.data() != undefined){
-                        this.isRequestSent = true
-                    }
-                    else{
-                        this.isRequestSent = false
-                    }
-                })
-        },
     },
     created(){
-        this.findFriendId()
-        this.getUserData()
-        this.username = this.name
-        this.areFriends(this.name)
-        this.isFriendRequestSent(this.name)
+        this.myName = this.myUsername;
+        this.friendId = this.id;
+        this.isFriend = this.weFriends;
+        this.isRequestSent = this.requestSent
     }
 }
 </script>
