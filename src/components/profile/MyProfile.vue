@@ -9,7 +9,7 @@
     <div class="go__messages" @click="toggleMessageVisibility"  >
         <font-awesome-icon v-if="!messagesVisible" class="messages-icon" :icon="['fa', 'dove']"/>
         <font-awesome-icon v-if="messagesVisible" class="messages-icon" :icon="['fa', 'xmark']"/>
-        <div v-if="requests.length != 0" class="messge-status">
+        <div v-if="requests.length != 0 && !messagesVisible" class="message-status">
             <p>!</p>
         </div>
     </div>
@@ -261,7 +261,7 @@ export default {
         .messages-icon{
             font-size: 1.2rem;
         }
-        .messge-status{
+        .message-status{
             animation: breathe 1s infinite alternate ease-in-out;
             position: absolute;
             bottom: 0;

@@ -12,40 +12,44 @@
             :goal="goal"
             :img="getImgUrl(img)"
             :friends="friendCount"
-            :areFriends="isFriend"
+
+            :areFriends="areWeFriends"
         />
-        <!-- <p>{{ id }}</p>
-        <p>{{ weFriends }}</p> -->
+
 
         <div class="profile__btns">
+
             <button 
                 class="profile__btn" 
-                v-if="isFriend == false && isRequestSent == false " 
+                v-if="canSendRequest " 
                 @click="sendFriendRequest"
             >
                 Send Friend Request
             </button>
 
+         
+
+            <button 
+                class="profile__btn sent-friend__btn" 
+                v-if="haveSentRequest"
+                @click="cancelRequest(name)"
+            >
+                <span>Friend Request Sent</span> 
+                <font-awesome-icon 
+                    class="sent-icon" 
+                    :icon="['fa', 'circle-check']"
+                />
+            </button>
+
+
             <button 
                 class="profile__btn remove-friend__btn" 
-                v-if="isFriend"  
+                v-if="weAreFriends"  
                 @click="removeFriend(name)"
             >
                 Remove Friend
             </button>
 
-            <button 
-                class="profile__btn sent-friend__btn" 
-                v-if="isRequestSent"
-                @click="cancelRequest(name)"
-            >
-                <span>Friend Request Sent</span> 
-                <font-awesome-icon 
-                    v-if="isFriend" 
-                    class="sent-icon" 
-                    :icon="['fa', 'circle-check']"
-                />
-            </button>
 
             <BaseNotif
                 :text="message"
@@ -54,6 +58,12 @@
             />
 
         </div>
+
+        <!-- <div style="text-align: center">
+            <p >{{ id }}</p>
+            <p>Request sent? {{ requestSent }} : {{ isRequestSent }}</p>
+            <p>Friends? {{ areWeFriends }} : {{ isFriend }} </p>
+        </div> -->
 
     </div>
 
@@ -84,11 +94,11 @@ export default {
             type: Number,
             default: 100
         },
-        weFriends: {
+        requestSent: {
             type: Boolean,
             default: false
         },
-        requestSent: {
+        areWeFriends: {
             type: Boolean,
             default: false
         }
@@ -105,13 +115,25 @@ export default {
 
             myName: null, 
 
-            friendId: this.id,
             friendProfilePic: '',
             currentFriend: '',
 
             isFriend: false,
-            isRequestSent: null,
-            
+            isRequestSent: this.requestSent,
+
+
+        }
+    },
+    watch: {
+        requestSent(){
+            this.isRequestSent = this.requestSent
+            console.log("is request sent? " + this.isRequestSent)
+
+        },
+        areWeFriends(){
+            this.isFriend = this.areWeFriends
+            console.log("Are friends? " + this.areWeFriends)
+        
         }
     },
     computed: {
@@ -123,6 +145,18 @@ export default {
         },
         myGoal(){
             return this.$store.getters.myGoal
+        },
+        canSendRequest(){
+            if(!this.isFriend  && !this.isRequestSent){
+                return true
+            } 
+            return false
+        },
+        haveSentRequest(){
+            return this.isRequestSent ? true : false
+        },
+        weAreFriends(){
+            return this.isFriend ? true : false
         },
     },
     methods: {
@@ -165,11 +199,6 @@ export default {
                 })
         },
         sendFriendRequest(){
-            // console.log("is it null? ", this.friendId, this.id)
-            // console.log("id: " + this.friendId) 
-            // console.log("my name: " + this.myName)
-
-
             this.addFriendRequestYouSent(this.name)
             setTimeout(this.saveMessageToFriend, 2000)
             this.isRequestSent = true
@@ -186,7 +215,6 @@ export default {
             this.isFriend = false
         },
 
-
         cancelRequest(name){ // cancels friend request
 
             // remove friend request from myself
@@ -198,21 +226,17 @@ export default {
             // remove friend request from user
             setTimeout(() => {
                 db.collection("users")
-                .doc(this.friendId)
+                .doc(this.id)
                 .collection("friend-requests")
                 .doc(this.myUsername)
                 .delete()
             }, 1000)
-
             this.isRequestSent = false
             this.useNotification("Friend request CANCELED", "warning")
         },
     },
     created(){
         this.myName = this.myUsername;
-        this.friendId = this.id;
-        this.isFriend = this.weFriends;
-        this.isRequestSent = this.requestSent
     }
 }
 </script>
@@ -257,9 +281,13 @@ export default {
     .profile__btns{
         position: relative;
         display: flex;
+        flex-direction: column;
         justify-content: center;
+        gap: 1rem;
         transform: translate(0,-90px);
         .profile__btn{
+            width: 80%;
+            align-self: center;
             padding: 1rem 3rem;
             // margin-left: 1rem;
             border: none;

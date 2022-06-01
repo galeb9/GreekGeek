@@ -46,8 +46,8 @@
           :goal="goal"
 
           :id="friendId"
-          :we-friends="isFriend"
           :request-sent="requestSent"
+          :are-we-friends="isFriend"
         />
       </div>
     </transition>
@@ -144,11 +144,10 @@ export default {
         .then(snapshot => {
             snapshot.forEach(user => {
               this.friendId = user.id
-              console.log(this.friendId)
+              // console.log(this.friendId)
             })
         })
     },
-
     areFriends(username){ // Checks if we are friends 
       db.collection("users")
         .doc(auth.currentUser.uid)
@@ -157,10 +156,13 @@ export default {
         .get()
         .then(user => {
           if(user.data() === undefined){
-            return null
+            // return null
+            this.isFriend = false
+            // console.log("are friends? " + this.isFriend)
+
           }else{
-            // console.log(user.data())
             this.isFriend = user.data().friends
+            // console.log("are friends? " + this.isFriend)
           }
         })
     },
