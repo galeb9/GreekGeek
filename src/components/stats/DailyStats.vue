@@ -171,6 +171,8 @@ export default {
     letter-spacing: 5px;
   }
   .stats-item{
+    position: relative;
+
     &__button{
       padding: 1.5rem 3rem;
       background: none;

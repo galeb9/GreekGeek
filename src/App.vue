@@ -12,13 +12,13 @@
     </transition>
 
     <transition name="fade-in" mode="out-in">
-      <Loader v-if="loadActive" />
+      <Loader v-if="loadActive" type="fullscreen" />
     </transition>
   </main>
 </template>
 
 <script>
-import Loader from '@/components/UI/LoadFullscreen.vue'
+import Loader from '@/components/UI/LoaderThingy.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
 import { db } from '@/components/firebaseInit.js'
 

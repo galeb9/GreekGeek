@@ -1,5 +1,5 @@
 <template>
-<div class="load-fullscreen">
+<div :class="['load-fullscreen', type]">
     <svg class="spinner" viewBox="0 0 100 100" height="150px" width="150px">
         <clipPath id="clip4">
             <path d="M 50.027344 18.191406 A 31 31 0 0 0 19.029297 49.191406 A 31 31 0 0 0 50.029297 80.191406 A 31 31 0 0 0 67.878906 74.535156 L 67.154297 73.458984 A 29.700001 29.700001 0 0 1 50.029297 78.892578 A 29.700001 29.700001 0 0 1 20.330078 49.191406 A 29.700001 29.700001 0 0 1 50.029297 19.492188 A 29.700001 29.700001 0 0 1 79.730469 49.191406 A 29.700001 29.700001 0 0 1 77.251953 61.068359 L 78.425781 61.626953 A 31 31 0 0 0 81.029297 49.191406 A 31 31 0 0 0 50.029297 18.191406 A 31 31 0 0 1 50.027344 18.191406 z " />
@@ -55,7 +55,9 @@
 
 <script>
 export default {
-
+    props: {
+        type: { type: String, default: '' }
+    }
 }
 </script>
 
@@ -66,15 +68,9 @@ export default {
         background: $bg;
         display: flex;
         justify-content: center;
-        //align-items: center;
-        position: absolute;
-        height: 100%;
-        width: 100vw;
-        top: 0;
-        z-index: 1000;
+
         .spinner {
             border-radius: 50%;
-            margin-top: 35vh;
             animation: Rotate 2.4s both infinite linear;
         }
         .path {
@@ -99,6 +95,28 @@ export default {
                 stroke-dasharray: 126 126;
             }
         }
-
+    }
+    .fullscreen{
+        position: absolute;
+        height: 100%;
+        width: 100vw;
+        top: 0;
+        z-index: 1000;
+        .spinner {
+            margin-top: 35vh;
+        }
+    }
+    .normal{
+        // border: 1px solid black;
+        // background: transparent;
+        position: absolute;
+        width: 80%;
+        height: 80%;
+        margin: auto;
+        border-radius: 50%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
 </style>

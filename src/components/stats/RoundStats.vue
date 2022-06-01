@@ -4,6 +4,9 @@
         <div v-if="amount > goal" class="stats-item__round">
             <p class="goal-achived">+ {{ surplus }} </p>
             <font-awesome-icon class="fa-icon" :icon="['fa', 'check']" />
+            <transition name="fade-in" mode="out-in">
+                <Loader v-if="loadActive" type="normal" /> 
+            </transition>
         </div>
 
         <div v-else class="stats-item__round">
@@ -11,13 +14,21 @@
                 <h3>Goal</h3>
                 <p>{{ amount }} / {{ goal }} </p>
             </div>
-      
         </div>
+        <transition name="fade-in" mode="out-in">
+            <Loader v-if="loadActive" type="normal" /> 
+        </transition>
+
     </div>
 </template>
 
 <script>
+import Loader from '@/components/UI/LoaderThingy.vue'
+
 export default {
+    components: {
+        Loader
+    },
     props:{
         amount: {
             type: Number,
@@ -32,6 +43,14 @@ export default {
             default: 0
         }
     },
+    data(){
+        return {
+            loadActive: true
+        }
+    },
+    created() {
+        setTimeout(() => this.loadActive = false, 1000)
+    }
 }
 </script>
 
