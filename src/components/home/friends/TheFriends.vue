@@ -5,9 +5,30 @@
       placeholder="Search for new alies"
       v-model="search"
     />
-    <div class="all-users">
-      <h3>All Users</h3>
-      <div class="users-list" v-if="search !== ''">
+    <div class="users">
+      <div class="users__head">
+        <h3 class="users__heading"> {{ wordFilter }}</h3>
+
+        <!-- <p>{{ seeAllUsers }}</p> -->
+
+        <div class="users__head__btn" @click="toggleAllUsers">
+          <font-awesome-icon 
+            class="fa-eye" 
+            :icon="['fa', 'eye-low-vision']"
+            v-if="seeAllUsers" 
+          />
+          <font-awesome-icon 
+            v-else  
+            class="fa-eye" 
+            :icon="['fa', 'eye']"
+          />
+
+
+        </div>
+
+
+      </div>
+      <div class="users__list" v-if="search !== ''">
         <FriendCard
           v-for="(el, index) in searchForUser"
           :key="index" 
@@ -16,9 +37,9 @@
           @get-friend-data="getFriendData"
         />
       </div>
-      <div v-else class="users-list">
+      <div v-else class="users__list">
         <FriendCard
-          v-for="(el, index) in sampleUsers"
+          v-for="(el, index) in usersFilter"
           :key="index" 
           :name="el.username"
           :user-img="el.userImg"
@@ -81,6 +102,7 @@ export default {
 
       isFriend: false,
       requestSent: false,
+      seeAllUsers: false
     }
   },
   computed: { //somehow do so you cannot find yourself (remove from array)
@@ -95,13 +117,30 @@ export default {
     },
     sampleUsers(){
       return this.$store.getters.sampleUsers
+    },
+    usersFilter(){
+      if(this.seeAllUsers){
+        return this.allUsers
+      }
+      return this.sampleUsers 
+    },
+    wordFilter(){
+      if(this.search === ''){
+        if(this.seeAllUsers){
+          return "All users" 
+        }
+        return "Some users"
+      }
+      return "Search Result"
     }
   },
   methods: {
+    toggleAllUsers(){
+      this.seeAllUsers = !this.seeAllUsers
+    },
     openPopup(){
       this.popupVisible = true;
       document.body.style.overflow = "hidden";
-
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     },
@@ -164,7 +203,9 @@ export default {
     },
   },
   created(){
-    this.$store.dispatch('getUsers')
+    if(this.allUsers.length === 0){
+      this.$store.dispatch('getUsers')
+    }
   }
 }
 </script>
@@ -188,13 +229,28 @@ export default {
         width: 100%;
       }
     }
-    .all-users{
+    .users{
       margin-top: 2rem;
       padding-bottom: 5rem;
       min-height: 75vh;
       overflow-x: scroll;
-      .users-list{
-        width: 100vw;
+      .users__head{
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        .users__heading{
+          font-size: 1.5rem;
+        }
+        .users__head__btn{
+          margin-right: .5rem;
+          border: 1px solid black;
+          padding: .5rem;
+          &:hover{
+            cursor: pointer;
+          }
+        }
+      }
+      .users__list{
         padding-top: 1rem;
         display: flex;
         flex-wrap: wrap;

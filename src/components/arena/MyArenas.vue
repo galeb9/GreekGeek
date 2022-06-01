@@ -16,7 +16,7 @@
     <transition name="move-from-bottom"> 
       <SelectedGroup 
         :name="name"
-        :memebers="memebers"
+        :members="memebers"
         :img="img"
         @click-back="hideGroup"
         v-if="groupSelected"
@@ -26,7 +26,6 @@
     <transition name="move-from-bottom">
       <AddGroupPopup 
         v-if="isPopupVisible" 
-        @new-arena-data="getData" 
         @close-popup="closePopup"  
       />
     </transition>
@@ -41,6 +40,7 @@ import AddArenaBtn from '@/components/arena/items/AddArenaBtn.vue'
 import GroupItem from '@/components/arena/group/GroupItem.vue'
 import AddGroupPopup from '@/components/arena/popup/AddGroupPopup.vue'
 import SelectedGroup from '@/components/arena/group/SelectedGroup.vue'
+import { db, auth } from '@/components/firebaseInit.js';
 
 export default {
   components: {
@@ -51,10 +51,7 @@ export default {
   },
   data() {
     return {
-      data: [
-        { img: "group02.png", name: "Bros69", memebers: 12 },
-        { img: "group01.png", name: "Los Locos", memebers: 4 }
-      ],
+      data: [],
       isPopupVisible: false,
       groupSelected: false,
       // groupSelected: true,
@@ -73,21 +70,38 @@ export default {
     closePopup(){
       this.isPopupVisible = false
     },
-    getData(newArenaData){
-      this.data.push(newArenaData)
-      console.log("new data added", newArenaData)
+    getData(){
+      db.collection("users").doc(auth.currentUser.uid)
+        .collection("arenas")
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            this.data.push({
+              img: doc.data().img,
+              name: doc.data().name,
+              memebers: doc.data().memebers
+            })
+          })
+        })
+      // this.data.push(newArenaData)
+      // console.log("new data added", newArenaData)
       this.closePopup()
     },
 
-    showGroup(name, img, memebers){
+    showGroup(name, img, memebers){ // gets group data from group item
       this.groupSelected = true;
+
       this.name = name;
       this.img = img;
       this.memebers = memebers
+      console.log("Members: " + this.memebers)
     },
     hideGroup(){
       this.groupSelected = false;
     }
+  },
+  created(){
+    this.getData();
   }
 }
 </script>

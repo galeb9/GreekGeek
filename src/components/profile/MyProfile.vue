@@ -124,10 +124,12 @@ export default {
                 .get()
                 .then(snapshot=> {
                     snapshot.forEach(doc => {
+                        console.log(doc.data())
                         this.requests.push({
-                            username: doc.id,
+                            username: doc.data().username,
                             status: doc.data().friends,
                             messagePic: doc.data().profileImage,
+                            // messagePic: 'greek-geek.png',
                             friendID: doc.data().friendID
                         })
                     })
@@ -139,6 +141,7 @@ export default {
                 .doc(name)
                 .delete()
         },
+        // @confirm="acceptFriendship(index, el.friendID, el.username, el.messagePic)"
         acceptFriendship(index, id, name, img){ // add some notification
             const user = db.collection("users").doc(auth.currentUser.uid) 
             // add to my friends collection
@@ -162,7 +165,7 @@ export default {
                     friendID: auth.currentUser.uid
                 })
 
-            // remove from friends collection 
+            // remove from friend requests collection 
             user.collection("friend-requests")
                 .doc(name)
                 .delete()
@@ -194,6 +197,11 @@ export default {
         }
     },
     created(){
+        if(this.myUsername === "user404"){
+            this.$store.dispatch("getUserData")
+        }else{
+            console.log("Basic user data allready loaded from DB")
+        }
         this.getFriends();
         this.getUserData();
         this.getMessages(); 

@@ -59,6 +59,7 @@
                 :shadow="false"
                 align="" 
                 @click="CreateNewArena"
+
             />
             <BaseButton 
                 text="cancel" 
@@ -82,6 +83,8 @@ import PhotoChoice from './photo/PhotoChoice.vue'
 import GroupItem from '../group/GroupItem.vue'
 import PopupHeading from './PopupHeading.vue'
 import MemberItem from './MemberItem.vue'
+import { db, auth } from '@/components/firebaseInit.js';
+
 
 
 export default {
@@ -107,6 +110,8 @@ export default {
                 { name: "user03", img: "greek-geek5.jpg", isMemeber: false },
                 { name: "user04", img: "greek-geek6.jpg", isMemeber: false },
             ],
+            friends: [],
+
             matchingMembers: [],
             selectedImg: 'group01.png'
         }
@@ -134,28 +139,55 @@ export default {
                 this.removeFromArray(arr, name)
             }
         },
+        getFriends(){ // get your friends
+            db.collection("users").doc(auth.currentUser.uid)
+                .collection("friends") // test if it work on other users
+                .get()
+                .then(snapshot => {
+                    snapshot.forEach(doc => {
+                        console.log(doc.data())
+                        this.friends.push({
+                            name: doc.data().username,
+                            img: doc.data().profileImage,
+                            isMemeber: false,
+                            id: doc.data().friendID,
+                        })
+                    })
+                })
+        },
         CreateNewArena(){
-            const data = {
-                img: this.selectedImg,
-                name: this.arenaName,
-                memebers: this.addedFriends.length
+            if(this.arenaName !== '' && this.addedFriends.length > 0) {
+                db.collection("users").doc(auth.currentUser.uid)
+                    .collection("arenas")
+                    .doc(this.arenaName)
+                    .set({
+                        img: this.selectedImg,
+                        name: this.arenaName,
+                        memebers: this.addedFriends
+                    })
+                this.$emit('closePopup')
+            } else{
+                alert("Some of the required info is empty, please fill in...")
             }
-            this.$emit("newArenaData", data)
         }
     },
-    computed: { //somehow do so you cannot find yourself (remove from array)
+    computed: { // switched memebers arr for friends arr
         searchForUser() {
-            for(let i = 0; i < this.memebers.length; i++){
+            for(let i = 0; i < this.friends.length; i++){
                 for(let j = 0; j < this.addedFriends.length; j++){
-                    if(this.memebers[i].name === this.addedFriends[j]){
+                    if(this.friends[i].name === this.addedFriends[j]){
                         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-                        this.memebers[i].isMemeber = true // some wierd quickfix maybe not good? uppper comment stoped eslint??
+                        this.friends[i].isMemeber = true // some wierd quickfix maybe not good? uppper comment stoped eslint??
                     }
                 }
             }
-            return this.memebers.filter(user => user.name.toLowerCase().indexOf(this.memeberSearch.toLowerCase()) != -1)
+            return this.friends.filter(user => user.name.toLowerCase().indexOf(this.memeberSearch.toLowerCase()) != -1)
         },
     },
+    created(){
+        this.getFriends()
+
+    }
 }
 </script>
 

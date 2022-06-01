@@ -21,23 +21,18 @@
 
 <script>
 import PopupHeading from '@/components/arena/popup/PopupHeading.vue'
+import { db, auth } from '@/components/firebaseInit.js';
 
 export default {
     components: {
         PopupHeading
     },
     props: {
-        friendsData: { type: Array, default: () => [] }
+        members: { type: Array, default: () => [] }
     },
     data() {
         return {
             friends: [
-                { img: "greek-geek.png", name: "sinjikit131"}, 
-                { img: "greek-geek2.png", name: "galeb9"}, 
-                { img: "greek-geek3.png", name: "knifonion"}, 
-                { img: "greek-geek4.jpg", name: "Miča"}, 
-                { img: "greek-geek5.jpg", name: "roboCock"}, 
-                { img: "greek-geek6.jpg", name: "sandPerson"}
             ]
         }
     },
@@ -47,8 +42,31 @@ export default {
         },
         longStr(str){
             return str.length > 12 ? str.slice(0, 9) + '...' : str
+        },
+        getMembers(){
+            db.collection("users").doc(auth.currentUser.uid)
+                .collection("friends")
+                .get()
+                .then(snapshot => {
+                    snapshot.forEach(doc => {
+                        console.log(this.members)
+                        for(let i = 0; i < this.members.length; i++){
+                            if(doc.data().username === this.members[i]){
+                                console.log(doc.data())
+                                this.friends.push({
+                                    img: doc.data().profileImage,
+                                    name: doc.data().username,
+                                    id: doc.data().friendID
+                                })
+                            }
+                        }
+                    })
+                })
         }
     },
+    created(){
+        this.getMembers()
+    }
 }
 </script>
 

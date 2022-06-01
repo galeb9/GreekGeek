@@ -12,11 +12,11 @@
     <div class="group-item-selected__main">
       <GroupItem 
         :name="name"
-        :memebers="memebers"
+        :memebers="members"
         :img="img"
       /> 
       <GroupFriends 
-              
+        :members="members"
       />
     </div>
 
@@ -38,7 +38,7 @@ export default {
   props: {
     name: { type: String, default: "Group name" },
     img: { type: String, default: "greek-geek.png" },
-    memebers: { type: Number, default: 0 }
+    members: { type: Array, default: () => [] }
   }
 }
 </script>

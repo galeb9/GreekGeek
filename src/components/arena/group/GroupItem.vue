@@ -5,7 +5,7 @@
     </div>
     <div class="group__text">
       <h3 class="name">{{ name }}</h3>
-      <p class="memebers">{{ memebers }} memebers</p>
+      <p class="memebers">{{ memebers.length }} memebers</p>
     </div>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
     props: {
       img: { type: String, default: "group01.png" },
       name: { type: String, default: "users123" },
-      memebers: { type: Number, default: 0 }
+      memebers: { type: Array, default: () => [] }
     },
     methods: {
       getImgUrl(pic) {

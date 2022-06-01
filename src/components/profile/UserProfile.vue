@@ -59,11 +59,11 @@
 
         </div>
 
-        <!-- <div style="text-align: center">
+        <div style="text-align: center">
             <p >{{ id }}</p>
             <p>Request sent? {{ requestSent }} : {{ isRequestSent }}</p>
             <p>Friends? {{ areWeFriends }} : {{ isFriend }} </p>
-        </div> -->
+        </div>
 
     </div>
 
@@ -147,13 +147,13 @@ export default {
             return this.$store.getters.myGoal
         },
         canSendRequest(){
-            if(!this.isFriend  && !this.isRequestSent){
+            if(this.isFriend !== true  && this.isRequestSent !== true){
                 return true
             } 
             return false
         },
         haveSentRequest(){
-            return this.isRequestSent ? true : false
+            return this.isRequestSent === true ? true : false
         },
         weAreFriends(){
             return this.isFriend ? true : false
@@ -193,8 +193,8 @@ export default {
                 .doc(this.myName)
                 .set({
                     friends: false,
-                    profileImage: this.myUsername,
-                    username : this.myAvatarImg,
+                    profileImage: this.myAvatarImg,
+                    username : this.myUsername,
                     friendID: auth.currentUser.uid
                 })
         },
@@ -285,6 +285,7 @@ export default {
         justify-content: center;
         gap: 1rem;
         transform: translate(0,-90px);
+        margin-top: 1rem;
         .profile__btn{
             width: 80%;
             align-self: center;

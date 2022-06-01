@@ -50,9 +50,6 @@ export default {
         },
 
     },
-    methods: {
-
-    }
 }
 </script>
 
@@ -66,7 +63,7 @@ export default {
         text-align: center;
         z-index: 2;
         color: black;
-        transform: translate(0,-100px);
+        transform: translate(0,-90px);
         
         .my-profile__info-item{
             padding-bottom: 1.5rem;

@@ -48,9 +48,9 @@ const store = createStore({
             }
         },
         getUsers(state){
-            if(state.users.length > 0) {
+            // if(state.users.length > 0) {
                 db.collection("users")
-                //   .where("username", "!=", state.username)
+                  .where("username", "!=", state.username)
                   .orderBy("username","asc")
                   .get()
                   .then((querySnapshot) => {
@@ -73,9 +73,9 @@ const store = createStore({
                       }
                     });
                 });
-            }else{
-                console.log("Users already in the arr, so no need to get them again.")
-            }
+            // }else{
+                // console.log("Users already in the arr, so no need to get them again.")
+            // }
 
         },
     },

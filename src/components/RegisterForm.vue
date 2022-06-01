@@ -87,6 +87,7 @@ export default {
                         pushupsToday: 0, 
                         username: this.username,
                         userImg: this.chooseRandomAvatar()
+                        //userId: auth.currentUser.uid
                     })
                     console.log("New user registered")
                 },

@@ -26,6 +26,18 @@ export default {
     PushupTypes,
     TheHeader,
   },
+  computed: {
+    myUsername(){
+      return this.$store.getters.myUsername
+    },
+  },
+  created(){
+    if(this.myUsername === "user404"){
+      this.$store.dispatch("getUserData")
+    }else{
+      console.log("Basic user data allready loaded from DB")
+    }
+  }
 
  
 }

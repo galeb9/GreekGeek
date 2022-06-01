@@ -37,9 +37,14 @@ export default {
 
     }
   },
+  computed: {
+    myUsername(){
+      return this.$store.getters.myUsername
+    }
+  },
   methods: {
     logComponent(comp, val) {
-      console.logv(val)
+      // console.logv(val)
       if (val === 'LoginForm' || val === 'RegisterForm'){
         this.headerVisible = false
       } else {
@@ -65,7 +70,11 @@ export default {
     }
   }, 
   created(){
-    this.$store.dispatch("getUserData")
+    if(this.myUsername === "user404"){
+      this.$store.dispatch("getUserData")
+    }else{
+      console.log("Basic user data allready loaded from DB")
+    }
     // this.isUsernameOk("medo007")
 
     setTimeout(() => this.loadActive = false, 1600)

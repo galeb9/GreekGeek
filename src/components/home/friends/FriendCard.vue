@@ -11,21 +11,6 @@
               <font-awesome-icon class="fa-eye" :icon="['fa', 'eye']"/>
             </button>
         </div>
-
-
-
-        <!-- <transition name="move-in-bottom">
-            <div class="user-profile__popup" v-show="popupVisible">
-                <UserProfile
-                    @close-popup="closePopup"
-                    :img="userImg"
-                    :name="name"
-                    :goal="goal"
-                />
-            </div>
-        </transition> -->
-
-        
     </div>
 </template>
 
@@ -87,9 +72,6 @@ export default {
     padding: 0.6rem;
     border-radius: $main-radius;
     box-shadow: 0px 8px 14px rgba(0, 0, 0, 0.22);
-
-
-
     .user-card__img{
         max-width: 100%;
         width: 3.5rem;
@@ -124,7 +106,7 @@ export default {
 }
 @media only screen and (max-width: 540px) {
     .user-card{
-        width: 90%;
+        width: 100%;
         min-width: 240px;
     }
 }
