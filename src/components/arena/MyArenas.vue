@@ -13,7 +13,6 @@
       />
     </div>
 
-    <!-- move this to new component -->
     <transition name="move-from-bottom"> 
       <SelectedGroup 
         :name="name"
@@ -23,13 +22,6 @@
         v-if="groupSelected"
       />
     </transition>
-    <!-- end of component  -->
-
-    
-
-
-
-
 
     <transition name="move-from-bottom">
       <AddGroupPopup 
@@ -66,8 +58,6 @@ export default {
       isPopupVisible: false,
       groupSelected: false,
       // groupSelected: true,
-
-
       name: null,
       img: null,
       memebers: null
@@ -99,8 +89,6 @@ export default {
       this.groupSelected = false;
     }
   }
-
-
 }
 </script>
 
