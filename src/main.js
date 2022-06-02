@@ -21,7 +21,7 @@ import BaseNotification from './components/UI/BaseNotification.vue'
 import HomeSection from './components/UI/HomeSection.vue'
 import BaseNotif from '@/components/UI/BaseNotif.vue'
 import GoBack from '@/components/UI/GoBack.vue'
-
+import BaseIcon from '@/components/UI/BaseIcon.vue'
 
 
 import TheHeader from '@/components/layout/TheHeader.vue'
@@ -44,6 +44,7 @@ auth.onAuthStateChanged( user => {
             .component("HomeSection", HomeSection)
             .component("BaseNotif", BaseNotif)
             .component("GoBack", GoBack)
+            .component("BaseIcon", BaseIcon)
             
         app.use(store)
         app.use(router);

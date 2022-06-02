@@ -1,6 +1,6 @@
 <template>
   <div class="home-section">
-      <h3>{{ title }}</h3>
+      <h3 v-if="title" class="home-section__title">{{ title }}</h3>
       <slot></slot>
   </div>
 
@@ -27,7 +27,7 @@ export default {
         gap: 1rem;
         padding: .5rem 0;
         border-bottom: 8px double $grey;
-        h3{
+        .home-section__title{
             color: $secondary;
             font-size: 1rem;
             padding-bottom: .5rem;

@@ -74,15 +74,13 @@ export default {
       loadActive: true
     }
   },
-  computed: {
-
-  },
   methods: {
     showPopup(){
       this.isPopupVisible = !this.isPopupVisible
     },
     closePopup(){
       this.isPopupVisible = false
+      // this.getData(); //so it refreshes
     },
     getData(){
       db.collection("users").doc(auth.currentUser.uid)
@@ -112,6 +110,7 @@ export default {
     },
     hideGroup(){
       this.groupSelected = false;
+      // this.getData(); //so it refreshes
     }
   },
   created(){

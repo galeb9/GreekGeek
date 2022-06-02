@@ -18,12 +18,14 @@ import {
     faXmark,
     faArrowUpFromBracket,
     faEyeLowVision,
-    faArrowDownLong
+    faArrowDownLong,
+    faTrashCan
 } from "@fortawesome/free-solid-svg-icons";
 // import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
 //import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-const icons = [    faBullseye, 
+const icons = [    
+    faBullseye, 
     faHouse, 
     faFireFlameCurved, 
     faChartPie, 
@@ -41,7 +43,8 @@ const icons = [    faBullseye,
     faXmark,
     faArrowUpFromBracket,
     faEyeLowVision,
-    faArrowDownLong
+    faArrowDownLong,
+    faTrashCan
 ]
 
 for(let i = 0; i < icons.length; i++){

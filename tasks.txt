@@ -59,6 +59,20 @@ x new node course
  
 <------------------------------------------------------------------------>
 
+02.06.2022
+x add arena functionality (need to code it) 4/5
+x Composition Api 
+x new node course
+x clean code with vuex
+x refactor add friend component to not be used for each user but onClick
+
+
+- make a function that will add to an array our group we have made in popup
+- make a function that will remove form an array our group we have removed in selected group
+- vuex folders
+- poglej kako word diplomo spisat [ Jure template ]
+ 
+<------------------------------------------------------------------------>
 ⭐ Functionalities:
     ➡ 
     ➡ Add arena option

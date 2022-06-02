@@ -9,6 +9,11 @@
       link="arena"
       @click="$emit('clickBack')"  
     />
+    <BaseIcon 
+      aligment="top-right"
+      icon="trash"
+      @click="deleteGroup"
+    />
     <div class="group-item-selected__main">
       <GroupItem 
         :name="name"
@@ -18,24 +23,17 @@
       <GroupFriends 
         :members="members"
       />
+      <RankedList   
+        :data="top3"
+      />
+      <TheScoreboard
+        :data="friends"
+        heading="Daily Scoreboard"
+        :displayTableHead="false"
+      />
     </div>
 
-    <div
-      v-for="(member, index) in friends"
-      :key="index"
-    >
-      <h3>{{ member.name }}</h3>
-      <p>{{member.img}}</p>
-      <p>Pushups done: {{ member.pushups }}</p>
-    </div>
-<!--  o have to make them in order by pushups
-      o scrollable have to be
- -->
-    <TheScoreboard
-      :data="friends"
-    />
-
-    
+    <!-- o scrollable have to be -->
   </div>
 
 </template>
@@ -43,15 +41,18 @@
 <script>
 import GroupItem from './GroupItem.vue'
 import GroupFriends from './GroupFriends.vue'
+import RankedList from './ranked/RankedList.vue'
+
 import TheScoreboard from '@/components/home/home-stats/TheScoreboard.vue'
-import { db } from '@/components/firebaseInit.js';
+import { db, auth } from '@/components/firebaseInit.js';
 
 
 export default {
   components: {
     GroupItem,
     GroupFriends,
-    TheScoreboard
+    TheScoreboard,
+    RankedList,
   },
   props: {
     name: { type: String, default: "Group name" },
@@ -60,14 +61,17 @@ export default {
   },
   data(){
     return{
-      friends: []
+      friends: [],
+      top3: []
     }
   },
   methods: {
     getFriends(){
       db.collection("users")
+        .orderBy("pushupsToday", "desc")
         .get()
         .then(snapshot => {
+          let count = 0
           snapshot.forEach(doc => {
             for(let i = 0; i < this.members.length; i++){
               if(doc.data().username === this.members[i]){
@@ -76,19 +80,28 @@ export default {
                   name: doc.data().username,
                   pushups: doc.data().pushupsToday
                 })
+                if(count < 3){
+                  this.top3.push({
+                    img: doc.data().userImg,
+                    name: doc.data().username,
+                    pushups: doc.data().pushupsToday
+                  })
+                }
               }
             }
           })
       })
-
-      this.friends.push({
-        img: this.myAvatarImg,
-        name: this.myUsername,
-        pushups: this.myPushups
-      })
+    },
+    deleteGroup(){
+      if(confirm("Would you like to delete this arena?") == true){
+        db.collection("users").doc(auth.currentUser.uid)
+          .collection("arenas")
+          .doc(this.name)
+          .delete()
+          //put some notifications here
+        this.$emit('clickBack')
+      } 
     }
-
-
   },
   computed: {
     myUsername(){
@@ -106,6 +119,10 @@ export default {
   },
   created(){
     this.getFriends()
+    console.log("friends: " + this.friends)
+    setTimeout(() => {
+      console.log("friends: " + this.friends)
+    },1000) 
   }
 }
 </script>
@@ -121,9 +138,12 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 1rem 1.4rem;
     .group-item-selected__main{
+      padding: 1rem 1.4rem;
       margin-top: 5rem;
+      height: 100%;
+      overflow: scroll;
+      padding-bottom: 3rem;
     }
   }
 </style>

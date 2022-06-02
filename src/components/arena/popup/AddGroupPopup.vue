@@ -154,6 +154,8 @@ export default {
         },
         CreateNewArena(){
             if(this.arenaName !== '' && this.addedFriends.length > 0) {
+                this.addedFriends.push(this.myUsername)
+
                 db.collection("users").doc(auth.currentUser.uid)
                     .collection("arenas")
                     .doc(this.arenaName)
@@ -163,7 +165,7 @@ export default {
                         memebers: this.addedFriends
                     })
                 this.$emit('closePopup')
-                this.$router.push("/arena")
+                
             } else{
                 alert("Some of the required info is empty, please fill in...")
             }
@@ -181,6 +183,9 @@ export default {
             }
             return this.friends.filter(user => user.name.toLowerCase().indexOf(this.memeberSearch.toLowerCase()) != -1)
         },
+        myUsername() {
+            return this.$store.getters.myUsername
+        }
     },
     created(){
         this.getFriends()

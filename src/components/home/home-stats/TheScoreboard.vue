@@ -1,8 +1,12 @@
 <template>
   <HomeSection :title="title">
+    <PopupHeading 
+        color="rgba(0,0,0, 0.6)"
+        :text="heading"
+    />
     <div class="scoreboard">
         <ul class="scoreboard__list">
-            <li>
+            <li v-if="displayTableHead">
                 <div class="scoreboard__item first--item">
                     <div class="row">
                         <p class="scoreboard__item__place">#</p>
@@ -17,10 +21,10 @@
                 v-for="(el, index) in data"
                 :key="index"
             >
-                <div :class="['scoreboard__item', { 'first' : index === 0 }, { 'second' : index === 1 }, { 'third' : index === 2 }, ]">
+                <div :class="['scoreboard__item', { 'first' : index === 0 }, { 'second' : index === 1 }, { 'third' : index === 2 },{ 'you' : el.name == this.myUsername } ]">
                     <div class="row">
                         <p class="scoreboard__item__place">{{index + 1}}</p>
-                        <p class="scoreboard__item__name">{{ el.name }}</p>
+                        <p class="scoreboard__item__name">{{ el.name === this.myUsername ? "You" : capitalize(el.name) }}</p>
                     </div>
                     <p class="scoreboard__item__num">{{ el.pushups }}</p>
                 </div>
@@ -31,22 +35,35 @@
 </template>
 
 <script>
+import PopupHeading from '@/components/arena/popup/PopupHeading.vue'
 
 export default {
+    components: {
+        PopupHeading
+    },
     props: {
         data: { type: Array, default: () => [] },
-        title: { type: String, default: "" }
+        title: { type: String, default: "" },
+        heading: { type: String, default: "" },
+        displayTableHead: { type: Boolean, default: true}
     },
     data(){
         return{
             list: []
         }
     },
+    methods: {
+        capitalize(str){
+            let first = str.charAt(0)
+            let upper = first.toUpperCase()
+            let rest = str.slice(1)
+            return upper + rest
+        }
+    },
     computed: {
-        // placement() {
-            // return  index === 0 ? 'first' : index === 1 ? 'second' : index === 2 ? 'third' : '' 
-        // }
-
+        myUsername(){
+            return this.$store.getters.myUsername
+        },
     }
 }
 </script>
@@ -60,16 +77,18 @@ export default {
         .scoreboard__list{
 
             .first{
-                // background: rgba(gold, .7);
-                // background: #C89C18;
-                background: rgba(200, 156, 24, 0.77);
+                background: $gold ;
+                background: rgba($gold, 0.77) ;
+
             }
             .second{
-                // background: rgba(silver, .7);
-                background: #D3D3D3;
+                background: $silver;
             }
             .third{
-                background: rgba(189, 131, 74, 0.45);
+                background: rgba($bronze, 0.45);
+            }
+            .you{
+                color: red !important;
             }
             .scoreboard__item{
                 display: flex;
@@ -108,6 +127,8 @@ export default {
                 margin-bottom: .3rem;
                 background: transparent;
                 border-radius: 0;
+                padding-top: 0;
+                margin-top: 1rem;
                 .scoreboard__item__name{
                     font-size: 1rem;
                     font-weight: 400;

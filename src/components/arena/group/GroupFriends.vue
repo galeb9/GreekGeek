@@ -2,10 +2,8 @@
 <div class="group-friends">
     <PopupHeading 
         color="rgba(0,0,0, 0.6)"
-        text="Members"
+        text="Other Members"
     />
-
-
 </div>
     <div class="friends__list">
         <div
