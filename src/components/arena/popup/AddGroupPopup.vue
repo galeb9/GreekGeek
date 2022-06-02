@@ -6,7 +6,7 @@
         <GroupItem 
             :img="selectedImg"
             :name="arenaName === '' ? 'Group name' : arenaName "
-            :members="addedFriends.length"
+            :memebers="addedFriends"
         />
 
         <GroupInput 
@@ -22,7 +22,7 @@
                 class="popup__heading--special"
                 text="Added so far" 
             >
-                <span class="added-count">{{ addedFriends.length }} / {{ memebers.length }}</span>
+                <span class="added-count">{{ addedFriends.length }} / {{ friends.length }}</span>
             </PopupHeading>
             <p class="memebers-added__list" v-if="addedFriends.length > 0">
                 {{ addedFriends.join(", ") }}
@@ -102,14 +102,11 @@ export default {
             memeberSearch: "",
 
             addedFriends: [],
-            memebers: [ //dummy, later call friends from firebase
-                { name: "galeb9", img: "greek-geek.png", isMemeber: false },
-                { name: "medo007", img: "greek-geek2.png", isMemeber: false },
-                { name: "Šaman69", img: "greek-geek3.png", isMemeber: false },
-                { name: "sinjikit131", img: "greek-geek4.jpg", isMemeber: false },
-                { name: "user03", img: "greek-geek5.jpg", isMemeber: false },
-                { name: "user04", img: "greek-geek6.jpg", isMemeber: false },
-            ],
+            // memebers: [ //dummy, later call friends from firebase
+            //     { name: "galeb9", img: "greek-geek.png", isMemeber: false },
+            //     { name: "medo007", img: "greek-geek2.png", isMemeber: false },
+            //     { name: "Šaman69", img: "greek-geek3.png", isMemeber: false },
+            // ],
             friends: [],
 
             matchingMembers: [],
@@ -139,13 +136,13 @@ export default {
                 this.removeFromArray(arr, name)
             }
         },
-        getFriends(){ // get your friends
+        getFriends(){ // get your friends //should put this in vuex and use in many places
             db.collection("users").doc(auth.currentUser.uid)
-                .collection("friends") // test if it work on other users
+                .collection("friends") 
                 .get()
                 .then(snapshot => {
                     snapshot.forEach(doc => {
-                        console.log(doc.data())
+                        // console.log(doc.data())
                         this.friends.push({
                             name: doc.data().username,
                             img: doc.data().profileImage,
@@ -166,6 +163,7 @@ export default {
                         memebers: this.addedFriends
                     })
                 this.$emit('closePopup')
+                this.$router.push("/arena")
             } else{
                 alert("Some of the required info is empty, please fill in...")
             }

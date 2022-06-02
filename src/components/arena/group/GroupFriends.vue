@@ -32,8 +32,7 @@ export default {
     },
     data() {
         return {
-            friends: [
-            ]
+            friends: []
         }
     },
     methods: {
@@ -43,16 +42,14 @@ export default {
         longStr(str){
             return str.length > 12 ? str.slice(0, 9) + '...' : str
         },
-        getMembers(){
+        getMembers(){ // maybe get a main getFriends function in VUEX
             db.collection("users").doc(auth.currentUser.uid)
                 .collection("friends")
                 .get()
                 .then(snapshot => {
                     snapshot.forEach(doc => {
-                        console.log(this.members)
                         for(let i = 0; i < this.members.length; i++){
                             if(doc.data().username === this.members[i]){
-                                console.log(doc.data())
                                 this.friends.push({
                                     img: doc.data().profileImage,
                                     name: doc.data().username,
@@ -65,7 +62,12 @@ export default {
         }
     },
     created(){
-        this.getMembers()
+        if(this.friends.length === 0){
+            this.getMembers()
+            console.log("Got your members")
+        }else{
+            console.log("Members already loaded")
+        }
     }
 }
 </script>

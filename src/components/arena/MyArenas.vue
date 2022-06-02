@@ -2,7 +2,11 @@
   <div class="my-arenas">
     <GoBack text="Home" type="dark" />
     <h3 class="my-arenas__title">Your Arenas</h3>
-    <div class="groups">
+
+
+    <Loader v-if="data.length === 0 && loadActive"  />
+
+    <div class="groups" v-if="data.length > 0">
       <GroupItem 
         v-for="(group, index) in data" 
         :key="index"
@@ -12,6 +16,9 @@
         @show-selected-group="showGroup"
       />
     </div>
+    
+    <GroupNotFound v-if="data.length === 0 && loadActive === false" />
+
 
     <transition name="move-from-bottom"> 
       <SelectedGroup 
@@ -40,6 +47,10 @@ import AddArenaBtn from '@/components/arena/items/AddArenaBtn.vue'
 import GroupItem from '@/components/arena/group/GroupItem.vue'
 import AddGroupPopup from '@/components/arena/popup/AddGroupPopup.vue'
 import SelectedGroup from '@/components/arena/group/SelectedGroup.vue'
+import GroupNotFound from '@/components/arena/group/GroupNotFound.vue'
+import Loader from '@/components/UI/LoaderThingy.vue'
+
+
 import { db, auth } from '@/components/firebaseInit.js';
 
 export default {
@@ -47,7 +58,9 @@ export default {
     AddArenaBtn,
     GroupItem,
     AddGroupPopup,
-    SelectedGroup
+    SelectedGroup,
+    GroupNotFound,
+    Loader
   },
   data() {
     return {
@@ -57,7 +70,8 @@ export default {
       // groupSelected: true,
       name: null,
       img: null,
-      memebers: null
+      memebers: null,
+      loadActive: true
     }
   },
   computed: {
@@ -102,6 +116,8 @@ export default {
   },
   created(){
     this.getData();
+    setTimeout(() => this.loadActive = false, 1600)
+
   }
 }
 </script>
@@ -112,6 +128,7 @@ export default {
   .my-arenas{
     min-height: 80vh;
     margin: 65px 0.5rem 0 0.5rem;
+
     .my-arenas__title{
       font-weight: 400;
       font-size: 18px;
@@ -143,21 +160,6 @@ export default {
         transform: translateY(0);
       }
     }
-
-
-    // .group-item-selected{
-    //   background: $bg;
-    //   position: fixed;
-    //   z-index: 3;
-    //   top: 0;
-    //   left: 0;
-    //   right: 0;
-    //   bottom: 0;
-    //   padding: 1rem 1.4rem;
-    //   .group-item-selected__main{
-    //     margin-top: 5rem;
-    //   }
-    // }
   }
   
 </style>
