@@ -75,6 +75,14 @@ export default {
     }
   },
   methods: {
+    removeOne(arr, index){
+      const oldArr = arr;
+      oldArr.splice(index, 1)
+      return oldArr
+    },
+    addOne(arr, data){
+      arr.push(data)
+    },
     showPopup(){
       this.isPopupVisible = !this.isPopupVisible
     },

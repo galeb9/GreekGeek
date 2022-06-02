@@ -59,11 +59,11 @@
 
         </div>
 
-        <div style="text-align: center">
+        <!-- <div style="text-align: center">
             <p >{{ id }}</p>
             <p>Request sent? {{ requestSent }} : {{ isRequestSent }}</p>
             <p>Friends? {{ areWeFriends }} : {{ isFriend }} </p>
-        </div>
+        </div> -->
 
     </div>
 

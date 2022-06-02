@@ -86,6 +86,7 @@ export default {
                     name: doc.data().username,
                     pushups: doc.data().pushupsToday
                   })
+                  count++;
                 }
               }
             }
@@ -119,10 +120,6 @@ export default {
   },
   created(){
     this.getFriends()
-    console.log("friends: " + this.friends)
-    setTimeout(() => {
-      console.log("friends: " + this.friends)
-    },1000) 
   }
 }
 </script>

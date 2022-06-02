@@ -58,7 +58,7 @@
                 class="add-arena-popup__btn"
                 :shadow="false"
                 align="" 
-                @click="CreateNewArena"
+                @click="createNewArena"
 
             />
             <BaseButton 
@@ -102,15 +102,10 @@ export default {
             memeberSearch: "",
 
             addedFriends: [],
-            // memebers: [ //dummy, later call friends from firebase
-            //     { name: "galeb9", img: "greek-geek.png", isMemeber: false },
-            //     { name: "medo007", img: "greek-geek2.png", isMemeber: false },
-            //     { name: "Šaman69", img: "greek-geek3.png", isMemeber: false },
-            // ],
+            members: [],
             friends: [],
-
-            matchingMembers: [],
-            selectedImg: 'group01.png'
+            selectedImg: 'group01.png',
+            fejkFriends: ["greekGeek", "ribon430", "sinjikit131"]
         }
     },
 
@@ -142,7 +137,6 @@ export default {
                 .get()
                 .then(snapshot => {
                     snapshot.forEach(doc => {
-                        // console.log(doc.data())
                         this.friends.push({
                             name: doc.data().username,
                             img: doc.data().profileImage,
@@ -152,19 +146,47 @@ export default {
                     })
                 })
         },
-        CreateNewArena(){
-            if(this.arenaName !== '' && this.addedFriends.length > 0) {
-                this.addedFriends.push(this.myUsername)
+        sendArenaRequest(){
+            //gets members + their IDs
+            for(let i = 0; i < this.fejkFriends.length; i++){
+                for(let j = 0; j < this.friends.length; j++){
+                    if(this.fejkFriends[i] === this.friends[j].name){
+                        this.members.push(this.friends[j])
+                    }
+                }
+            }
 
-                db.collection("users").doc(auth.currentUser.uid)
-                    .collection("arenas")
+            for(let i = 0; i < this.members.length; i++){
+                db.collection("users")
+                    .doc(this.members[i].id)
+                    .collection("arena-requests")
                     .doc(this.arenaName)
                     .set({
                         img: this.selectedImg,
                         name: this.arenaName,
-                        memebers: this.addedFriends
+                        memebers: this.addedFriends,
+                        admin: this.myUsername,
+                        joined: false
                     })
-                this.$emit('closePopup')
+            }
+        },
+        createNewArena(){
+            if(this.arenaName !== '' && this.addedFriends.length > 0) {
+                this.addedFriends.push(this.myUsername)
+                const newArena = {
+                    img: this.selectedImg,
+                    name: this.arenaName,
+                    memebers: this.addedFriends
+                }
+
+                db.collection("users").doc(auth.currentUser.uid)
+                    .collection("arenas")
+                    .doc(this.arenaName)
+                    .set(newArena)
+
+                this.sendArenaRequest()
+
+                this.$emit('closePopup', newArena) // somehow work with myArenas removeOne, addOne ....
                 
             } else{
                 alert("Some of the required info is empty, please fill in...")
@@ -189,7 +211,9 @@ export default {
     },
     created(){
         this.getFriends()
-
+        // setTimeout(() => {
+        //  this.sendArenaRequest()
+        // }, 1000);
     }
 }
 </script>

@@ -21,16 +21,20 @@
                 <MessageItem 
                     v-for="(el,index) in requests"
                     :key="index"
-                    :img="el.messagePic"
-                    :username="el.username"
-                    :friendID="el.friendID"
-
-                    :data="requests"
+                    type="friend-request"
+                    :data="el"
                     @confirm="acceptFriendship(index, el.friendID, el.username, el.messagePic)"
                     @deny="denyFriendship(index, el.username)"
-
                 />
-                <div v-if="requests.length == 0">No more messages</div>
+                <MessageItem 
+                    v-for="(el,index) in arenas"
+                    :key="index"
+                    type="arena-request"
+                    :data="el"
+                    @confirm="joinArena(el.name, el.img, el.members, index)"
+                    @deny="denyArena(el.name, index)"
+                />
+                <div v-if="requests.length == 0 && arenas.length == 0">No more messages</div>
             </transition-group>
         </div>
     </transition>
@@ -78,6 +82,7 @@ export default {
             requests: [],
             messagesVisible: false,
             friendCount: 0,
+            arenas: []
         }
     },
     computed: {
@@ -118,7 +123,7 @@ export default {
                 this.goal = user.data().goal
             })
         },
-        getMessages(){
+        getFriendMessages(){
             db.collection("users").doc(auth.currentUser.uid)
                 .collection("friend-requests")
                 .get()
@@ -194,7 +199,56 @@ export default {
                         this.friendCount++
                     })
                 })
+        },
+        getArenaMessages(){
+            db.collection("users")
+                .doc(auth.currentUser.uid)
+                .collection("arena-requests")
+                .get()
+                .then(snapshot => {
+                    snapshot.forEach(doc => {
+                        this.arenas.push({
+                            admin: doc.data().admin,
+                            img: doc.data().img,
+                            members: doc.data().memebers,
+                            name: doc.data().name,
+                            joined: false
+                        })
+                    })
+                })
+        },
+        joinArena(name, img, members, index){
+            db.collection("users")
+                .doc(auth.currentUser.uid)
+                .collection("arenas")
+                .doc(name)
+                .set({
+                    name: name,
+                    img: img,
+                    memebers: members
+                })
+
+
+            db.collection("users")
+                .doc(auth.currentUser.uid)
+                .collection("arena-requests")
+                .doc(name)
+                .delete()
+
+            this.removeOne(this.arenas, index)
+        },
+        denyArena(name, index){
+            db.collection("users")
+                .doc(auth.currentUser.uid)
+                .collection("arena-requests")
+                .doc(name)
+                .delete()
+
+            this.removeOne(this.arenas, index)
+
         }
+
+
     },
     created(){
         if(this.myUsername === "user404"){
@@ -204,7 +258,9 @@ export default {
         }
         this.getFriends();
         this.getUserData();
-        this.getMessages(); 
+
+        this.getFriendMessages(); 
+        this.getArenaMessages()
     }
 }
 </script>
