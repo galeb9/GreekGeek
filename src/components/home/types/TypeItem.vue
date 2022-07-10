@@ -29,7 +29,7 @@ export default {
     align-items: center;
     padding:0 .8rem; 
     margin-bottom: 1rem;
-    background: $grey;
+    background: rgba(31, 27, 27, 0.4);;
     border-radius: $radius;
     img{
         width: 110px;

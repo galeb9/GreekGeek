@@ -137,7 +137,6 @@ export default {
     },
 
     resetToday(day){
-      // this.saveUserDay();
       this.saveUserDayz(day);
       this.resetTodaysPushups();
       this.userPushups = 0; 

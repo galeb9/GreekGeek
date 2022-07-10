@@ -99,7 +99,6 @@ export default {
           .collection("arenas")
           .doc(this.name)
           .delete()
-          //put some notifications here
         this.$emit('clickBack')
       } 
     }

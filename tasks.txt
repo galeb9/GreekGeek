@@ -48,14 +48,7 @@ x new node course
 ----------------------------------------------------------------------------------
 
 17.05.2022
-- add arena functionality (need to code it) 1/5
-- Composition Api 
-- vuex folders
-- poglej kako word diplomo spisat [ Jure template ]
-
-- new node course
-- clean code with vuex
-- refactor add friend component to not be used for each user but onClick
+x nothing
  
 <------------------------------------------------------------------------>
 
@@ -66,6 +59,8 @@ x new node course
 x clean code with vuex
 x refactor add friend component to not be used for each user but onClick
 
+
+6.6.2022
 - some problem with friends (sinjikit131 & medo007 friends, but only medo007 has sinjikit131)
 - send friend request send from user404 as well ????
 - make a function that will add to an array our group we have made in popup
@@ -75,20 +70,22 @@ x refactor add friend component to not be used for each user but onClick
  
 <------------------------------------------------------------------------>
 ⭐ Functionalities:
-    ➡ 
-    ➡ Add arena option
+    ➡ Make color picker
+    ➡ Add arena admin to creator
     ➡ Automatic day finish / Option to finish for yesterday
+        -> solution: save date to firebase, added it to vuex and check if(currentData !== new Date()){ finishDay() }
     ➡ PastData be by months
     ➡ Remove wrong day in PastData
     ➡ Make friends be seen if you tap on friends on user/your profile
+    ➡ as you register send email of welcome to user (with link to page of this app maybe)
 
 
 🐜 Bugs:
-    ➡ Username already taken [promises]
+    ➡ Username already taken in register [promises]
 
 
 👉 Tasks:
-    ➡ Reformat add friend component (to not be used for each user but onClick)
+    ✅ Reformat add friend component (to not be used for each user but onClick) 
     ➡ Add friend component should display limit 5 users + whatever it finds on search
     ➡ In Word diploma change the pics pri opisu tehnologij in dodaj besedilo in nove opise novih tehnologij
     ➡ Change of goal somewhere else and also on your profile tap on goal (maybe ... btn)

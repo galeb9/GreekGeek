@@ -35,7 +35,6 @@ export default {
     getUserData(){
       db.collection("users").doc(this.userId).get()
       .then(user => {
-        // console.log(user.data())
         this.userPushups = user.data().pushupsToday;
         this.userGoal = user.data().goal;
       })

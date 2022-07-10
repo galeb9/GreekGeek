@@ -62,7 +62,7 @@ const store = createStore({
                         userImg: user.data().userImg,
                         goal: user.data().goal
                       })
-          
+                
                       if(count < 6){ // makes a sample list
                         state.sampleUsers.push({
                           username: user.data().username,

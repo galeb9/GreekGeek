@@ -236,7 +236,18 @@ export default {
         right: 0;
         color: white;
         // padding: .8rem 1.8rem;
-
+        .parent{
+            padding: 20px;
+            width: 100px;
+            height: 100px;
+            background: purple;
+        }
+        .parent .child2{
+            color: yellow;
+        }
+        .parent .child1{
+            color: black;
+        }
         .popup-main{
             max-height: 87vh;
             height: 100%;

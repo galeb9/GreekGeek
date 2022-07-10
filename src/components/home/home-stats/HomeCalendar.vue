@@ -19,15 +19,7 @@ export default {
       char: "M",
       num: 3,
       daysChar: ["S", "M", "T","W", "T", "F", "S"],
-      days: [
-        // { char: "S", num: 21, active: false }
-        // { char: "M", num: 22, active: false },
-        // { char: "T", num: 23, active: false },
-        // { char: "W", num: 24, active: false },
-        // { char: "T", num: 25, active: false },
-        // { char: "F", num: 26, active: false },
-        // { char: "S", num: 27, active: false },
-      ],
+      days: [],
       today: null
     }
   },
@@ -38,7 +30,7 @@ export default {
     getChar(num){
       return this.daysChar[num]
     },
-    getDays(){ // will probably have to fix this (counting of days)
+    getDays(){
         let todayCharIndex = this.today.getDay(); // day char
         let todaysDate = this.today.getDate(); //day num
         let smaller = todayCharIndex;
@@ -50,9 +42,9 @@ export default {
 
         for(let i = 0; i < this.daysChar.length; i++){ // nafila koledar z dummy data
             this.days.push({
-                char: this.getChar(i),
-                num: i,
-                active: false
+              char: this.getChar(i),
+              num: i,
+              active: false
             })
         }
 
@@ -70,7 +62,6 @@ export default {
                 day.num = todaysDate  + bigger;
                 bigger++;
             }
-
         }
 
         for(let i = 0; i < this.days.length; i++){ // nekak more dobit dneve prejšnega/naslednjega meseca da ne bo 0 ali -n
@@ -109,7 +100,6 @@ export default {
     text-align: center;
     padding: 1.2rem 0;
     color: $secondary;
-    //border-radius: 50px;
     .char{
       margin-bottom: .2rem;
       font-weight: 900;
@@ -126,7 +116,6 @@ export default {
       content: '';
       width: 12px;
       height: 12px;
-      // border-radius: 50%;
       transform: rotate(45deg);
       background: black;
       position: absolute;
