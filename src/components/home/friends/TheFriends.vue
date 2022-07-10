@@ -22,10 +22,7 @@
             class="fa-eye" 
             :icon="['fa', 'eye']"
           />
-
-
         </div>
-
 
       </div>
       <div class="users__list" v-if="search !== ''">

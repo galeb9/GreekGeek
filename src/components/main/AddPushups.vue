@@ -73,7 +73,8 @@ export default {
                 db.collection("users").doc(this.userId).get()
                 .then(user => {
                     user.ref.update({
-                        pushupsToday: user.data().pushupsToday + p
+                        pushupsToday: user.data().pushupsToday + p,
+                        attempts: Number(user.data().attempts) + 1
                     })
                 })
                 this.pushupsToShow = this.newPushups
@@ -84,7 +85,7 @@ export default {
                 this.useNotification(this.warningMessage, "warning")
             }
         }
-    },
+    }
 }
 </script>
 

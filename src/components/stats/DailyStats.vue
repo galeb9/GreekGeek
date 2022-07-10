@@ -97,10 +97,13 @@ export default {
     },
     //new user firebase code
     getUserData(){
-      db.collection("users").doc(this.userId).get()
+      db.collection("users")
+      .doc(this.userId)
+      .get()
       .then(user => {
         this.userPushups = user.data().pushupsToday // users pushups today
         this.userGoal = user.data().goal // users pushups today
+        this.attempts = user.data().attempts
       })
     },
     // saveUserDay(){ // not used, maybe later 

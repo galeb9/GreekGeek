@@ -86,7 +86,8 @@ export default {
                         goal: 100,
                         pushupsToday: 0, 
                         username: this.username,
-                        userImg: this.chooseRandomAvatar()
+                        userImg: this.chooseRandomAvatar(),
+                        attempts: 0
                         //userId: auth.currentUser.uid
                     })
                     console.log("New user registered")
