@@ -2,8 +2,20 @@
     <div class="past-stats">
         <div class="quote"><!-- <p>{{ message }}</p> --></div>
         <div class="current-month">
-            <p class="current-month__item">{{ month }}</p>
-            <p class="current-month__item">Total: <span>{{ totalPushups }}</span> </p>
+            <div class="current-month__row">
+                <p class="current-month__item">{{ month }}</p>
+            </div>
+            <div class="current-month__row">
+                <div class="current-month__item month__item--column">
+                    <p>Avrage</p> 
+                    <p> {{ monthAvg }} /set </p>
+                </div>
+                <div class="current-month__item month__item--column">
+                    <p>Total</p> 
+                    <p> {{ totalPushups }}</p>
+                </div>
+
+            </div>
         </div>
         <transition name="list">
             <div class="past-list" v-if="dayz.length">
@@ -42,6 +54,7 @@ export default {
             message: "\"Quality is not an act, It is a habit.\"",
             totalPushups: 0,
             month: null,
+            monthAvg: null,
             today: new Date(),
             userId: auth.currentUser.uid,
             // days: [],
@@ -65,6 +78,15 @@ export default {
             setTimeout(() => {
                 this.loader = false
             }, 1000);
+        },
+        getMonthAvrage() {
+            let avgs = 0
+            let count = 0
+            this.dayz.forEach((item) => {
+                avgs += (item.num / item.attempts)
+                count++
+            }) 
+            this.monthAvg =  avgs / count
         },
         // new firebase code
 
@@ -124,6 +146,10 @@ export default {
         this.getCurrentMonthDays()
         this.hideLoader()
         this.getOtherMonthsDays()
+
+        setTimeout(() => {
+            this.getMonthAvrage()
+        }, 400);
     }
 }
 </script>
@@ -152,19 +178,25 @@ export default {
         letter-spacing: 1px;
     }
     .current-month {
-        display: flex;
-        justify-content: space-around;
-        gap: 10px;
         margin-bottom: 2rem;
-        p{
-            text-align: center;
-            flex: 1;
-            font-weight: 700;
-            background: black;
-            color: white;
-            padding:  .8rem 2rem;
-            width: max-content;
-            border-radius: 10px;
+        .current-month__row{
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin-bottom: 1rem;
+            .current-month__item{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                flex: 1;
+                font-weight: 700;
+                background: black;
+                color: white;
+                padding:  .8rem 2rem;
+                width: max-content;
+                border-radius: 10px;
+            }
         }
     }
 }
