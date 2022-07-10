@@ -8,6 +8,7 @@
         :surplus="surplus"
        />
 
+      <!-- <div class="stats-item" v-if="userPushups"> -->
       <div class="stats-item">
         <button @click="togglePopup" class="stats-item__button">Finish day</button>
       </div>
@@ -19,14 +20,13 @@
       />
 
  
-
       <transition name="move-in-bottom">
         <div class="popup-container" v-if="popupVisible">
           <div class="popup" >
             <h2>Finish for</h2>
-            <BaseButton text="Today" @click="resetToday(this.getTodaysDate())" />
+            <BaseButton text="Today" @click="resetToday(this.getTodaysDate(), month)" />
             <p>or</p>
-            <BaseButton text="Yesterday" @click="resetToday(this.getYesterdayDate())" />
+            <BaseButton text="Yesterday" @click="resetYesterday(this.getYesterdayDate(), month)" />
           </div>
         </div>
       </transition>
@@ -57,7 +57,7 @@ export default {
     return{
       daysChar: ["Sun", "Mon", "Tue","Wed", "Thu", "Fri", "Sat"],
       today: new Date(),
-
+      month: null,
       userGoal: 0,
       userPushups: 0,
       userId: auth.currentUser.uid,
@@ -76,6 +76,9 @@ export default {
       this.popupVisible = !this.popupVisible
     },
     getChar(num){
+      if(num === -1) {
+        num = this.daysChar.length-1
+      }
       return this.daysChar[num]
     },
     isTodayWin(){
@@ -94,6 +97,10 @@ export default {
     },
     getYesterdayDate(){
       return `${this.today.getDate() - 1}-${this.today.getMonth() + 1}-${this.today.getFullYear()}`
+    },
+    getMonthByWord(month) {
+      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      return months[month]
     },
     //new user firebase code
     getUserData(){
@@ -127,33 +134,54 @@ export default {
         })
       })
     },
-
-    saveUserDayz(day){
+    saveToday(day, month){
       db.collection("users").doc(this.userId)
-        .collection("dayz")
+        .collection("past")
+        .doc(month)
+        .collection("days")
         .doc(day)
         .set({
           dateNum: this.today.getDate(),
           day: this.getChar(this.today.getDay()),
           num: this.userPushups,
-          status: this.isTodayWin()
+          status: this.isTodayWin(),
+          attempts: this.attempts
         })
     },
-
-    resetToday(day){
-      this.saveUserDayz(day);
+    saveYesterday(day, month){
+      db.collection("users").doc(this.userId)
+        .collection("past")
+        .doc(month)
+        .collection("days")
+        .doc(day)
+        .set({
+          dateNum: this.today.getDate() -1,
+          day: this.getChar(this.today.getDay() -1),
+          num: this.userPushups,
+          status: this.isTodayWin(),
+          attempts: this.attempts
+        })
+    },
+    resetDay() {
       this.resetTodaysPushups();
       this.userPushups = 0; 
       this.attempts = 0;
       this.calories = 0;
       this.popupVisible = false
+    },
+    resetToday(day, month){
+      this.saveToday(day, month);
+      this.resetDay()
+    },
+    resetYesterday(day, month){
+      this.saveYesterday(day, month);
+      this.resetDay()
     }
-
   },
   created(){
     this.getUserData();
     setTimeout(this.getBurntCalories, 300)
-    console.log(this.getYesterdayDate())
+    this.month = this.getMonthByWord(this.today.getMonth())
   },
 }
 </script>

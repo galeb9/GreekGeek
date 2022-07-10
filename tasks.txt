@@ -59,14 +59,20 @@ x new node course
 x clean code with vuex
 x refactor add friend component to not be used for each user but onClick
 
+10.7.2022
+x poglej kako word diplomo spisat [ Jure template ]
+x Stats bugs fixed
 
-6.6.2022
+11.7.2022
+- make a component for every month, load months
+- fix the placeholder for months created in PastData
+
 - some problem with friends (sinjikit131 & medo007 friends, but only medo007 has sinjikit131)
 - send friend request send from user404 as well ????
 - make a function that will add to an array our group we have made in popup
 - make a function that will remove form an array our group we have removed in selected group
 - vuex folders
-- poglej kako word diplomo spisat [ Jure template ]
+
  
 <------------------------------------------------------------------------>
 ⭐ Functionalities:

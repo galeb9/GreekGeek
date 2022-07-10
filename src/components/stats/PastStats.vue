@@ -1,10 +1,9 @@
 <template>
     <div class="past-stats">
-        <div
-            class="quote"
-        >
-            <p>{{ message }}</p>
-            <p>Total: <span>{{ totalPushups }}</span> </p>
+        <div class="quote"><!-- <p>{{ message }}</p> --></div>
+        <div class="current-month">
+            <p class="current-month__item">{{ month }}</p>
+            <p class="current-month__item">Total: <span>{{ totalPushups }}</span> </p>
         </div>
         <transition name="list">
             <div class="past-list" v-if="dayz.length">
@@ -16,32 +15,45 @@
                     :day="item.day"
                     :num="item.num"
                     :status="item.status"
+                    :attempts="item.attempts"
                 />
             </div>
+            <div v-else-if="loader">
+                <LoaderThingy />
+            </div>
+            <p class="no__past-list" v-else> <b>No days...</b> <br> Do some pushups and <b>FINISH</b> your <b>DAY</b> to see your days here.</p>
         </transition>
      </div>
 </template>
 
 <script>
 import PastStatsItem from '@/components/stats/PastStatsItem'
+import LoaderThingy from '@/components/UI/LoaderThingy.vue'
 import { db, auth } from '@/components/firebaseInit.js'
 
 export default {
     components: {
-        PastStatsItem
+        PastStatsItem,
+        LoaderThingy
     },
     data(){
         return{
             pastData: [],
             message: "\"Quality is not an act, It is a habit.\"",
             totalPushups: 0,
-
+            month: null,
+            today: new Date(),
             userId: auth.currentUser.uid,
             // days: [],
-            dayz: []
+            dayz: [],
+            loader: true
         }
     },
     methods: {
+        getMonthByWord(month) {
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+            return months[month]
+        },
         getTotalPushups(){
             db.collection('days').get().then(snapshot => {
                 snapshot.forEach(doc => {
@@ -49,8 +61,13 @@ export default {
                 })
             })
         },
-        
+        hideLoader() {
+            setTimeout(() => {
+                this.loader = false
+            }, 1000);
+        },
         // new firebase code
+
         // getUserData(){
         //     db.collection("users").doc(this.userId).get()
         //     .then(user => {
@@ -66,10 +83,24 @@ export default {
         //         }
         //     })
         // },
-
-
-        getDayz(){
-            db.collection("users").doc(this.userId).collection("dayz")
+        getOtherMonthsDays() { 
+            // problem when creating a document for july 
+            // souliton -> must add some field to it beacause it cannot be just a placeholder
+            db.collection("users")
+                .doc(this.userId)
+                .collection("past")
+                .get()
+                .then(snapshot => {
+                    snapshot.forEach(month => {
+                        console.log(month.id)
+                    })
+                })
+        },
+        getCurrentMonthDays(){
+            db.collection("users").doc(this.userId)
+                .collection("past")
+                .doc(this.month)
+                .collection("days")
                 .orderBy("dateNum","desc")
                 .limit(10) // max last 10
                 .get() //get the days
@@ -80,19 +111,20 @@ export default {
                         dateNum: day.data().dateNum,
                         num: day.data().num,
                         day: day.data().day,
-                        status: day.data().status
+                        status: day.data().status,
+                        attempts: day.data().attempts
                     })
                     this.totalPushups += day.data().num
                 })
             })
         },
     },
-
     created(){
-        // this.getUserData();
-        this.getDayz()
+        this.month = this.getMonthByWord(this.today.getMonth())
+        this.getCurrentMonthDays()
+        this.hideLoader()
+        this.getOtherMonthsDays()
     }
-    
 }
 </script>
 
@@ -101,33 +133,38 @@ export default {
 
 .past-stats{
     padding: 0 1rem;
-    margin-top: 3rem;
     min-height: 90vh;
+    .no__past-list {
+        max-width: 80%;
+        text-align: center;
+        margin: 0 auto;
+        padding-top: 80px;
+    }
     .past-list{
         height: 100%;
         overflow-y: scroll;
-        padding: 0 20px 140px 20px
+        padding: 0 0 140px;
     }
     .quote{
         color: black;
         text-align: center;
-        margin-top: 3rem;
         font-size: 18px;
         letter-spacing: 1px;
-
-        p:first-child{
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px dashed black;
-        }
-        p:last-child{
+    }
+    .current-month {
+        display: flex;
+        justify-content: space-around;
+        gap: 10px;
+        margin-bottom: 2rem;
+        p{
+            text-align: center;
+            flex: 1;
             font-weight: 700;
-            background: $secondary;
+            background: black;
             color: white;
             padding:  .8rem 2rem;
             width: max-content;
             border-radius: 10px;
-            margin: 2rem auto;
         }
     }
 }
@@ -139,6 +176,6 @@ export default {
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateY(40px);
 }
 </style>

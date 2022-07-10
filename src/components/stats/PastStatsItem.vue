@@ -15,6 +15,11 @@
                     </svg>
                 </div>
             </div>
+            <div class="pushups-section stats-section">
+                <p v-if="!avrage">N/A</p>
+                <p v-else>{{ avrage }}</p>
+                <p>avg.</p>
+            </div>
         </div>
         <div :class="[ 'status' , status]"></div>
     </div>
@@ -23,23 +28,25 @@
 <script>
 export default {
     props:{
-        dateNum: {
-            type: Number,
-            default: 1
-        },
-        day: {
-            type: String,
-            default: 'Mon'
-        },
-        num: {
-            type: Number,
-            default: 69
-        },
-        status: {
-            type: String,
-            default: 'neg'
+        dateNum: { type: Number, default: 1 },
+        day: { type: String, default: 'Mon' },
+        num: { type: Number, default: 69 },
+        status: { type: String, default: 'neg' },
+        attempts: { type: Number, default: null}
+    },
+    data() {
+        return {
+            avrage: null
+        }
+    },
+    methods: {
+        getAvrage() {
+            return this.num / this.attempts
         },
     },
+    created() {
+        this.avrage = this.getAvrage()
+    }
 }
 </script>
 
@@ -48,7 +55,7 @@ export default {
 
     .past-item{
         margin-bottom: 1.5rem;
-        border-bottom: $secondary 5px double;
+        border-bottom: black 5px double;
         padding-bottom: .3rem;
         display: flex;
         justify-content: space-between;
