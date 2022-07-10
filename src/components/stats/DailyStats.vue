@@ -122,7 +122,8 @@ export default {
       db.collection("users").doc(this.userId).get()
       .then(user => {
         user.ref.update({
-          pushupsToday: 0
+          pushupsToday: 0,
+          attempts: 0
         })
       })
     },
