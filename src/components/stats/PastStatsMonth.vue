@@ -98,7 +98,7 @@ export default {
         this.getMonthDays()
         setTimeout(() => {
             this.getMonthAvrage()
-        }, 400);
+        }, 1000);
         this.hideLoader()
     }
 }
