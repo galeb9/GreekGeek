@@ -18,7 +18,6 @@
         :calories="calories"
         :userPushups="userPushups"
       />
-
  
       <transition name="move-in-bottom">
         <div class="popup-container" v-if="popupVisible">
@@ -182,6 +181,7 @@ export default {
     this.getUserData();
     setTimeout(this.getBurntCalories, 300)
     this.month = this.getMonthByWord(this.today.getMonth())
+    // this.month = "May"
   },
 }
 </script>

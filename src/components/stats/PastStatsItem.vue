@@ -17,7 +17,7 @@
             </div>
             <div class="pushups-section stats-section">
                 <p v-if="!avrage">N/A</p>
-                <p v-else>{{ avrage }}</p>
+                <p v-else>{{ Math.floor(avrage) }}</p>
                 <p>avg.</p>
             </div>
         </div>
