@@ -85,7 +85,7 @@ export default {
       this.loadData()
     }
     setTimeout(() => this.loadActive = false, 1600)
-    // this.isUsernameOk("medo007")
+    //this.isUsernameOk("medo007")
   }
 }
 </script>

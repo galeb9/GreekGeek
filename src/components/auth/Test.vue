@@ -50,14 +50,14 @@ export default {
                 "greek-geek.png",
                 "greek-geek2.png",
                 "greek-geek3.png",
-                "greek-geek4.png",
-                "greek-geek5.png",
+                "greek-geek4.jpg",
+                "greek-geek5.jpg",
                 "homer.jpg",
                 "idiocrates.jpg",
                 "polibo.jpg",
                 "thucydides.jpg",
                 "xenophanes.jpg",
-                "xenophanes2.jpg",
+                "xenophanes2.jpg"
             ]
             let randomNum = Math.floor(Math.random() * avatarList.length)
             return avatarList[randomNum]

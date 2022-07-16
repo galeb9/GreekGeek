@@ -26,13 +26,12 @@
                     <label for="password">Confirm password</label>
                         <input class="input-field__not-password password" type="password" id="password" v-model="confirmedPassword">
           
-                <div class="notification__auth">
+                <div :class="['notification__auth']">
                     <p v-if="text" class="notification__text">{{ text }}</p>
                 </div>
                 </div>
                 <div class="register__buttons">
-                    <!-- <button class="register__button" @click="registerUser">REGISTER</button> -->
-                    <button class="register__button" @click="register">REGISTER</button>
+                    <button class="register__button" @click="registerUser">REGISTER</button>
                 </div>
             </form>
         </div>
@@ -58,8 +57,7 @@ export default {
             password: '',
             confirmedPassword: '',
             text: '',
-            isUsernameOK: false,
-            isPasswordOK: false
+            users: []
         }
     },
     methods: {
@@ -81,41 +79,49 @@ export default {
                 "greek-geek.png",
                 "greek-geek2.png",
                 "greek-geek3.png",
-                "greek-geek4.png",
-                "greek-geek5.png",
+                "greek-geek4.jpg",
+                "greek-geek5.jpg",
                 "homer.jpg",
                 "idiocrates.jpg",
                 "polibo.jpg",
                 "thucydides.jpg",
                 "xenophanes.jpg",
-                "xenophanes2.jpg",
+                "xenophanes2.jpg"
             ]
             let randomNum = Math.floor(Math.random() * avatarList.length)
             return avatarList[randomNum]
         },
-        checkUsername() {
-            const arr = []
-
+        getUsers() {
             db.collection("users")
                 .get()
                 .then(snapshot => {
                     snapshot.forEach(user => {
-                        arr.push(user.data().username)
+                        this.users.push(user.data().username)
                     })
                 })
-            console.log(arr)
         },
         checkPassword() {
             if(this.password.length >= 8) {
                 if(this.password === this.confirmedPassword) {
-                    this.isPasswordOK = true
-                    console.log("password is ok")
+                    document.querySelector(".notification__auth").classList.add("notification__auth--success")
+                    this.text = "Successfully registered 🎉"
+                    this.createUser()
                 } else {
                     this.text = "Your password does not match, please check."
                 }
             } else {
                 this.text = "Your password must be at least 8 characters long!"
             }
+        },
+        validateUsername(username) {
+            let isUsernameOk = true;
+            for(let i = 0; i < this.users.length; i++) {
+                if(username === this.users[i]) {
+                    console.log("Name matched")
+                    isUsernameOk = false
+                }
+            }
+            return isUsernameOk
         },
         createUser() {
             try {
@@ -136,47 +142,26 @@ export default {
                 )
             } catch(err) {
                 console.log(err)
+                this.text(err)
             } 
 
         },
         registerUser(event){
             event.preventDefault();
-            // this.checkUsername()
-            this.checkPassword()
-            if(this.isPasswordOK) {
-                this.createUser()
-                console.log("user created")
-            }
-            this.text = null
-            //document.querySelector(".notification__text").classList.add("notification__text--success")
 
-        },
-        register(e){ // old function that works?
-            //figure out promises
-            auth.createUserWithEmailAndPassword(this.email, this.password)
-                .then(cred => {
-                    alert(`Račun narejen za ${cred.user.email}`)
-                    this.$router.push("/")
-                    db.collection('users').doc(cred.user.uid).set({
-                        goal: 100,
-                        pushupsToday: 0, 
-                        username: this.username,
-                        userImg: this.chooseRandomAvatar(),
-                        attempts: 0
-                        //userId: auth.currentUser.uid
-                    })
-                    console.log("New user registered")
-                },
-                err => {
-                    alert(err.message)
-                }
-            )
-            e.preventDefault();
+            let isUsernameOk = this.validateUsername(this.username)
+
+            if(isUsernameOk) {
+                console.log("username ok")
+                this.checkPassword()
+            } else {
+                this.text = "Username taken, please try something else."
+            }
         },
     },
     created(){
+        this.getUsers()
         this.chooseRandomAvatar()
-        this.checkUsername()
     }
 }
 </script>
@@ -297,14 +282,13 @@ export default {
                 .notification__auth {
                     margin: 0.5rem 1rem 0 ;
                     min-height: 40px;
+                    color: $error;
+
                     .notification__text {
-                        color: $error;
                         font-weight: 700;
                         animation: fade-in-top 0.3s ease-in ;
                     }
-                    .notification__text--success {
-                        color: $success;
-                    }
+
                     @keyframes fade-in-top {
                         0% {
                             opacity: 0;
@@ -315,6 +299,9 @@ export default {
                             transform: translateY(0);
                         }
                     }
+                }
+                .notification__auth--success {
+                    color: $success; 
                 }
             }
         }
