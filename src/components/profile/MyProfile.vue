@@ -54,7 +54,6 @@
         align="center" 
         @click="goToGoal"
     />
-    <TheHeader />
 
   </div>
 
@@ -64,14 +63,11 @@
 import { db, auth } from '@/components/firebaseInit.js'
 import MessageItem from '@/components/profile/MessageItem.vue'
 import ProfileInfo from '@/components/profile/ProfileInfo.vue'
-import TheHeader from '@/components/layout/TheHeader.vue'
-
 
 export default {
     components: {
         MessageItem,
-        ProfileInfo, 
-        TheHeader
+        ProfileInfo
     },
     data(){
         return{

@@ -23,17 +23,14 @@
         :type="type"
         :notif-visible="notifVisible"
       />
-      <TheHeader />
     </div>
 </template>
 
 <script>
 import { db, auth } from '@/components/firebaseInit.js';
-import TheHeader from '@/components/layout/TheHeader.vue'
 
 export default {
   components: {
-    TheHeader,
   },
   data(){
     return{

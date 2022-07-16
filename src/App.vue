@@ -2,13 +2,12 @@
   <main>
     <router-view class="router-view" v-slot="{ Component }">
       <transition name="fade-in" mode="out-in">
-        <!-- <component :is="logComponent(Component, Component.type.name)" /> -->
         <component :is="Component" />
       </transition>
     </router-view>
-    <!-- <TheHeader v-if="headerVisible" class="header" /> -->
+
     <transition name="move-in-bottom">
-      <TheHeader v-if="false" class="header" />
+      <TheHeader v-if="showHeader(this.$route.fullPath)" class="header" />
     </transition>
 
     <transition name="fade-in" mode="out-in">
@@ -43,14 +42,22 @@ export default {
     }
   },
   methods: {
-    logComponent(comp, val) {
-      // console.logv(val)
-      if (val === 'LoginForm' || val === 'RegisterForm'){
-        this.headerVisible = false
-      } else {
-        this.headerVisible = true
+    showHeader(route) {
+      const acceptableRoutes = [
+        'home',
+        'friends',
+        'profile',
+        'add',
+        'stats',
+        'settings',
+        'goal',
+        'arena'
+      ]
+      for(let i = 0; i < acceptableRoutes.length; i++) {
+        if(route === ('/' + acceptableRoutes[i]) ) {
+          return true
+        }
       }
-      return comp
     },
     async isUsernameOk(username){ //works
       const userData = await db.collection("users")
@@ -65,19 +72,18 @@ export default {
         })
       console.log(userData)
     },
-    loadAnimation(){
-
+    loadData() {
+      if(this.myUsername === "user404"){
+        this.$store.dispatch("getUserData")
+      }else{
+        console.log("Basic user data allready loaded from DB")
+      }
     }
   }, 
   created(){
-    if(this.myUsername === "user404"){
-      this.$store.dispatch("getUserData")
-    }else{
-      console.log("Basic user data allready loaded from DB")
-    }
-    // this.isUsernameOk("medo007")
-
+    this.loadData()
     setTimeout(() => this.loadActive = false, 1600)
+    // this.isUsernameOk("medo007")
   }
 }
 </script>

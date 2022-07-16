@@ -17,21 +17,18 @@
     <transition name="fade-in" mode="out-in">
       <component :is="currentTab"></component>
     </transition>
-    <TheHeader />
   </div>
 </template>
 
 <script>
 import DailyStats from '@/components/stats/DailyStats.vue'
 import PastStats from '@/components/stats/PastStats.vue'
-import TheHeader from '@/components/layout/TheHeader.vue'
 
 
 export default {
   components: {
     DailyStats,
-    PastStats,
-    TheHeader
+    PastStats
   },
   data(){
     return{

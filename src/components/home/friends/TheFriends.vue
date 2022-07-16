@@ -64,22 +64,19 @@
         />
       </div>
     </transition>
-
-    <TheHeader />
   </div>
 </template>
 
 <script>
 import { db, auth } from '@/components/firebaseInit.js';
 import FriendCard from '@/components/home/friends/FriendCard.vue'
-import TheHeader from '@/components/layout/TheHeader.vue'
 import GroupInput from '@/components/arena/popup/GroupInput.vue'
 import UserProfile from '@/components/profile/UserProfile.vue'
 
 export default {
+  name: 'TheFriends',
   components:{
     FriendCard,
-    TheHeader,
     GroupInput,
     UserProfile
   },
@@ -198,11 +195,14 @@ export default {
       this.areFriends(name)
       this.isFriendRequestSent(name)
     },
+    loadUser() {
+      if(this.allUsers.length === 0){
+        this.$store.dispatch('getUsers')
+      }
+    }
   },
   created(){
-    if(this.allUsers.length === 0){
-      this.$store.dispatch('getUsers')
-    }
+    this.loadUser()
   }
 }
 </script>
