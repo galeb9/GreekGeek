@@ -7,7 +7,7 @@
                 :month="month"
             />
         </div>
-        <p v-show="false" class="no__past-list"> <b>No days...</b> <br> Do some pushups and <b>FINISH</b> your <b>DAY</b> to see your days here.</p>
+        <!-- <p v-show="true" class="no__past-list"> <b>No days...</b> <br> Do some pushups and <b>FINISH</b> your <b>DAY</b> to see your days here.</p> -->
      </div>
 </template>
 

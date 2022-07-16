@@ -16,7 +16,6 @@
             </div>
             <button class="login__button" @click="login">LOGIN</button>
             <div class="mid-line"></div>
-            <!-- <button class="login__button" @click="loginWithGoogle">LOGIN with GOOGLE </button> -->
         </form>
     </div>
   </div>
@@ -48,14 +47,6 @@ export default {
             )
             e.preventDefault();
         },
-
-        // loginWithGoogle(){
-        //     const provider = new firebase.auth.GoogleAuthProvider()
-        //     firebase.auth().signInWithPopup(provider)
-        //         .catch(console.log)
-
-        //     this.$router.push('/')
-        // }
     }
 }
 </script>

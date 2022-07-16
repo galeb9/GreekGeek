@@ -20,6 +20,7 @@
                     <input type="password" id="password" v-model="password">
                 </div>
                 <button class="login__button" @click="register">REGISTER</button>
+                <button class="login__button" @click="loginWithGoogle">REGISTER with GOOGLE</button>
             </form>
         </div>
         <div class="or">
@@ -33,7 +34,7 @@
 </template>
 
 <script>
-import { db, auth } from '@/components/firebaseInit.js'
+import { db, auth, firebase } from '@/components/firebaseInit.js'
 
 export default {
     name: 'LoginForm',
@@ -80,7 +81,6 @@ export default {
             auth.createUserWithEmailAndPassword(this.email, this.password)
                 .then(cred => {
                     alert(`Račun narejen za ${cred.user.email}`)
-                    // this.$router.go({path : this.$router.path});
                     this.$router.push("/")
                     db.collection('users').doc(cred.user.uid).set({
                         goal: 100,
@@ -97,6 +97,23 @@ export default {
                 }
             )
             e.preventDefault();
+        },
+        loginWithGoogle(event){
+            event.preventDefault();
+            let provider = new firebase.auth.GoogleAuthProvider()
+
+            firebase.auth().signInWithPopup(provider)
+                .then((result) => {
+                    let token = result.credential.accessToken;
+                    let user = result.user;
+                    console.log(token) // Token
+                    console.log(user) // User that was authenticated
+                })
+                .catch((err) => {
+                    console.log(err); // This will give you all the information needed to further debug any errors
+                });
+
+            this.$router.push('/')
         }
     },
     created(){
