@@ -1,10 +1,6 @@
 <template>
   <div class="login">
     <div class="login-container">
-        <h4>OR</h4>
-        <router-link to="/register">
-            <h3> Register for an account</h3>
-        </router-link>
         <form class="login-form">
             <div class="input-field">
                 <label for="email">Email:</label>
@@ -17,6 +13,13 @@
             <button class="login__button" @click="login">LOGIN</button>
             <div class="mid-line"></div>
         </form>
+        <div class="or">
+            <h4>OR</h4>
+            <router-link to="/register">
+                <h3> Register for an account</h3>
+            </router-link>
+        </div>
+
     </div>
   </div>
 </template>
@@ -59,23 +62,27 @@ export default {
     min-width: 300px;
     margin: 0 auto;
     color: $secondary;
-    min-height: 120vh;
     .login-container{
-        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         width: 80%;
+        min-height: 90vh;
         margin: 0 auto;
-        h3{
-            text-align: center;
-            color: white;
-            background: $secondary;
-            padding: 1rem 0;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
+        .or {
+            h3{
+                text-align: center;
+                padding-bottom: 3px;
+                margin-bottom: 2rem;
+                letter-spacing: 2px;
+                border-bottom: 1px solid $secondary;
+            }
+            h4{
+                text-align: center;
+                margin-bottom: 1rem;
+            }
         }
-        h4{
-            text-align: center;
-            margin-bottom: 1rem;
-        }
+
         .login-form{
             display: flex;
             flex-direction: column;

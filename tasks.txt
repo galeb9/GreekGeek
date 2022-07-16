@@ -63,7 +63,16 @@ x refactor add friend component to not be used for each user but onClick
 x poglej kako word diplomo spisat [ Jure template ]
 x Stats bugs fixed
 
-11.7.2022
+16.7.2022
+- Register  
+    ➡ eye check password ✅
+    ➡ check if choosen password === password
+    ➡ check if username is taken
+    ➡ register with google (displayName?)
+
+- Login
+    ➡ forgot password
+
 - make a component for every month, load months
 - fix the placeholder for months created in PastData
 

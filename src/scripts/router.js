@@ -5,8 +5,8 @@ import AddPushups from '@/components/main/AddPushups';
 import TheStats from '@/components/stats/TheStats';
 import TheHome from '@/components/home/TheHome';
 import TheSettings from '@/components/settings/TheSettings.vue'
-import LoginForm from '@/components/LoginForm'
-import RegisterForm from '@/components/RegisterForm'
+import LoginForm from '@/components/auth/LoginForm'
+import RegisterForm from '@/components/auth/RegisterForm'
 import TheFriends from '@/components/home/friends/TheFriends.vue'
 import MyProfile from '@/components/profile/MyProfile.vue'
 import MyArenas from '@/components/arena/MyArenas.vue'
