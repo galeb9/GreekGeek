@@ -63,16 +63,7 @@ x refactor add friend component to not be used for each user but onClick
 x poglej kako word diplomo spisat [ Jure template ]
 x Stats bugs fixed
 
-16.7.2022
-- Register  
-    ➡ eye check password ✅
-    ➡ check if choosen password === password
-    ➡ check if username is taken
-    ➡ register with google (displayName?)
-
-- Login
-    ➡ forgot password
-
+11.7.2022
 - make a component for every month, load months
 - fix the placeholder for months created in PastData
 
@@ -111,4 +102,6 @@ x Stats bugs fixed
     ➡ Composition API
     ➡ Learn async await & promises & firebase usage in vue
     ➡ Check how to structure vuex files
+
+
 

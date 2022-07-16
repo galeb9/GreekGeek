@@ -31,8 +31,8 @@
                 </div>
                 </div>
                 <div class="register__buttons">
-                    <button class="register__button" @click="registerUser">REGISTER</button>
-                    <!-- <button class="register__button" @click="registerWithGoogle">REGISTER with GOOGLE</button> -->
+                    <!-- <button class="register__button" @click="registerUser">REGISTER</button> -->
+                    <button class="register__button" @click="register">REGISTER</button>
                 </div>
             </form>
         </div>
@@ -50,7 +50,7 @@
 import { db, auth } from '@/components/firebaseInit.js'
 
 export default {
-    name: 'registerForm',
+    name: 'RegisterForm',
     data() {
         return {
             username: '',
@@ -109,6 +109,7 @@ export default {
             if(this.password.length >= 8) {
                 if(this.password === this.confirmedPassword) {
                     this.isPasswordOK = true
+                    console.log("password is ok")
                 } else {
                     this.text = "Your password does not match, please check."
                 }
@@ -117,7 +118,42 @@ export default {
             }
         },
         createUser() {
-          auth.createUserWithEmailAndPassword(this.email, this.password)
+            try {
+                auth.createUserWithEmailAndPassword(this.email, this.password)
+                    .then(cred => {
+                        alert(`Račun narejen za ${cred.user.email}`)
+                        this.$router.push("/")
+                        db.collection('users').doc(cred.user.uid).set({
+                            goal: 100,
+                            pushupsToday: 0, 
+                            username: this.username,
+                            userImg: this.chooseRandomAvatar(),
+                            attempts: 0
+                            //userId: auth.currentUser.uid
+                        })
+                        console.log("New user registered")
+                    }
+                )
+            } catch(err) {
+                console.log(err)
+            } 
+
+        },
+        registerUser(event){
+            event.preventDefault();
+            // this.checkUsername()
+            this.checkPassword()
+            if(this.isPasswordOK) {
+                this.createUser()
+                console.log("user created")
+            }
+            this.text = null
+            //document.querySelector(".notification__text").classList.add("notification__text--success")
+
+        },
+        register(e){ // old function that works?
+            //figure out promises
+            auth.createUserWithEmailAndPassword(this.email, this.password)
                 .then(cred => {
                     alert(`Račun narejen za ${cred.user.email}`)
                     this.$router.push("/")
@@ -135,21 +171,11 @@ export default {
                     alert(err.message)
                 }
             )
-        },
-        registerUser(event){
-            // this.checkUsername()
-            this.checkPassword()
-            if(this.isPasswordOK /*&& this.isUsernameOK*/) {
-                this.createUser()
-            }
-            this.text = "Success, you have registered"
-            document.querySelector(".notification__text").classList.add("notification__text--success")
-            event.preventDefault();
+            e.preventDefault();
         },
     },
     created(){
         this.chooseRandomAvatar()
-
         this.checkUsername()
     }
 }

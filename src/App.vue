@@ -81,7 +81,9 @@ export default {
     }
   }, 
   created(){
-    this.loadData()
+    if(this.$route.path !== '/register' || this.$route.path !== '/login' ) {
+      this.loadData()
+    }
     setTimeout(() => this.loadActive = false, 1600)
     // this.isUsernameOk("medo007")
   }

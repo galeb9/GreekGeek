@@ -38,13 +38,14 @@ const store = createStore({
             try {
                 db.collection("users").doc(auth.currentUser.uid).get()
                 .then(user => {
-                  state.avatarImg = user.data().userImg
-                  state.username = user.data().username
-                  state.goal = user.data().goal
-                  state.pushupsToday = user.data().pushupsToday
+                    state.avatarImg = user.data().userImg
+                    state.username = user.data().username
+                    state.goal = user.data().goal
+                    state.pushupsToday = user.data().pushupsToday
                 })    
             } catch (error) {
                 console.log(error)
+                console.log("Napaka iz vuex")
             }
         },
         getUsers(state){
