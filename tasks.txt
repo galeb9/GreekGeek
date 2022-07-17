@@ -78,6 +78,8 @@ x password & username validation for register
 - maybe make forgot password
 - 
 
+
+- add register validation for EMAIL
 - some problem with friends (sinjikit131 & medo007 friends, but only medo007 has sinjikit131)
 - send friend request send from user404 as well ????
 - make a function that will add to an array our group we have made in popup

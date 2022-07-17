@@ -1,11 +1,7 @@
 <template>
   <div class="register">
     <div class="register__container">
-        <!-- <img class="auth-img" src="@/assets/img/greek-body.png" alt=""> -->
         <div class="register__main">
-            <!-- <div class="app-title">
-                <h2>GreeK GeeK</h2> 
-            </div> -->
             <form class="register-form">
                 <div class="input-field">
                     <label for="username">Username</label>
@@ -64,8 +60,8 @@ export default {
                 'input--password',
                 'input--password-confirm',
             ],
-            errorClass: "border--error",
-            successClass: "border--success"
+            errorClass: "input--error",
+            successClass: "input--success"
         }
     },
     methods: {
@@ -257,11 +253,19 @@ export default {
                 display: flex;
                 flex-direction: column;
                 height: 100%;
-                .border--error {
+                .input--error {
                     border: 2px solid red !important;
+                    // animation: move-L-R 1.5s ease-in;
                 }                
-                .border--success {
+                .input--success {
                     border: 2px solid green !important;
+                }
+                @keyframes move-L-R {
+                    0% { transform: translateX(0) } 
+                    25% { transform: translateX(-5px) }
+                    50% { transform: translateX(5px) }
+                    70% { transform: translateX(-5px) }
+                    100% { transform: translateX(0) }
                 }
                 .input-field{
                     display: flex;
@@ -305,9 +309,8 @@ export default {
                             transition: all 0.3s ease-in;
                         }
                         .fa-eye {
-                            // background: red;
                             padding: 12.5px 13px;
-                            border-radius:  0 8px 8px 0;
+                            border-radius:  0 5px 5px 0;
                             background: transparent;
                             color: black;
                             transition: all .2s ease-out;
@@ -328,7 +331,6 @@ export default {
                     margin: 0.5rem 1rem 0 ;
                     min-height: 40px;
                     color: $error;
-
                     .notification__text {
                         font-weight: 700;
                         animation: fade-in-top 0.3s ease-in ;
