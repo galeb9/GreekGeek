@@ -93,7 +93,7 @@ export default {
             transition: all 0.3s ease-in;
         }
         .fa-eye {
-            padding: 12.5px 13px;
+            padding: 17px 15px;
             border-radius:  0 5px 5px 0;
             background: transparent;
             color: black;

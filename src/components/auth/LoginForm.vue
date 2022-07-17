@@ -127,9 +127,6 @@ export default {
             justify-content: space-between;
             height: 100%;
             flex: 1;
-            .auth__inputs{
-
-            }
             .auth__buttons {
                 display: flex;
                 flex-direction: column;

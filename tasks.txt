@@ -73,48 +73,51 @@ x password & username validation for register
 <------------------------------------------------------------------------>
 
 17.7.2022
-- google account register
-- correct styles on login
-- maybe make forgot password
-- square under login make it rotate and scale up (maybe trasition to homepage)
+x correct styles on login
+x add register validation for EMAIL
+x AUTH functionality 
+
+? google account register
+? maybe make forgot password
+? square under login make it rotate and scale up (maybe trasition to homepage)
 
 
-- add register validation for EMAIL
+
+
 - some problem with friends (sinjikit131 & medo007 friends, but only medo007 has sinjikit131)
 - send friend request send from user404 as well ????
 - make a function that will add to an array our group we have made in popup
 - make a function that will remove form an array our group we have removed in selected group
+
+
 - vuex folders
 
  
 <------------------------------------------------------------------------>
 ⭐ Functionalities:
     ➡ Make color picker
+    ➡ Change username
     ➡ Add arena admin to creator
     ➡ Automatic day finish / Option to finish for yesterday
         -> solution: save date to firebase, added it to vuex and check if(currentData !== new Date()){ finishDay() }
-    ➡ PastData be by months
+    ✅ PastData be by months
     ➡ Remove wrong day in PastData
-    ➡ Make friends be seen if you tap on friends on user/your profile
+    ➡ Make friends be seen in a list if you tap on friends on user/your profile
     ➡ as you register send email of welcome to user (with link to page of this app maybe)
 
 
 🐜 Bugs:
-    ➡ Username already taken in register [promises]
+    ✅ Username already taken in register [promises]
 
 
 👉 Tasks:
-    ✅ Reformat add friend component (to not be used for each user but onClick) 
+     Reformat add friend component (to not be used for each user but onClick) 
     ➡ Add friend component should display limit 5 users + whatever it finds on search
     ➡ In Word diploma change the pics pri opisu tehnologij in dodaj besedilo in nove opise novih tehnologij
     ➡ Change of goal somewhere else and also on your profile tap on goal (maybe ... btn)
-
 
 🌴 Weekend Knowledge Gain:
     ➡ Udemy vuex 
     ➡ Composition API
     ➡ Learn async await & promises & firebase usage in vue
     ➡ Check how to structure vuex files
-
-
-
