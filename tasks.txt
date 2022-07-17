@@ -76,7 +76,7 @@ x password & username validation for register
 - google account register
 - correct styles on login
 - maybe make forgot password
-- 
+- square under login make it rotate and scale up (maybe trasition to homepage)
 
 
 - add register validation for EMAIL

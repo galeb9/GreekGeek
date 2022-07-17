@@ -1,17 +1,33 @@
 <template>
   <div class="login">
+    <div class="greek-geek__title">
+        <h1 class="top">GreekGeek</h1>    
+        <div class="bottom"></div>
+    </div>
     <div class="login-container">
         <form class="login-form">
-            <div class="input-field">
-                <label for="email">Email:</label>
-                <input type="email" id="email" v-model="email">
+            <div class="auth__inputs">
+                <AuthInput   
+                    name="email"
+                    type="email"
+                    v-model="email"
+                />
+                <AuthInputPassword v-model="password" />
+                <!-- <router-link to="/reset-password">
+                    <h3>Forgot password?</h3>
+                </router-link> -->
+                <AuthNotification :text="text" />
             </div>
-            <div class="input-field">
-                <label for="password">Password:</label>
-                <input type="password" id="password" v-model="password">
+
+            <div class="auth__buttons">
+                <BaseButton
+                    text="LOGIN"
+                    kind="auth"
+                    width="80%"
+                    @click="login"
+                />
+                <!-- <div class="mid-line"></div> -->
             </div>
-            <button class="login__button" @click="login">LOGIN</button>
-            <div class="mid-line"></div>
         </form>
         <div class="or">
             <h4>OR</h4>
@@ -19,21 +35,29 @@
                 <h3> Register for an account</h3>
             </router-link>
         </div>
-
     </div>
   </div>
 </template>
 
 <script>
 import { auth } from '@/components/firebaseInit.js'
-// import firebase from 'firebase/compat/app';
+import AuthInput from '@/components/auth/auth-items/AuthInput.vue'
+import AuthInputPassword from '@/components/auth/auth-items/AuthInputPassword.vue'
+import AuthNotification from '@/components/auth/auth-items/AuthNotification.vue'
+
 
 export default {
     name: 'LoginForm',
+    components: {
+        AuthInput,
+        AuthInputPassword,
+        AuthNotification
+    },
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            text: ''
         }
     },
     methods: {
@@ -41,11 +65,11 @@ export default {
             auth.signInWithEmailAndPassword(this.email, this.password)
                 .then(cred => {
                     alert(`Ste logirani not kot ${cred.user.email}`)
-                    //this.$router.go({path : this.$router.path});
                     this.$router.push('/')
                 },
                 err => {
-                    alert(err.message)
+                    // alert(err.message)
+                    this.text = err.message
                 }
             )
             e.preventDefault();
@@ -62,20 +86,34 @@ export default {
     min-width: 300px;
     margin: 0 auto;
     color: $secondary;
+    position: relative;
+    .greek-geek__title {
+        text-align: center;
+        padding: 1rem;
+        background: black;
+        color: white;
+        border-radius: 5px;
+        border-radius: 5px;
+        margin: -5px 15px 10px;
+    }
     .login-container{
+        padding-top: 30px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: 80%;
-        min-height: 90vh;
+        width: 90%;
+        min-height: 82vh;
         margin: 0 auto;
         .or {
             h3{
                 text-align: center;
-                padding-bottom: 3px;
+                margin: 0 auto;
                 margin-bottom: 2rem;
                 letter-spacing: 2px;
-                border-bottom: 1px solid $secondary;
+                border-bottom: 1px solid black;
+                padding: 0 4px;
+                padding-bottom: 3px;
+                max-width: max-content;
             }
             h4{
                 text-align: center;
@@ -86,54 +124,32 @@ export default {
         .login-form{
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             height: 100%;
-            .input-field{
-                display: flex;
-                flex-direction: column;
-                margin-top: 1rem;
-                label{
-                    font-weight: 700;
-                    font-size: 1.2rem;
-                    letter-spacing: 2px;
-                }
-                input{
-                    border: none;
-                    border-bottom: 2px solid $secondary;
-                    background: transparent;
-                    margin-top: .3rem;
-                    padding: .5rem 1rem;
-                }
-            }
-            .mid-line{
-                width: 12px;
-                height: 12px;
-                transform: rotate(45deg);
-                background: $secondary;
-                margin: 1rem auto ;
+            flex: 1;
+            .auth__inputs{
 
             }
-        }
-      
-        .login__button{
-            padding: .7rem ;
-            line-height: 1.5rem;
-            width: 80%;
-            margin: 0 auto;
-            margin-top: 2rem;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            font-weight: 900;
-            color: $secondary;
-            background: transparent;
-            border: 10px double $secondary;
-            &:last-child{
-                margin-top: 0;
-            }
-            &:focus{
-                background: black;
-                color: white;
+            .auth__buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 2rem 0;
+                .mid-line{
+                    width: 12px;
+                    height: 12px;
+                    transform: rotate(45deg);
+                    background: $secondary;
+                    background: transparent;
+                    border: 3px solid black;
+                    border-radius: 3px;
+                    margin: 0 1rem auto ;
+                }
             }
         }
+
+ 
     }
 
 }

@@ -11,18 +11,9 @@
 <script>
 export default {   
     props:{
-        placeholder: {
-            type: String,
-            default: "Type here..."
-        },
-        modelValue: {
-            type: String,
-            default: ""
-        },
-        inputType: {
-            type: String,
-            default: "text"
-        }
+        placeholder: { type: String, default: "Type here..." },
+        modelValue: { type: String, default: "" },
+        inputType: { type: String, default: "text" }
     }, 
     methods: {
         updateValue(event){

@@ -1,5 +1,8 @@
 <template>
-    <div :class="[ 'base-button-container', align]">
+    <div 
+        :class="[ 'base-button-container', align]" 
+        :style="{ width: width}"
+    >
         <button :class="['base-button', kind, { 'shadow': shadow}]">{{ text }}</button>
     </div>
 </template>
@@ -7,22 +10,11 @@
 <script>
 export default {
     props:{
-        text: {
-            type: String,
-            default: "button"
-        },
-        kind: {
-            type: String,
-            default: 'kind1'
-        },
-        align: {
-            type: String,
-            default: 'center'
-        },
-        shadow: {
-            type: Boolean,
-            default: true
-        }
+        text: { type: String, default: "button" },
+        kind: { type: String, default: 'kind1' },
+        align: { type: String, default: 'center' }, 
+        width: { type: String, default: 'auto' },
+        shadow: { type: Boolean, default: true }
     }
 }
 </script>
@@ -34,9 +26,9 @@ export default {
         outline: none;
         border: none;
         padding: .8rem 1.6rem;
-        transition: all .1s ease-in;
+        transition: all .1s ease-out;
         &:active{
-            transform: translateY(3px);
+            transform: translateY(1px);
         }
     }
 
@@ -52,6 +44,7 @@ export default {
     .kind1{
         background: black;
         color: white;
+        border-radius: 5px;
     }
     .kind2{
         background: transparent ;
@@ -62,6 +55,20 @@ export default {
         transition: all .3s ease-in-out;
         &:hover{
             background: $black;
+            color: white;
+        }
+    }
+    .auth {
+        padding: 1em 2em;
+        font-size: 14px;
+        font-weight: 900;
+        color: $secondary;
+        background: transparent;
+        border-radius: 5px;
+        border: 10px double rgba($secondary, 1);
+        width: 100%;
+        &:focus{
+            background: black;
             color: white;
         }
     }

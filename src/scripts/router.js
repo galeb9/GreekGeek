@@ -7,6 +7,7 @@ import TheHome from '@/components/home/TheHome';
 import TheSettings from '@/components/settings/TheSettings.vue'
 import LoginForm from '@/components/auth/LoginForm'
 import RegisterForm from '@/components/auth/RegisterForm'
+import ResetPassword from '@/components/auth/ResetPassword'
 //import Test from '@/components/auth/Test'
 
 import TheFriends from '@/components/home/friends/TheFriends.vue'
@@ -43,6 +44,13 @@ const router = createRouter({
         { 
             path: '/register',
             component: RegisterForm,
+            meta: {
+                requiresGuest: true
+            }
+        },
+        { 
+            path: '/reset-password',
+            component: ResetPassword,
             meta: {
                 requiresGuest: true
             }

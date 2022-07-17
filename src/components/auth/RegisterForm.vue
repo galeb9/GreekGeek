@@ -1,16 +1,23 @@
 <template>
   <div class="register">
+    <div class="greek-geek__title">
+        <h1 class="top">GreekGeek</h1>    
+        <div class="bottom"></div>
+    </div>
     <div class="register__container">
         <div class="register__main">
             <form class="register-form">
-                <div class="input-field">
-                    <label for="username">Username</label>
-                    <input class="input-field__not-password input--username"  type="text" id="username" v-model="username">
-                </div>
-                <div class="input-field">
-                    <label for="email">Email</label>
-                    <input class="input-field__not-password input--email" type="email" id="email" v-model="email">
-                </div>
+                <AuthInput   
+                    name="username"
+                    type="text"
+                    v-model="username"
+                />
+                <AuthInput   
+                    name="email"
+                    type="email"
+                    v-model="email"
+                />
+                <!-- passwords -->
                 <div class="input-field">
                     <label for="password">Choose password</label>
                     <div class="input-field__container input--password">
@@ -18,16 +25,28 @@
                         <font-awesome-icon @click="changeInputType()" class="fa-eye" :icon="['fa', 'eye']"/>
                     </div>
                 </div>
+
                 <div class="input-field ">
                     <label for="password">Confirm password</label>
-                    <input class="input-field__not-password password input--password-confirm" type="password" id="password" v-model="confirmedPassword">
-          
-                <div :class="['notification__auth']">
-                    <p v-if="text" class="notification__text">{{ text }}</p>
+                    <input 
+                        class="input-field__not-password input-field__password-confirm  password input--password-confirm" 
+                        type="password" 
+                        id="password" 
+                        v-model="confirmedPassword"
+                    >
                 </div>
-                </div>
-                <div class="register__buttons">
-                    <button class="register__button" @click="registerUser">REGISTER</button>
+      
+      
+                <AuthNotification :text="text"/>
+
+                <!-- register buttons -->
+                <div class="auth__buttons">
+                    <BaseButton
+                        text="REGISTER"
+                        kind="auth"
+                        width="80%"
+                        @click="registerUser"
+                    />
                 </div>
             </form>
         </div>
@@ -42,10 +61,16 @@
 </template>
 
 <script>
-import { db, auth, firebase } from '@/components/firebaseInit.js'
+import { db, auth } from '@/components/firebaseInit.js'
+import AuthInput from '@/components/auth/auth-items/AuthInput.vue'
+import AuthNotification from '@/components/auth/auth-items/AuthNotification.vue'
 
 export default {
     name: 'RegisterForm',
+    components: {
+        AuthInput,
+        AuthNotification
+    },
     data() {
         return {
             username: '',
@@ -125,9 +150,7 @@ export default {
         checkPassword() {
             if(this.password.length >= 8) {
                 if(this.password === this.confirmedPassword) {
-                    document.querySelector(".notification__auth").classList.add("notification__auth--success")
-                    this.text = "Successfully registered 🎉"
-                    this.addClassToAll(this.classesArr, this.successClass)
+             
                     this.createUser() // the create method called
                 } else {
                     this.text = "Your password does not match, please check."
@@ -154,7 +177,12 @@ export default {
             try {
                 auth.createUserWithEmailAndPassword(this.email, this.password)
                     .then(cred => {
+
+                        document.querySelector(".notification__auth").classList.add("notification__auth--success")
+                        this.text = "Successfully registered 🎉"
+                        this.addClassToAll(this.classesArr, this.successClass)
                         alert(`Račun narejen za ${cred.user.email}`)
+
                         this.$router.push("/")
                         db.collection('users').doc(cred.user.uid).set({
                             goal: 100,
@@ -165,7 +193,9 @@ export default {
                             //userId: auth.currentUser.uid
                         })
                         console.log("New user registered")
-                        console.log("error: ", firebase.auth.Error )
+                    },
+                    err => {
+                        this.text = err.message
                     }
                 )
             } catch(err) {
@@ -194,6 +224,7 @@ export default {
     created(){
         this.getUsers()
         this.chooseRandomAvatar()
+        console.log(auth)
     }
 }
 </script>
@@ -206,10 +237,18 @@ export default {
     min-width: 300px;
     margin: 0 auto;
     color: $secondary;
+    .greek-geek__title {
+        text-align: center;
+        padding: 1rem;
+        background: black;
+        color: white;
+        border-radius: 5px;
+        margin: -5px 15px 10px;
+    }
     .register__container{
         z-index: 1;
-        min-height: 90vh;
-        width: 85%;
+        min-height: 86vh;
+        width: 90%;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
@@ -228,10 +267,11 @@ export default {
             h3{
                 text-align: center;
                 margin: 0 auto;
-                padding-bottom: 3px;
                 margin-bottom: 2rem;
                 letter-spacing: 2px;
                 border-bottom: 1px solid black;
+                padding: 0 4px;
+                padding-bottom: 3px;
                 max-width: max-content;
             }
             h4{
@@ -280,13 +320,14 @@ export default {
                         width: max-content;
                         padding: 0 10px;
                     }
-                    .input-field__not-password{
+                    .input-field__not-password,
+                    .input-field__password-confirm{
                         border: none;
                         background: transparent;
                         border: 2px solid $secondary;
                         border-radius: 10px;
                         margin-top: .3rem;
-                        padding: 0.7rem 1rem;
+                        padding: 1rem;
                         outline: none;
                         transition: all 0.3s ease-in;
                     }
@@ -303,7 +344,7 @@ export default {
                             border: none;
                             background: transparent;
                             border-right: 2px solid black;
-                            padding: 0.7rem 1rem;
+                            padding: 1rem;
                             outline: none;
                             border-radius: 10px 0 0 10px;
                             transition: all 0.3s ease-in;
@@ -327,49 +368,14 @@ export default {
                         }
                     }
                 }
-                .notification__auth {
-                    margin: 0.5rem 1rem 0 ;
-                    min-height: 40px;
-                    color: $error;
-                    .notification__text {
-                        font-weight: 700;
-                        animation: fade-in-top 0.3s ease-in ;
-                    }
-
-                    @keyframes fade-in-top {
-                        0% {
-                            opacity: 0;
-                            transform: translateY(-20%);
-                        }
-                        100% {              
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                    }
-                }
-                .notification__auth--success {
-                    color: $success; 
-                }
             }
         }
-        .register__buttons {
+        .auth__buttons {
             margin-top: 2rem;
             display: flex;
             flex-direction: column;
             gap: 1rem;
             align-items: center;
-            .register__button {
-                padding: 1em 2em;
-                font-size: 14px;
-                font-weight: 900;
-                color: $secondary;
-                background: transparent;
-                border: 8px double rgba($secondary, 0.8);
-                &:focus{
-                    background: black;
-                    color: white;
-                }
-            }
         }
 
     }
