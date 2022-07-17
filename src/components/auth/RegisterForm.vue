@@ -9,22 +9,22 @@
             <form class="register-form">
                 <div class="input-field">
                     <label for="username">Username</label>
-                    <input class="input-field__not-password"  type="text" id="username" v-model="username">
+                    <input class="input-field__not-password input--username"  type="text" id="username" v-model="username">
                 </div>
                 <div class="input-field">
                     <label for="email">Email</label>
-                    <input class="input-field__not-password" type="email" id="email" v-model="email">
+                    <input class="input-field__not-password input--email" type="email" id="email" v-model="email">
                 </div>
                 <div class="input-field">
                     <label for="password">Choose password</label>
-                    <div class="input-field__container">
+                    <div class="input-field__container input--password">
                         <input class="input-field__password password" type="password" id="password" v-model="password">
                         <font-awesome-icon @click="changeInputType()" class="fa-eye" :icon="['fa', 'eye']"/>
                     </div>
                 </div>
-                <div class="input-field">
+                <div class="input-field ">
                     <label for="password">Confirm password</label>
-                        <input class="input-field__not-password password" type="password" id="password" v-model="confirmedPassword">
+                    <input class="input-field__not-password password input--password-confirm" type="password" id="password" v-model="confirmedPassword">
           
                 <div :class="['notification__auth']">
                     <p v-if="text" class="notification__text">{{ text }}</p>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { db, auth } from '@/components/firebaseInit.js'
+import { db, auth, firebase } from '@/components/firebaseInit.js'
 
 export default {
     name: 'RegisterForm',
@@ -57,7 +57,15 @@ export default {
             password: '',
             confirmedPassword: '',
             text: '',
-            users: []
+            users: [],
+            classesArr : [
+                'input--username',
+                'input--email',
+                'input--password',
+                'input--password-confirm',
+            ],
+            errorClass: "border--error",
+            successClass: "border--success"
         }
     },
     methods: {
@@ -91,6 +99,24 @@ export default {
             let randomNum = Math.floor(Math.random() * avatarList.length)
             return avatarList[randomNum]
         },
+        removeErrorClassFromAll(classesArr, errorClass) {
+            for(let i = 0; i < classesArr.length; i++) {
+                let current = document.querySelector('.' + classesArr[i])
+                if(current.classList.contains(errorClass)) {
+                    current.classList.remove(errorClass)
+                }
+            }
+        },
+        addClassToAll(classesArr, yourClass) {
+            for(let i = 0; i < classesArr.length; i++) {
+                document.querySelector('.' + classesArr[i]).classList.add(yourClass)
+            }
+        },
+        markErrorInput(classNameToMark) {
+            this.removeErrorClassFromAll(this.classesArr, this.errorClass)
+            let input = document.querySelector(".input--" + classNameToMark)
+            input.classList.add(this.errorClass)
+        },
         getUsers() {
             db.collection("users")
                 .get()
@@ -105,12 +131,17 @@ export default {
                 if(this.password === this.confirmedPassword) {
                     document.querySelector(".notification__auth").classList.add("notification__auth--success")
                     this.text = "Successfully registered 🎉"
-                    this.createUser()
+                    this.addClassToAll(this.classesArr, this.successClass)
+                    this.createUser() // the create method called
                 } else {
                     this.text = "Your password does not match, please check."
+                    this.markErrorInput("password")
+                    this.markErrorInput("password-confirm")
                 }
             } else {
                 this.text = "Your password must be at least 8 characters long!"
+                this.markErrorInput("password")
+                this.markErrorInput("password-confirm")
             }
         },
         validateUsername(username) {
@@ -138,6 +169,7 @@ export default {
                             //userId: auth.currentUser.uid
                         })
                         console.log("New user registered")
+                        console.log("error: ", firebase.auth.Error )
                     }
                 )
             } catch(err) {
@@ -148,15 +180,19 @@ export default {
         },
         registerUser(event){
             event.preventDefault();
-
-            let isUsernameOk = this.validateUsername(this.username)
-
-            if(isUsernameOk) {
-                console.log("username ok")
-                this.checkPassword()
+            if(this.username && this.email && this.password && this.confirmedPassword) {
+                let isUsernameOk = this.validateUsername(this.username)
+                if(isUsernameOk) {
+                    this.checkPassword()
+                } else {
+                    this.text = "Username taken, please try something else."
+                    this.markErrorInput("username")
+                }
             } else {
-                this.text = "Username taken, please try something else."
+                this.text = "Please fill in all the input areas."
+                this.addClassToAll(this.classesArr, this.errorClass)
             }
+
         },
     },
     created(){
@@ -174,16 +210,15 @@ export default {
     min-width: 300px;
     margin: 0 auto;
     color: $secondary;
-    // min-height: 120vh;
     .register__container{
         z-index: 1;
-        min-height: 85vh;
+        min-height: 90vh;
         width: 85%;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
         gap: 2rem;
-        // justify-content: space-between;
+        justify-content: space-between;
         position: relative;
         .auth-img{
             position: absolute;
@@ -222,6 +257,12 @@ export default {
                 display: flex;
                 flex-direction: column;
                 height: 100%;
+                .border--error {
+                    border: 2px solid red !important;
+                }                
+                .border--success {
+                    border: 2px solid green !important;
+                }
                 .input-field{
                     display: flex;
                     flex-direction: column;
@@ -242,6 +283,8 @@ export default {
                         border-radius: 10px;
                         margin-top: .3rem;
                         padding: 0.7rem 1rem;
+                        outline: none;
+                        transition: all 0.3s ease-in;
                     }
                     .input-field__container {
                         display: flex;
@@ -258,6 +301,8 @@ export default {
                             border-right: 2px solid black;
                             padding: 0.7rem 1rem;
                             outline: none;
+                            border-radius: 10px 0 0 10px;
+                            transition: all 0.3s ease-in;
                         }
                         .fa-eye {
                             // background: red;

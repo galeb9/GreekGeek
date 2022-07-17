@@ -64,8 +64,19 @@ x poglej kako word diplomo spisat [ Jure template ]
 x Stats bugs fixed
 
 11.7.2022
-- make a component for every month, load months
-- fix the placeholder for months created in PastData
+x make a component for every month, load months
+x fix the placeholder for months created in PastData
+
+16.7.2022
+x password & username validation for register
+
+<------------------------------------------------------------------------>
+
+17.7.2022
+- google account register
+- correct styles on login
+- maybe make forgot password
+- 
 
 - some problem with friends (sinjikit131 & medo007 friends, but only medo007 has sinjikit131)
 - send friend request send from user404 as well ????
