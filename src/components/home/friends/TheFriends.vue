@@ -8,9 +8,6 @@
     <div class="users">
       <div class="users__head">
         <h3 class="users__heading"> {{ wordFilter }}</h3>
-
-        <!-- <p>{{ seeAllUsers }}</p> -->
-
         <div class="users__head__btn" @click="toggleAllUsers">
           <font-awesome-icon 
             class="fa-eye" 
@@ -23,9 +20,13 @@
             :icon="['fa', 'eye']"
           />
         </div>
-
       </div>
-      <div class="users__list" v-if="search !== ''">
+      <TransitionGroup 
+        name="list" 
+        tag="div" 
+        class="users__list" 
+        v-if="search !== ''"
+      >
         <FriendCard
           v-for="(el, index) in searchForUser"
           :key="index" 
@@ -33,8 +34,13 @@
           :user-img="el.userImg"
           @get-friend-data="getFriendData"
         />
-      </div>
-      <div v-else class="users__list">
+      </TransitionGroup>
+      <TransitionGroup 
+        name="list" 
+        tag="div" 
+        class="users__list" 
+        v-else
+      >
         <FriendCard
           v-for="(el, index) in usersFilter"
           :key="index" 
@@ -42,7 +48,8 @@
           :user-img="el.userImg"
           @get-friend-data="getFriendData"
         />
-      </div>
+      </TransitionGroup>
+      
     </div>
 
 
@@ -252,6 +259,15 @@ export default {
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
+      }
+      .list-enter-active,
+      .list-leave-active {
+        transition: all 0.5s ease;
+      }
+      .list-enter-from,
+      .list-leave-to {
+        opacity: 0;
+        transform: translateX(100px);
       }
     }
     .user-profile__popup{

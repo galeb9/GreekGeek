@@ -150,8 +150,7 @@ export default {
         checkPassword() {
             if(this.password.length >= 8) {
                 if(this.password === this.confirmedPassword) {
-             
-                    this.createUser() // the create method called
+                    this.createUser() 
                 } else {
                     this.text = "Your password does not match, please check."
                     this.markErrorInput("password")
@@ -177,12 +176,9 @@ export default {
             try {
                 auth.createUserWithEmailAndPassword(this.email, this.password)
                     .then(cred => {
-
                         document.querySelector(".notification__auth").classList.add("notification__auth--success")
                         this.text = "Successfully registered 🎉"
                         this.addClassToAll(this.classesArr, this.successClass)
-                        alert(`Račun narejen za ${cred.user.email}`)
-
                         this.$router.push("/")
                         db.collection('users').doc(cred.user.uid).set({
                             goal: 100,
@@ -190,9 +186,7 @@ export default {
                             username: this.username,
                             userImg: this.chooseRandomAvatar(),
                             attempts: 0
-                            //userId: auth.currentUser.uid
                         })
-                        console.log("New user registered")
                     },
                     err => {
                         this.text = err.message
@@ -218,7 +212,6 @@ export default {
                 this.text = "Please fill in all the input areas."
                 this.addClassToAll(this.classesArr, this.errorClass)
             }
-
         },
     },
     created(){
