@@ -49,35 +49,29 @@ const store = createStore({
             }
         },
         getUsers(state){
-            // if(state.users.length > 0) {
-                db.collection("users")
-                  .where("username", "!=", state.username)
-                  .orderBy("username","asc")
-                  .get()
-                  .then((querySnapshot) => {
-                    let count = 0;
-                    querySnapshot.forEach((user) => {
-                      
-                      state.allUsers.push({ // the real list user will search for friends
+            db.collection("users")
+                .where("username", "!=", state.username)
+                .orderBy("username","asc")
+                .get()
+                .then((querySnapshot) => {
+                let count = 0;
+                querySnapshot.forEach((user) => {
+                    state.allUsers.push({ // the real list user will search for friends
                         username: user.data().username,
                         userImg: user.data().userImg,
                         goal: user.data().goal
-                      })
-                
-                      if(count < 6){ // makes a sample list
+                    })
+                    console.log(user.data())
+                    if(count < 6){ // makes a sample list
                         state.sampleUsers.push({
-                          username: user.data().username,
-                          userImg: user.data().userImg,
-                          goal: user.data().goal
+                            username: user.data().username,
+                            userImg: user.data().userImg,
+                            goal: user.data().goal
                         })
                         count++;
-                      }
-                    });
+                    }
                 });
-            // }else{
-                // console.log("Users already in the arr, so no need to get them again.")
-            // }
-
+            });
         },
     },
     actions: { // best use of functions

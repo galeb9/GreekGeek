@@ -166,13 +166,9 @@ export default {
         .get()
         .then(user => {
           if(user.data() === undefined){
-            // return null
             this.isFriend = false
-            // console.log("are friends? " + this.isFriend)
-
           }else{
             this.isFriend = user.data().friends
-            // console.log("are friends? " + this.isFriend)
           }
         })
     },
