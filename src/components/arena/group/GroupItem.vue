@@ -30,7 +30,8 @@ export default {
 
     .group-item{
       margin-bottom: 1rem;
-      padding: 0.7rem 1rem ;
+      // padding: 0.7rem 1rem ;
+      padding: 20px;
       max-width: 540px;
       min-width: 250px;
       border-radius: 8px;

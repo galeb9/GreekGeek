@@ -1,19 +1,66 @@
 <template>
-
- <div 
-    class="group-item-selected"
-  >
+  <div class="group-item-selected">
     <GoBack 
       text="Back" 
       type="dark"  
       link="arena"
       @click="$emit('clickBack')"  
     />
-    <BaseIcon 
-      aligment="top-right"
-      icon="trash"
-      @click="deleteGroup"
-    />
+    <!-- admin btns -->
+    <div v-if="isAdmin" class="admin__btns group-control__btns">
+      <BaseIcon 
+        aligment="top-right"
+        icon="settings"
+        @click="showAdminPopup = true"
+      />
+      <BasePopup 
+        heading="Admin rights" 
+        :isVisible="showAdminPopup"
+        type="blured"
+      >
+        <div class="group-control__btns">
+          <BaseButton 
+            text="Leave arena"
+            kind="icons"
+            margin="auto"
+            width="80%"
+            icon-type="trash"
+            @btn-click="leaveGroup"
+          />
+          <!-- <BaseButton 
+            text="Leave arena"
+            kind="icons"
+            margin="auto"
+            width="80%"
+            icon-type="trash"
+          /> -->
+        </div>
+      </BasePopup>
+      <BaseOverlay v-if="showAdminPopup" @close="closePopup" />
+    </div>
+    <!-- not admin btns-->
+    <div v-else class="not-admin__btns">
+       <BaseIcon 
+        aligment="top-right"
+        icon="settings"
+        @click="showMemberPopup = true"
+      />
+      <BasePopup 
+        heading="Member rights" 
+        :isVisible="showMemberPopup"
+      >
+        <BaseButton 
+          text="Leave arena"
+          kind="icons"
+          margin="auto"
+          width="80%"
+          icon-type="trash"
+          @click="leaveGroup"
+        />
+      </BasePopup>
+      <BaseOverlay v-if="showMemberPopup" @close="closePopup" />
+    </div>
+
     <div class="group-item-selected__main">
       <GroupItem 
         :name="name"
@@ -32,8 +79,6 @@
         :displayTableHead="false"
       />
     </div>
-
-    <!-- o scrollable have to be -->
   </div>
 
 </template>
@@ -62,10 +107,17 @@ export default {
   data(){
     return{
       friends: [],
-      top3: []
+      top3: [],
+      showMemberPopup: false,
+      isAdmin: null,
+      showAdminPopup: false,
     }
   },
   methods: {
+    closePopup(value) {
+      this.showAdminPopup = value
+      this.showMemberPopup = value
+    },
     getFriends(){
       db.collection("users")
         .orderBy("pushupsToday", "desc")
@@ -93,7 +145,7 @@ export default {
           })
       })
     },
-    deleteGroup(){
+    leaveGroup(){ // leave group
       if(confirm("Would you like to delete this arena?") == true){
         db.collection("users").doc(auth.currentUser.uid)
           .collection("arenas")
@@ -101,6 +153,21 @@ export default {
           .delete()
         this.$emit('clickBack')
       } 
+      this.closePopup()
+    },
+    getSelectedGroupAdmin() {
+      db.collection("users").doc(auth.currentUser.uid)
+        .collection("arenas")
+        .doc(this.name)
+        .get()
+        .then(user => {
+          if(user.data().admin === this.myUsername) {
+            this.isAdmin = true
+          } else {
+            this.isAdmin = false
+          }
+          
+        })
     }
   },
   computed: {
@@ -119,6 +186,7 @@ export default {
   },
   created(){
     this.getFriends()
+    this.getSelectedGroupAdmin()
   }
 }
 </script>
@@ -137,9 +205,14 @@ export default {
     .group-item-selected__main{
       padding: 1rem 1.4rem;
       margin-top: 5rem;
-      height: 100%;
+      height: 100vh;
       overflow: scroll;
       padding-bottom: 3rem;
+    }
+    .group-control__btns {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
   }
 </style>

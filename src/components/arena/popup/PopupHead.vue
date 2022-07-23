@@ -1,13 +1,15 @@
 <template>
     <div class="popup__head">
         <div class="popup__line"></div>
-        <h2 class="popup__title">Add new Arena</h2>
+        <h2 class="popup__title">{{ heading }}</h2>
     </div>
 </template>
 
 <script>
 export default {
-
+    props: {
+        heading: { type: String, default: "Title"}
+    }
 }
 </script>
 

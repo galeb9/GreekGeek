@@ -3,7 +3,6 @@
     <GoBack text="Home" type="dark" />
     <h3 class="my-arenas__title">Your Arenas</h3>
 
-
     <Loader v-if="data.length === 0 && loadActive"  />
 
     <div class="groups" v-if="data.length > 0">
@@ -19,7 +18,6 @@
     
     <GroupNotFound v-if="data.length === 0 && loadActive === false" />
 
-
     <transition name="move-from-bottom"> 
       <SelectedGroup 
         :name="name"
@@ -30,6 +28,8 @@
       />
     </transition>
 
+    <AddArenaBtn @click="showPopup" />
+
     <transition name="move-from-bottom">
       <AddGroupPopup 
         v-if="isPopupVisible" 
@@ -37,8 +37,6 @@
       />
     </transition>
 
-
-    <AddArenaBtn @click="showPopup" />
   </div>
 </template>
 
@@ -67,7 +65,6 @@ export default {
       data: [],
       isPopupVisible: false,
       groupSelected: false,
-      // groupSelected: true,
       name: null,
       img: null,
       memebers: null,
@@ -86,8 +83,12 @@ export default {
     showPopup(){
       this.isPopupVisible = !this.isPopupVisible
     },
-    closePopup(){
+    closePopup(newArena){
       this.isPopupVisible = false
+      if(newArena) {
+        this.addOne(this.data, newArena)
+      }
+      // this.data.push(newArena)
       // this.getData(); //so it refreshes
     },
     getData(){
@@ -103,14 +104,11 @@ export default {
             })
           })
         })
-      // this.data.push(newArenaData)
-      // console.log("new data added", newArenaData)
       this.closePopup()
     },
 
     showGroup(name, img, memebers){ // gets group data from group item
       this.groupSelected = true;
-
       this.name = name;
       this.img = img;
       this.memebers = memebers
@@ -135,7 +133,10 @@ export default {
   .my-arenas{
     min-height: 80vh;
     margin: 65px 0.5rem 0 0.5rem;
-
+    .groups {
+      min-height: 80vh;
+      padding-bottom: 160px;
+    }
     .my-arenas__title{
       font-weight: 400;
       font-size: 18px;

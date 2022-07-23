@@ -1,9 +1,18 @@
 <template>
     <div 
         :class="[ 'base-button-container', align]" 
-        :style="{ width: width}"
+        :style="{ width: width, margin: getMargin}"
     >
-        <button :class="['base-button', kind, { 'shadow': shadow}]">{{ text }}</button>
+        <button @click="$emit('btnClick')" :class="['base-button', kind, { 'shadow': shadow}]">
+            {{ text }}
+            <BaseIcon 
+                v-if="iconType"
+                :icon="iconType"
+                kind="in-btn"
+                aligment="none"
+
+            />
+        </button>
     </div>
 </template>
 
@@ -14,12 +23,23 @@ export default {
         kind: { type: String, default: 'kind1' },
         align: { type: String, default: 'center' }, 
         width: { type: String, default: 'auto' },
-        shadow: { type: Boolean, default: true }
+        shadow: { type: Boolean, default: true },
+        margin: { type: String, default: '0' },
+        iconType: { type: String, default: '' },
+    },
+    computed: {
+        getMargin () {
+            if(this.margin === "auto") {
+                return  'auto'
+            } else {
+                return this.margin + 'px 0'
+            }
+        }
     }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../../assets/scss/_variables.scss';
 .base-button-container{
     .base-button{
@@ -80,6 +100,18 @@ export default {
         background: rgb(189, 17, 17) !important;
         color: white;
     }
+    .icons {
+        border-radius: 5px;
+        background: $bg;
+        font-weight: 800;
+        font-size: 16px;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        text-align: center;
+    }
     .secondary{
         background: $secondary;
     }
@@ -88,5 +120,6 @@ export default {
 .center{
     display: flex;
     justify-content: center;
+    margin: 0 auto;
 }
 </style>

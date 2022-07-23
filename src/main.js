@@ -22,7 +22,8 @@ import HomeSection from './components/UI/HomeSection.vue'
 import BaseNotif from '@/components/UI/BaseNotif.vue'
 import GoBack from '@/components/UI/GoBack.vue'
 import BaseIcon from '@/components/UI/BaseIcon.vue'
-
+import BasePopup from '@/components/UI/BasePopup.vue'
+import BaseOverlay from '@/components/UI/BaseOverlay.vue'
 
 import TheHeader from '@/components/layout/TheHeader.vue'
 
@@ -45,7 +46,8 @@ auth.onAuthStateChanged( user => {
             .component("BaseNotif", BaseNotif)
             .component("GoBack", GoBack)
             .component("BaseIcon", BaseIcon)
-            
+            .component("BasePopup", BasePopup)
+            .component("BaseOverlay", BaseOverlay)
         app.use(store)
         app.use(router);
         app.mount('#app')

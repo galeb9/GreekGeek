@@ -3,7 +3,7 @@
         <PopupHeading text="Choose Arena photo" />
 
         <div class="photo__list">
-            <font-awesome-icon class="photo__upload" :icon="['fa', 'arrow-up-from-bracket']"/>
+            <!-- <font-awesome-icon class="photo__upload" :icon="['fa', 'arrow-up-from-bracket']"/> -->
             <GroupPhoto 
                 v-for="(pic, index) in pics" 
                 :key="index" 
@@ -26,7 +26,7 @@ export default {
     },
     data() {
         return {
-            pics: ["group01.png", "group02.png","group01.png", "group02.png","group01.png", "group02.png","group01.png", "group02.png"],
+            pics: ["group01.png", "group02.png","group03.png", "group04.png","group05.png", "group06.png","group08.png", "group09.png", "group10.png"],
             selectedImg: "",
             isSelected: false
         }

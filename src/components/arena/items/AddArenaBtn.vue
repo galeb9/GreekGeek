@@ -17,9 +17,9 @@ export default {
 
 <style lang="scss">
     .add-arena__container{
-        //border: 1px solid black;
+        // border: 1px solid black;
         position: absolute;
-        bottom: 3vh;
+        bottom: 100px;
         left: 0;
         right: 0;
         display: flex;
@@ -34,7 +34,5 @@ export default {
             justify-content: center;
             align-items: center;
         }
-
     }
-
 </style>

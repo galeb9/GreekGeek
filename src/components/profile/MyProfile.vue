@@ -31,7 +31,7 @@
                     :key="index"
                     type="arena-request"
                     :data="el"
-                    @confirm="joinArena(el.name, el.img, el.members, index)"
+                    @confirm="joinArena(el.name, el.img, el.members, el.admin, index)"
                     @deny="denyArena(el.name, index)"
                 />
                 <div v-if="requests.length == 0 && arenas.length == 0">No more messages</div>
@@ -213,7 +213,7 @@ export default {
                     })
                 })
         },
-        joinArena(name, img, members, index){
+        joinArena(name, img, members, admin, index){
             db.collection("users")
                 .doc(auth.currentUser.uid)
                 .collection("arenas")
@@ -221,7 +221,8 @@ export default {
                 .set({
                     name: name,
                     img: img,
-                    memebers: members
+                    memebers: members,
+                    admin: admin
                 })
 
 

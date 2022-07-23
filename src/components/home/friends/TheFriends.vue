@@ -21,38 +21,48 @@
           />
         </div>
       </div>
-      <TransitionGroup 
-        name="list" 
-        tag="div" 
-        class="users__list" 
-        v-if="search !== ''"
+
+
+      <div 
+        class="users__list-container"
+        v-if="search === ''"
       >
-        <FriendCard
-          v-for="(el, index) in searchForUser"
-          :key="index" 
-          :name="el.username"
-          :user-img="el.userImg"
-          @get-friend-data="getFriendData"
-        />
-      </TransitionGroup>
-      <TransitionGroup 
-        name="list" 
-        tag="div" 
-        class="users__list" 
-        v-else
+        <TransitionGroup 
+          name="list" 
+          tag="div" 
+          class="users__list" 
+        >
+          <FriendCard
+            v-for="(el, index) in usersFilter"
+            :key="index" 
+            :name="el.username"
+            :user-img="el.userImg"
+            @get-friend-data="getFriendData"
+          />
+        </TransitionGroup>
+      </div>
+
+
+      <div 
+        v-else-if="search !== ''"
+        class="users__list-container"
       >
-        <FriendCard
-          v-for="(el, index) in usersFilter"
-          :key="index" 
-          :name="el.username"
-          :user-img="el.userImg"
-          @get-friend-data="getFriendData"
-        />
-      </TransitionGroup>
-      
+        <TransitionGroup 
+          name="list" 
+          tag="div" 
+          class="users__list" 
+          v-if="searchForUser"
+        >
+          <FriendCard
+            v-for="(el, index) in searchForUser"
+            :key="index" 
+            :name="el.username"
+            :user-img="el.userImg"
+            @get-friend-data="getFriendData"
+          />
+        </TransitionGroup>
+      </div>
     </div>
-
-
     <!-- user-profile on popup -->
     <transition name="move-in-bottom">
       <div 
@@ -263,7 +273,7 @@ export default {
       .list-enter-from,
       .list-leave-to {
         opacity: 0;
-        transform: translateX(100px);
+        transform: translateY(30px);
       }
     }
     .user-profile__popup{

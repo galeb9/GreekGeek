@@ -79,6 +79,7 @@ export default {
     align-items: center;
     gap: 0.5rem;
     overflow-y: scroll;
+    margin-bottom: 0.5rem;
     .friend-item{
         display: flex;
         flex-direction: column;
@@ -89,7 +90,7 @@ export default {
         color: white;
         min-width: 100px;
         height: 100px;
-        filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.25));
+        // filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.25));
         padding: .5rem;
         border-radius: $main-radius;
         

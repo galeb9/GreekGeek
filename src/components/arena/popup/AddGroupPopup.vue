@@ -1,6 +1,6 @@
 <template>
   <div class="add-group-popup">
-    <PopupHead />
+    <PopupHead heading="Add new Arena" />
     <div class="popup-main">
 
         <GroupItem 
@@ -36,7 +36,7 @@
         />
 
         <PopupHeading 
-            text="Search:" 
+            text="Search friends" 
             top-margin="1.5rem"
             bottom-margin="1.5rem"    
         />
@@ -59,7 +59,6 @@
                 :shadow="false"
                 align="" 
                 @click="createNewArena"
-
             />
             <BaseButton 
                 text="cancel" 
@@ -68,11 +67,7 @@
                 @click="$emit('closePopup')" 
             />
         </div>
-
-
     </div>
-   
-
   </div>
 </template>
 
@@ -120,7 +115,7 @@ export default {
             }
         },
         getSelectedImg(img){
-            this.selectedImg=img
+            this.selectedImg = img
         },
         changeArray(selected, arr, name){
             const notInArr = arr.every( el => el !== name) // true if current name is not yet in added friends
@@ -176,7 +171,8 @@ export default {
                 const newArena = {
                     img: this.selectedImg,
                     name: this.arenaName,
-                    memebers: this.addedFriends
+                    memebers: this.addedFriends,
+                    admin: this.myUsername 
                 }
 
                 db.collection("users").doc(auth.currentUser.uid)
@@ -220,22 +216,18 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/_variables.scss';
-
     .add-group-popup{
         min-width: 321px;
         max-height: 102vh;
-        // max-height: max-height;
         background: rgba(126, 164, 220, 0.27);
         -webkit-backdrop-filter: blur(25px);
         backdrop-filter: blur(25px);
-        //border-radius: 20px 20px 0 0;
         position: fixed;
         z-index: 101;
         top: 0;
         left: 0;
         right: 0;
         color: white;
-        // padding: .8rem 1.8rem;
         .parent{
             padding: 20px;
             width: 100px;
@@ -249,11 +241,10 @@ export default {
             color: black;
         }
         .popup-main{
-            max-height: 87vh;
+            max-height: 89vh;
             height: 100%;
             overflow-y: scroll;
             padding: .8rem 1.8rem;
-
             padding-bottom: 3rem;
             .memebers-added{
                 background: black;

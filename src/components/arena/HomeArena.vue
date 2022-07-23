@@ -2,7 +2,6 @@
   <HomeSection title="Arenas">
     <div class="home-arenas">
       <BaseButton @click="$router.push('/arena')" text="See your Arenas" />
-
     </div>
   </HomeSection>
 </template>

@@ -58,15 +58,7 @@
             />
 
         </div>
-
-        <!-- <div style="text-align: center">
-            <p >{{ id }}</p>
-            <p>Request sent? {{ requestSent }} : {{ isRequestSent }}</p>
-            <p>Friends? {{ areWeFriends }} : {{ isFriend }} </p>
-        </div> -->
-
     </div>
-
 </template>
 
 <script>
@@ -78,30 +70,12 @@ export default {
         ProfileInfo,
     },
     props: {
-        img: {
-            type: String,
-            default: 'greek-geek.png'
-        },
-        id: {
-            type: String,
-            default: ""
-        },
-        name: {
-            type: String,
-            default: ''
-        },
-        goal: {
-            type: Number,
-            default: 100
-        },
-        requestSent: {
-            type: Boolean,
-            default: false
-        },
-        areWeFriends: {
-            type: Boolean,
-            default: false
-        }
+        img: { type: String, default: 'greek-geek.png' },
+        id: { type: String, default: "" },
+        name: { type: String, default: '' },
+        goal: { type: Number, default: 100 },
+        requestSent: { type: Boolean, default: false },
+        areWeFriends: { type: Boolean, default: false }
     },
     data(){
         return{
@@ -216,7 +190,6 @@ export default {
         },
 
         cancelRequest(name){ // cancels friend request
-
             // remove friend request from myself
             db.collection("users").doc(auth.currentUser.uid)
                 .collection("requests-sent")
@@ -245,7 +218,7 @@ export default {
 @import '@/assets/scss/_variables.scss';
 
 .router-view{
-  padding:0 !important ;
+  padding: 0 !important ;
 }
 .user-profile{
     background: $bg;

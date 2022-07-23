@@ -6,17 +6,15 @@
       >
         <BaseInput 
           v-model="goal"
-          placeholder="New goal goes here" 
+          placeholder="Goal goes here" 
           class="goal__input"
           type="number"
         />
-        <button
-          class="goal__button"
-          text="ADD"
-          type="submit"
-        >
-          Change goal
-        </button>
+        <BaseButton 
+          text="Change goal"
+          kind="auth"
+          width="80%"
+        />
       </form>
       <BaseNotif 
         :text="message"
@@ -85,6 +83,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 40px;
     margin: 50px 0;
     .goal__input{
       width: max-content;
@@ -95,7 +94,7 @@ export default {
       border-radius: 20px;
       outline: none;
       border: none;
-      border: 3px dashed $secondary;
+      border: 3px solid $secondary;
     }
     .goal__button{
       background: transparent;

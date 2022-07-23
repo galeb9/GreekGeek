@@ -1,5 +1,5 @@
 <template>
-    <div :class="['base-icon', aligment]">
+    <div :class="[ aligment, kind ]">
         <div :class="['base-icon__icon', type]" @click="goTo(link)" >
             <font-awesome-icon class="fa-arrow-left" :icon="getIcon()"/>
         </div>
@@ -13,21 +13,25 @@ export default {
         link: { type: String, default: "" },
         type: { type: String, default: "" },
         aligment: { type: String, default: "top-left" },
-        icon: { type: String, default: "arrow-left" }
+        icon: { type: String, default: "arrow-left" },
+        kind: { type: String, default: "base-icon" },
     },
     methods: {
         goTo(link) { // maybe will break for go backs that go home => solution: give the link /home
-            if(link !== ""){
+            if(link){
                 this.$router.push("/" + link)
             }
         },
         getIcon(){
-            if(this.icon === "arrow-left"){
+            if (this.icon === "arrow-left"){
                 return ['fa', 'arrow-left']
-            }else if(this.icon === "trash"){
+            } else if (this.icon === "trash"){
                 return ['fa', 'trash-can']
+            } else if (this.icon === "settings"){
+                return ['fa', 'gear']
+            } else if (this.icon === "exit") {
+                return ['fa', 'arrow-up-from-bracket']
             }
-
         }
     }
 }
@@ -38,8 +42,6 @@ export default {
     .base-icon{
         z-index: 3;
         position: absolute;
-        
-
         display: flex;
         align-items: center;
         gap: 1.2rem;
@@ -55,7 +57,7 @@ export default {
             transition: all .1s ease-in;
             &:active{
                 transform: translateY(3px);
-                box-shadow: 0 0 0  rgba(0, 0, 0, 0.42);
+                box-shadow:  0 0 0  rgba(0, 0, 0, 0.42);
             }
             .fa-back{
                 font-size: 1.1rem;
@@ -79,6 +81,17 @@ export default {
     .top-right{
         top: 15px;
         right: 1.4rem;
+    }
+    .none {
+        top: 0;
+        left: 0; 
+    }
+    // what kind is it?
+    .in-btn {
+        position: relative;
+        .base-icon__icon{
+
+        }
     }
 
 
