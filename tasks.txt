@@ -77,11 +77,12 @@ x AUTH functionality
 23.7.2022
 x make a function that will add to an array our group we have made in popup
 x make a function that will remove form an array our group we have removed in selected group
-- make popup that will see if admin show this popup with btns (invite, throw out, )
+
 
  
 <------------------------------------------------------------------------>
 
+- make popup that will see if admin show this popup with btns (invite, throw out, )
 ? some problem with friends (sinjikit131 & medo007 friends, but only medo007 has sinjikit131)
 ? send friend request send from user404 as well ???? (does not load quick enough after register)
 ? test new register (on iphone) adds the samsung profile, user404 still a problem?
@@ -113,6 +114,8 @@ x make a function that will remove form an array our group we have removed in se
     ✅ Add friend component should display limit 5 users + whatever it finds on search
     ✅ In Word diploma change the pics pri opisu tehnologij in dodaj besedilo in nove opise novih tehnologij
     ✅ Change of goal somewhere else and also on your profile tap on goal (maybe ... btn)
+    ✅ Restyle AddPushups.vue
+    ➡ Restyle Goal.vue (neuomophic, similar as AddPushups)
 
 🌴 Weekend Knowledge Gain:
     ➡ Udemy vuex 

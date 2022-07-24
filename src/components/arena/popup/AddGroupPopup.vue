@@ -182,7 +182,7 @@ export default {
 
                 this.sendArenaRequest()
 
-                this.$emit('closePopup', newArena) // somehow work with myArenas removeOne, addOne ....
+                this.$emit('closePopup', newArena)
                 
             } else{
                 alert("Some of the required info is empty, please fill in...")
