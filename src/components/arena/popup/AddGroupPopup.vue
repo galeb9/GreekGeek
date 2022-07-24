@@ -266,7 +266,7 @@ export default {
                 }
             }
             .memebers-list{
-                padding-bottom: 100px; // to have space bellow
+                padding-bottom: 40px; // to have space bellow
             }
             .add-arena-popup__btn .base-button{
                 border-radius: $main-radius;                

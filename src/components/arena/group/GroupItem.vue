@@ -1,5 +1,5 @@
 <template>
-  <div class="group-item" @click="$emit('showSelectedGroup', this.name, this.img, this.memebers)">
+  <div class="group-item" @click="$emit('showSelectedGroup', this.name, this.img, this.memebers, this.admin)">
     <div class="group__image">
       <img :src="getImgUrl(img)" alt="">
     </div>

@@ -119,6 +119,7 @@ export default {
       this.showAdminPopup = value
       this.showMemberPopup = value
     },
+
     getFriends(){
       db.collection("users")
         .orderBy("pushupsToday", "desc")
@@ -167,7 +168,6 @@ export default {
           } else {
             this.isAdmin = false
           }
-          
         })
     }
   },

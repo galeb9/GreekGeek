@@ -23,6 +23,7 @@
         :name="name"
         :members="memebers"
         :img="img"
+        :admin="admin"
         @click-back="hideGroup"
         v-if="groupSelected"
       />
@@ -100,18 +101,20 @@ export default {
             this.data.push({
               img: doc.data().img,
               name: doc.data().name,
-              memebers: doc.data().memebers
+              memebers: doc.data().memebers,
+              adming: doc.data().admin
             })
           })
         })
       this.closePopup()
     },
 
-    showGroup(name, img, memebers){ // gets group data from group item
+    showGroup(name, img, memebers, admin){ // gets group data from group item
       this.groupSelected = true;
       this.name = name;
       this.img = img;
-      this.memebers = memebers
+      this.memebers = memebers;
+      this.admin = admin
       console.log("Members: " + this.memebers)
     },
     hideGroup(){
