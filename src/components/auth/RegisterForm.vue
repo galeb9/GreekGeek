@@ -179,7 +179,6 @@ export default {
                         document.querySelector(".notification__auth").classList.add("notification__auth--success")
                         this.text = "Successfully registered 🎉"
                         this.addClassToAll(this.classesArr, this.successClass)
-                        this.$router.push("/")
                         db.collection('users').doc(cred.user.uid).set({
                             goal: 100,
                             pushupsToday: 0, 
@@ -187,6 +186,7 @@ export default {
                             userImg: this.chooseRandomAvatar(),
                             attempts: 0
                         })
+                        this.$router.push("/")
                     },
                     err => {
                         this.text = err.message
@@ -227,7 +227,7 @@ export default {
 
 .register{
     max-width: 500px;
-    min-width: 300px;
+    // min-width: 300px;
     margin: 0 auto;
     color: $secondary;
     .greek-geek__title {

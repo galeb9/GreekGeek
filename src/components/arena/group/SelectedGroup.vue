@@ -24,7 +24,7 @@
             kind="icons"
             margin="auto"
             width="80%"
-            icon-type="trash"
+            icon-type="exit"
             @btn-click="leaveGroup"
           />
           <!-- <BaseButton 
@@ -48,6 +48,7 @@
       <BasePopup 
         heading="Member rights" 
         :isVisible="showMemberPopup"
+        type="blured"
       >
         <BaseButton 
           text="Leave arena"

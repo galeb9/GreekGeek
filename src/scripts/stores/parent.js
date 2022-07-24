@@ -30,7 +30,9 @@ const store = createStore({
             goal: 100,
             pushupsToday: 0,
             allUsers: [],
-            sampleUsers: []
+            sampleUsers: [],
+            areProfileNotifications: false,
+            friendCount: 0
         };
     },
     mutations: { // for functions
@@ -73,6 +75,39 @@ const store = createStore({
                 });
             });
         },
+        profileNotificationsCheck(state) {
+            db.collection("users")
+              .doc(auth.currentUser.uid)
+              .collection("friend-requests")
+              .get()
+              .then(snapshot => {
+                snapshot.forEach(doc => {
+                    if(doc.data()) {
+                        state.areProfileNotifications = true;
+                    }
+                })
+              })
+      
+            db.collection("users")
+              .doc(auth.currentUser.uid)
+              .collection("arena-requests")
+              .get()
+              .then(snapshot => {
+                  snapshot.forEach(doc => {
+                    if(doc.data()) {
+                        state.areProfileNotifications = true;
+                    }
+                  })
+              })
+        },
+        getFriends(state){
+            this.user.collection("friends").get()
+                .then(snapshot => {
+                    snapshot.forEach(() => {
+                        state.friendCount++
+                    })
+                })
+        },
     },
     actions: { // best use of functions
         getUserData(context){
@@ -80,7 +115,13 @@ const store = createStore({
         },
         getUsers(context){
             context.commit('getUsers')
-        }
+        },
+        profileNotificationsCheck(context) {
+            context.commit('profileNotificationsCheck')
+        },
+        getFriends(context) {
+            context.commit('getFriends')
+        } 
     },
     getters: { // same as computed
         myAvatar(state) {
@@ -100,6 +141,12 @@ const store = createStore({
         },
         sampleUsers(state){
             return state.sampleUsers
+        },
+        areProfileNotifications(state) {
+            return state.areProfileNotifications
+        },
+        friendCount(state) {
+            return state.friendCount
         }
     }, 
 })

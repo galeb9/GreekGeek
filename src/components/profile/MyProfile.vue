@@ -9,7 +9,9 @@
     <div class="go__messages" @click="toggleMessageVisibility"  >
         <font-awesome-icon v-if="!messagesVisible" class="messages-icon" :icon="['fa', 'dove']"/>
         <font-awesome-icon v-if="messagesVisible" class="messages-icon" :icon="['fa', 'xmark']"/>
-        <div v-if="requests.length != 0 && !messagesVisible" class="message-status">
+
+        <!-- <div v-if="(requests.length != 0 || arenas.length != 0)  && !messagesVisible" class="message-status"> -->
+        <div v-if="areProfileNotifications && !messagesVisible" class="message-status">
             <p>!</p>
         </div>
     </div>
@@ -90,7 +92,10 @@ export default {
         },
         myGoal(){
             return this.$store.getters.myGoal
-        }
+        },
+        areProfileNotifications() {
+            return this.$store.getters.areProfileNotifications
+        },
     },
     methods: {
         getImgUrl(pic) {
@@ -103,6 +108,7 @@ export default {
             this.$router.push("/goal")
         },
         toggleMessageVisibility(){
+            this.$store.state.areProfileNotifications = false
             this.messagesVisible = !this.messagesVisible
         },
         removeOne(arr, index){
@@ -125,7 +131,7 @@ export default {
                 .get()
                 .then(snapshot=> {
                     snapshot.forEach(doc => {
-                        console.log(doc.data())
+                        // console.log(doc.data())
                         this.requests.push({
                             username: doc.data().username,
                             status: doc.data().friends,
@@ -242,10 +248,7 @@ export default {
                 .delete()
 
             this.removeOne(this.arenas, index)
-
         }
-
-
     },
     created(){
         if(this.myUsername === "user404"){
@@ -290,7 +293,6 @@ export default {
     .go__back,
     .go__messages{
         position: absolute;
-      
         border-radius: 3px;
         background: $bg;
         z-index: 3;

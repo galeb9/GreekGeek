@@ -80,7 +80,7 @@ export default {
             padding-top: 1rem;
             .avatar__img{
                 width: 8rem;
-                border: 4px solid white;
+                // border: 4px solid white;
                 border-radius: 4px;
                 box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.42);
                 // transition: all .3s ease-in;

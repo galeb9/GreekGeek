@@ -23,14 +23,26 @@ export default {
             }
         },
         getIcon(){
-            if (this.icon === "arrow-left"){
-                return ['fa', 'arrow-left']
-            } else if (this.icon === "trash"){
-                return ['fa', 'trash-can']
-            } else if (this.icon === "settings"){
-                return ['fa', 'gear']
-            } else if (this.icon === "exit") {
-                return ['fa', 'arrow-up-from-bracket']
+            // if (this.icon === "arrow-left"){
+            //     return ['fa', 'arrow-left']
+            // } else if (this.icon === "trash"){
+            //     return ['fa', 'trash-can']
+            // } else if (this.icon === "settings"){
+            //     return ['fa', 'gear']
+            // } else if (this.icon === "exit") {
+            //     return ['fa', 'right-from-bracket']
+            // }
+            switch(this.icon) {
+                case "arrow-left": 
+                    return  ['fa', 'arrow-left'];
+                case "trash": 
+                    return  ['fa', 'trash-can'];
+                case "settings": 
+                    return  ['fa', 'gear'];
+                case "exit": 
+                    return  ['fa', 'right-from-bracket'];
+                default:  
+                    break;
             }
         }
     }

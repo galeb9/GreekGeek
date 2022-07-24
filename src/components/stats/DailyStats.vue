@@ -8,17 +8,48 @@
         :surplus="surplus"
        />
 
-      <!-- <div class="stats-item" v-if="userPushups"> -->
-      <div class="stats-item">
+      <!-- <div class="stats-item">
         <button @click="togglePopup" class="stats-item__button">Finish day</button>
-      </div>
-      
+      </div> -->
+      <BaseButton 
+        text="Finish your day" @btn-click="togglePopup" 
+      />
       <DailyStatsItems 
         :attempts="attempts"
         :calories="calories"
         :userPushups="userPushups"
       />
- 
+      
+      
+
+
+      <!-- <BasePopup 
+        heading="Finish day for" 
+        :isVisible="popupVisible"
+        type="blured"
+      >
+        <div class="group-control__btns">
+          <BaseButton 
+            text="Today" 
+            @click="resetToday(this.getTodaysDate(), month)" 
+            kind="icons"
+            margin="auto"
+            width="80%"
+          />
+          <p>or</p>
+          <BaseButton 
+            text="Yesterday" 
+            @click="resetYesterday(this.getYesterdayDate(), month)" 
+            kind="icons"
+            margin="auto"
+            width="80%"
+          />
+        </div>
+      </BasePopup>
+      <BaseOverlay v-if="popupVisible" @close="popupVisible = false" /> -->
+
+
+
       <transition name="move-in-bottom">
         <div class="popup-container" v-if="popupVisible">
           <div class="popup" >
@@ -29,13 +60,7 @@
           </div>
         </div>
       </transition>
-      <div 
-        class="popup-bg"
-        v-if="popupVisible"
-        @click="togglePopup"
-      >
-      </div>
-
+      <div class="popup-bg" v-if="popupVisible" @click="togglePopup"></div>
     </div>
   </BaseContainer>
 </template>
@@ -203,7 +228,6 @@ export default {
   }
   .stats-item{
     position: relative;
-
     &__button{
       padding: 1.5rem 3rem;
       background: none;

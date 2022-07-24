@@ -96,7 +96,7 @@ export default {
 
 .login{
     max-width: 500px;
-    min-width: 300px;
+    // min-width: 300px;
     margin: 0 auto;
     color: $secondary;
     min-height: 120vh;

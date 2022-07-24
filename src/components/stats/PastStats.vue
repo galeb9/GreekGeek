@@ -7,7 +7,7 @@
                 :month="month"
             />
         </div>
-        <!-- <p v-show="true" class="no__past-list"> <b>No days...</b> <br> Do some pushups and <b>FINISH</b> your <b>DAY</b> to see your days here.</p> -->
+        <p class="no__past-list"> <br> Do some pushups and <b>FINISH YOUR DAY</b> to see your days here.</p>
      </div>
 </template>
 
@@ -60,7 +60,8 @@ export default {
             scroll-snap-stop: always;
         }
     }
+    .no__past-list {
+        text-align: center;
+    }
 }
-
-
 </style>

@@ -22,8 +22,6 @@ import {
     faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 // import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-
-//import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 const icons = [    
     faBullseye, 
     faHouse, 

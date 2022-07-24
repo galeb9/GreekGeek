@@ -109,7 +109,7 @@ export default {
         width: 100%;
         align-items: center;
         justify-content: center;
-        gap: 1rem;
+        gap: .8rem;
         text-align: center;
     }
     .secondary{

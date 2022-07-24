@@ -34,9 +34,8 @@ export default {
     }else{
       console.log("Basic user data allready loaded from DB")
     }
+    console.log(this.myUsername)
   }
-
- 
 }
 </script>
 

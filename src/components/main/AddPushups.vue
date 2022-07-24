@@ -13,17 +13,23 @@
                     @submit.prevent="saveUserPushups"
                     class="add-component"
                 >
-                    <BaseInput 
-                        class="add__input"  
-                        v-model="newPushups" 
-                        placeholder="Reps?" 
-                        input-type="number" 
-                    />
+          
+
+                    <AddPushupsInput @toggle-animation="togglePlayPauseState">
+                        <BaseInput 
+                            class="add__input"  
+                            v-model="newPushups" 
+                            placeholder="Reps" 
+                            input-type="number" 
+                        />
+                    </AddPushupsInput>
+
+
                     <BaseButton 
                         class="add__button" 
                         text="ADD" 
                         type="submit"
-                        kind="kind2"
+                        @click="$router.push('/stats')"
                     />
                 </form>
             </BaseContainer>
@@ -36,8 +42,12 @@
 
 <script>
 import { db, auth } from '@/components/firebaseInit.js';
+import AddPushupsInput from './AddPushupsInput.vue'
 
 export default {
+    components: {
+        AddPushupsInput
+    },
     data(){
         return{
             newPushups: null,
@@ -53,6 +63,9 @@ export default {
         }
     },
     methods: {
+        togglePlayPauseState() {
+
+        },
         useNotification(message, type){
             this.notifVisible = true
             this.message = message
@@ -97,28 +110,34 @@ export default {
         padding: .3rem;
     }
     .add-component{
-        //height: 50%;
-        margin-top: 2rem;
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 10vh;
         .add__input{
             background: transparent;
             text-align: center;
-            font-size: 26px;
-            border: 5px  $secondary dashed ;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
+            font-size: 24px;
             outline: none;
-            margin-bottom: 60px;
+            border: none;
+            text-align: center;
             &::placeholder{
                 color: $secondary;
             }
         }
-        .add__button{
-            margin-top: 4rem;
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        .add__button .base-button{
+            width: 60vw;
         }
     }
 }

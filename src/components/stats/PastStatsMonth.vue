@@ -1,39 +1,41 @@
 <template>
-  <div class="past-stats__month" v-if="days.length">
-    <div class="current-month">
-        <div class="current-month__row row--center">
-            <p class="current-month__item">{{ month }}</p>
-        </div>
-        <div class="current-month__row">
-            <div class="current-month__item month__item--column">
-                <p>Avrage</p> 
-                <p> {{ Math.floor(monthAvg) }} /set </p>
+<div class="past-stats-month__container" v-if="days.length">
+    <div class="past-stats__month" >
+        <div class="current-month">
+            <div class="current-month__row row--center">
+                <p class="current-month__item">{{ month }}</p>
             </div>
-            <div class="current-month__item month__item--column">
-                <p>Total</p> 
-                <p> {{ total }}</p>
+            <div class="current-month__row">
+                <div class="current-month__item month__item--column">
+                    <p>Avrage</p> 
+                    <p> {{ Math.floor(monthAvg) }} /set </p>
+                </div>
+                <div class="current-month__item month__item--column">
+                    <p>Total</p> 
+                    <p> {{ total }}</p>
+                </div>
             </div>
         </div>
+        <transition name="list">
+            <div class="past-list">
+                <PastStatsItem 
+                    v-for="(item, index) in days"
+                    :key="index"
+
+                    :dateNum="item.dateNum"
+                    :day="item.day"
+                    :num="item.num"
+                    :status="item.status"
+                    :attempts="item.attempts"
+                />
+                <div v-if="loader && false">
+                    <LoaderThingy />
+                </div>
+            </div>
+        </transition>
     </div>
-    <transition name="list">
-        <div class="past-list" v-if="days.length">
-            <PastStatsItem 
-                v-for="(item, index) in days"
-                :key="index"
-
-                :dateNum="item.dateNum"
-                :day="item.day"
-                :num="item.num"
-                :status="item.status"
-                :attempts="item.attempts"
-            />
-            <div v-if="loader">
-                <LoaderThingy />
-            </div>
-        </div>
-
-    </transition>
-  </div>
+</div>
+ 
 </template>
 
 <script>
@@ -106,12 +108,7 @@ export default {
 
 <style lang="scss">
 .past-stats__month {
-    .no__past-list {
-        max-width: 80%;
-        text-align: center;
-        margin: 0 auto;
-        padding-top: 80px;
-    }
+    width: 80vw;
     .past-list{
         // height: 100%;
         // overflow-y: scroll;

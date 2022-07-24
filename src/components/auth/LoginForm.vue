@@ -64,11 +64,10 @@ export default {
         login(e){
             auth.signInWithEmailAndPassword(this.email, this.password)
                 .then(cred => {
-                    alert(`Ste logirani not kot ${cred.user.email}`)
+                    alert(`You are logged in as ${cred.user.email}`)
                     this.$router.push('/')
                 },
                 err => {
-                    // alert(err.message)
                     this.text = err.message
                 }
             )
@@ -83,7 +82,7 @@ export default {
 
 .login{
     max-width: 500px;
-    min-width: 300px;
+    // min-width: 300px;
     margin: 0 auto;
     color: $secondary;
     position: relative;

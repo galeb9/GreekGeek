@@ -19,7 +19,7 @@
 <script>
 import Loader from '@/components/UI/LoaderThingy.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
-import { db } from '@/components/firebaseInit.js'
+import { db, auth } from '@/components/firebaseInit.js'
 
 
 
@@ -32,8 +32,8 @@ export default {
   data(){
     return{
       headerVisible: true,
-      loadActive: true
-
+      loadActive: true,
+      isLoggedIn: false
     }
   },
   computed: {
@@ -78,6 +78,25 @@ export default {
       }else{
         console.log("Basic user data allready loaded from DB")
       }
+    },
+    checkLoggedIn() {
+      if(auth.currentUser) {
+        this.isLoggedIn = true;
+      }
+    },
+    showProfileNotifications() {
+      this.checkLoggedIn()
+      if(this.isLoggedIn) {
+        this.$store.dispatch("profileNotificationsCheck")
+      }
+    },
+    firstTime() {
+      if(window.history.state.back === "/register") {
+        console.log("Previous page was register")
+        window.location.reload()
+      } else {
+        console.log("previous: " + window.history.state.back)
+      }
     }
   }, 
   created(){
@@ -85,7 +104,9 @@ export default {
       this.loadData()
     }
     setTimeout(() => this.loadActive = false, 1600)
+    this.showProfileNotifications()
     //this.isUsernameOk("medo007")
+    this.firstTime()
   }
 }
 </script>

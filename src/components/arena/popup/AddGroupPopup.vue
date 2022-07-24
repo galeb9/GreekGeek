@@ -217,7 +217,7 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/_variables.scss';
     .add-group-popup{
-        min-width: 321px;
+        // min-width: 321px;
         max-height: 102vh;
         background: rgba(126, 164, 220, 0.27);
         -webkit-backdrop-filter: blur(25px);

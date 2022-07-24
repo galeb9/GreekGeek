@@ -29,7 +29,7 @@ export default {
 
 <style lang="scss">
     .base-popup{
-        min-width: 321px;
+        // min-width: 321px;
         max-height: max-content;
         background: black;
         position: fixed;
