@@ -49,7 +49,7 @@
         :username="myUsername"
         :goal="myGoal"
         :img="getImgUrl(myAvatarImg)" 
-        :friends="friendCount"
+        :friends="myFriendsCount"
     />
     <BaseButton 
         text="Change Goal" 
@@ -96,6 +96,9 @@ export default {
         areProfileNotifications() {
             return this.$store.getters.areProfileNotifications
         },
+        myFriendsCount() {
+            return this.$store.getters.myFriendsCount
+        }
     },
     methods: {
         getImgUrl(pic) {
@@ -194,14 +197,6 @@ export default {
             
             this.removeOne(this.requests, index)
         },
-        getFriends(){
-            this.user.collection("friends").get()
-                .then(snapshot => {
-                    snapshot.forEach(() => {
-                        this.friendCount++
-                    })
-                })
-        },
         getArenaMessages(){
             db.collection("users")
                 .doc(auth.currentUser.uid)
@@ -251,14 +246,12 @@ export default {
         }
     },
     created(){
-        if(this.myUsername === "user404"){
-            this.$store.dispatch("getUserData")
-        }else{
-            console.log("Basic user data allready loaded from DB")
-        }
-        this.getFriends();
+        // if(this.myUsername === "user404"){
+        //     this.$store.dispatch("getUserData")
+        // }else{
+        //     console.log("Basic user data allready loaded from DB")
+        // }
         this.getUserData();
-
         this.getFriendMessages(); 
         this.getArenaMessages()
     }

@@ -1,6 +1,6 @@
 <template>
   <BaseContainer>
-    <div class="stats daily">
+    <div class="stats__daily">
       <p class="stats__date">{{ `${today.getDate()} / ${today.getMonth() + 1}  / ${today.getFullYear()}` }}</p>
       <RoundStats
         :amount="userPushups"
@@ -12,17 +12,13 @@
         <button @click="togglePopup" class="stats-item__button">Finish day</button>
       </div> -->
       <BaseButton 
-        text="Finish your day" @btn-click="togglePopup" 
+        text="Finish your day" margin="20" @btn-click="togglePopup" 
       />
       <DailyStatsItems 
         :attempts="attempts"
         :calories="calories"
         :userPushups="userPushups"
       />
-      
-      
-
-
       <!-- <BasePopup 
         heading="Finish day for" 
         :isVisible="popupVisible"
@@ -47,8 +43,6 @@
         </div>
       </BasePopup>
       <BaseOverlay v-if="popupVisible" @close="popupVisible = false" /> -->
-
-
 
       <transition name="move-in-bottom">
         <div class="popup-container" v-if="popupVisible">
@@ -213,7 +207,7 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/_variables.scss';
-.stats{
+.stats__daily{
   min-height: 90vh;
   display: flex;
   flex-direction: column;
@@ -225,6 +219,7 @@ export default {
     color: black;
     font-weight: 900;
     letter-spacing: 5px;
+    margin-bottom: 20px;
   }
   .stats-item{
     position: relative;

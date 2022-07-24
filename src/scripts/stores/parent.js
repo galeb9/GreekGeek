@@ -32,7 +32,7 @@ const store = createStore({
             allUsers: [],
             sampleUsers: [],
             areProfileNotifications: false,
-            friendCount: 0
+            myFriendsCount: 0
         };
     },
     mutations: { // for functions
@@ -100,13 +100,16 @@ const store = createStore({
                   })
               })
         },
-        getFriends(state){
-            this.user.collection("friends").get()
-                .then(snapshot => {
-                    snapshot.forEach(() => {
-                        state.friendCount++
-                    })
-                })
+        getMyFriendsCount(state){
+            db.collection("users")
+            .doc(auth.currentUser.uid)
+            .collection("friends")
+            .get()
+            .then(snapshot => {
+              snapshot.forEach(() => {
+                state.myFriendsCount++
+              })
+            })
         },
     },
     actions: { // best use of functions
@@ -119,8 +122,8 @@ const store = createStore({
         profileNotificationsCheck(context) {
             context.commit('profileNotificationsCheck')
         },
-        getFriends(context) {
-            context.commit('getFriends')
+        getMyFriendsCount(context) {
+            context.commit('getMyFriendsCount')
         } 
     },
     getters: { // same as computed
@@ -145,8 +148,8 @@ const store = createStore({
         areProfileNotifications(state) {
             return state.areProfileNotifications
         },
-        friendCount(state) {
-            return state.friendCount
+        myFriendsCount(state) {
+            return state.myFriendsCount
         }
     }, 
 })

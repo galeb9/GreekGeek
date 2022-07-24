@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <div class="home__top">
+    <div class="home__top"> 
+      {{}}
       <HomeHead />
       <TheWelcome />
       <HomeStats />
@@ -31,10 +32,10 @@ export default {
   created(){
     if(this.myUsername === "user404"){
       this.$store.dispatch("getUserData")
+      this.$store.dispatch("getMyFriendsCount")
     }else{
       console.log("Basic user data allready loaded from DB")
     }
-    console.log(this.myUsername)
   }
 }
 </script>

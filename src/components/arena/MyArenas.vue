@@ -1,7 +1,7 @@
 <template>
   <div class="my-arenas">
     <GoBack text="Home" type="dark" />
-    <h3 class="my-arenas__title">Your Arenas</h3>
+    <h3 v-if="data.length > 0" class="my-arenas__title">Your Arenas</h3>
 
     <Loader v-if="data.length === 0 && loadActive"  />
 

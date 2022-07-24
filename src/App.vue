@@ -5,7 +5,6 @@
         <component :is="Component" />
       </transition>
     </router-view>
-
     <transition name="move-in-bottom">
       <TheHeader v-if="showHeader(this.$route.fullPath)" class="header" />
     </transition>
@@ -19,7 +18,7 @@
 <script>
 import Loader from '@/components/UI/LoaderThingy.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
-import { db, auth } from '@/components/firebaseInit.js'
+import { auth } from '@/components/firebaseInit.js'
 
 
 
@@ -33,12 +32,16 @@ export default {
     return{
       headerVisible: true,
       loadActive: true,
-      isLoggedIn: false
+      isLoggedIn: false,
+      friendsCount: 0
     }
   },
   computed: {
     myUsername(){
       return this.$store.getters.myUsername
+    },
+    myFriendsCount() {
+      return this.$store.getters.myFriendsCount
     }
   },
   methods: {
@@ -59,25 +62,18 @@ export default {
         }
       }
     },
-    async isUsernameOk(username){ //works
-      const userData = await db.collection("users")
-        .where("username", "==", username)
-        .get()
-        .then(snapshot => {
-            const arr = []
-            snapshot.forEach(user => {
-                arr.push(user.data().username)
-            })
-            return arr
-        })
-      console.log(userData)
-    },
     loadData() {
-      if(this.myUsername === "user404"){
-        this.$store.dispatch("getUserData")
-      }else{
-        console.log("Basic user data allready loaded from DB")
-      }
+        if(auth.currentUser) {
+          this.$store.dispatch("getMyFriendsCount")
+          if(this.myUsername === "user404"){
+            this.$store.dispatch("getUserData")
+          }else{
+            console.log("Basic user data allready loaded from DB")
+          }
+        }
+        setTimeout(() => {
+          console.log(this.myFriendsCount)  
+        }, 1400);
     },
     checkLoggedIn() {
       if(auth.currentUser) {
@@ -92,21 +88,18 @@ export default {
     },
     firstTime() {
       if(window.history.state.back === "/register") {
-        console.log("Previous page was register")
         window.location.reload()
-      } else {
-        console.log("previous: " + window.history.state.back)
-      }
+      } 
     }
   }, 
   created(){
-    if(this.$route.path !== '/register' || this.$route.path !== '/login' ) {
-      this.loadData()
-    }
+    setTimeout(() => {
+    this.loadData()
+    }, 1000);
     setTimeout(() => this.loadActive = false, 1600)
     this.showProfileNotifications()
-    //this.isUsernameOk("medo007")
     this.firstTime()
+    console.log(this.isLoggedIn)
   }
 }
 </script>
@@ -152,7 +145,7 @@ ul{
   list-style: none;
 }
 .router-view{
-  padding: 1.5rem 1rem ;
+  padding: 1.5rem 1.3rem ;
 }
 button, img{
   cursor: pointer

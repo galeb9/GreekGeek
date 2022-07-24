@@ -3,14 +3,16 @@
         :class="[ 'base-button-container', align]" 
         :style="{ width: width, margin: getMargin}"
     >
-        <button @click="$emit('btnClick')" :class="['base-button', kind, { 'shadow': shadow}]">
+        <button 
+            @click="$emit('btnClick')" 
+            :class="['base-button', kind, { 'shadow': shadow}]"
+        >
             {{ text }}
             <BaseIcon 
                 v-if="iconType"
                 :icon="iconType"
                 kind="in-btn"
                 aligment="none"
-
             />
         </button>
     </div>
@@ -120,6 +122,6 @@ export default {
 .center{
     display: flex;
     justify-content: center;
-    margin: 0 auto;
+    margin: 0 auto !important;
 }
 </style>

@@ -27,9 +27,11 @@
 
                     <BaseButton 
                         class="add__button" 
-                        text="ADD" 
+                        text="Add Pushups" 
                         type="submit"
-                        @click="$router.push('/stats')"
+                        align="center"
+                        width="100%"
+                        @btn-click="$router.push('/stats')"
                     />
                 </form>
             </BaseContainer>
@@ -114,7 +116,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10vh;
+        gap: 20vh;
         .add__input{
             background: transparent;
             text-align: center;
@@ -135,9 +137,6 @@ export default {
         /* Firefox */
         input[type=number] {
             -moz-appearance: textfield;
-        }
-        .add__button .base-button{
-            width: 60vw;
         }
     }
 }

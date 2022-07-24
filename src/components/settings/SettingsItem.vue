@@ -52,7 +52,6 @@ export default {
 
     .settings__item{
         background: transparent;
-        width: 90%;
         padding: 1rem 0;
         margin: 0 auto;
         .settings__item__info{

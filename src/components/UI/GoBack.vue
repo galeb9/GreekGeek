@@ -1,5 +1,5 @@
 <template>
-    <div class="go-back">
+    <div :class="['go-back', {'go-back--absolute': absolute}]">
         <div :class="['go-back__icon', type]" @click="goTo(link)" >
             <font-awesome-icon class="fa-back" :icon="['fa', 'arrow-left']"/>
         </div>
@@ -13,7 +13,8 @@ export default {
     props: {
         text: { type: String, default: "" },
         link: { type: String, default: "" },
-        type: { type: String, default: "" }
+        type: { type: String, default: "" },
+        absolute: { type: Boolean, default: true }
     },
     methods: {
         goTo(link) {
@@ -26,10 +27,7 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/_variables.scss';
     .go-back{
-        z-index: 3;
-        position: absolute;
-        top: 15px;
-        left: 1.4rem;
+
         display: flex;
         align-items: center;
         gap: 1.2rem;
@@ -62,6 +60,12 @@ export default {
             background: black;
             color: white;
         }
+    }
+    .go-back--absolute {
+        z-index: 3;
+        position: absolute;
+        top: 15px;
+        left: 1.4rem;
     }
 
 

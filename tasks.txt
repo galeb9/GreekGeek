@@ -76,14 +76,16 @@ x AUTH functionality
 
 23.7.2022
 x make a function that will add to an array our group we have made in popup
-- make a function that will remove form an array our group we have removed in selected group
+x make a function that will remove form an array our group we have removed in selected group
 - make popup that will see if admin show this popup with btns (invite, throw out, )
 
  
 <------------------------------------------------------------------------>
 
 ? some problem with friends (sinjikit131 & medo007 friends, but only medo007 has sinjikit131)
-? send friend request send from user404 as well ????
+? send friend request send from user404 as well ???? (does not load quick enough after register)
+? test new register (on iphone) adds the samsung profile, user404 still a problem?
+
 
 ⭐ Functionalities:
     ➡ Make color picker

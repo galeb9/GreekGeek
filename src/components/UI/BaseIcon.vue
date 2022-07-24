@@ -23,15 +23,6 @@ export default {
             }
         },
         getIcon(){
-            // if (this.icon === "arrow-left"){
-            //     return ['fa', 'arrow-left']
-            // } else if (this.icon === "trash"){
-            //     return ['fa', 'trash-can']
-            // } else if (this.icon === "settings"){
-            //     return ['fa', 'gear']
-            // } else if (this.icon === "exit") {
-            //     return ['fa', 'right-from-bracket']
-            // }
             switch(this.icon) {
                 case "arrow-left": 
                     return  ['fa', 'arrow-left'];
@@ -41,6 +32,8 @@ export default {
                     return  ['fa', 'gear'];
                 case "exit": 
                     return  ['fa', 'right-from-bracket'];
+                case "loupe": 
+                    return  ['fa', 'magnifying-glass'];
                 default:  
                     break;
             }

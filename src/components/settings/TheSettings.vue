@@ -1,14 +1,16 @@
 <template>
   <div class="settings">
-    <div class="settings__back" @click="goHome" >
-      <font-awesome-icon class="fa-settings" :icon="['fa', 'angle-down']"/>
-      <h3>Home</h3>
-    </div>
+    <GoBack 
+      text="Back" 
+      type="dark"  
+      :absolute="false"
+      @click="goHome"   
+    />
     <div class="container">
       <div class="settings__items">
         <SettingsItem
           title="Main Info"
-          :dropItem="'User: ' + username + '\nEmail: ' + email"
+          :dropItem="'Username: ' + username + '\nEmail: ' + email"
         />
             
         <div class="logout settings__item" @click="logout">
@@ -70,15 +72,6 @@ export default {
   .settings{
     color: black;
     min-height: 70vh;
-    .settings__back{
-      display: flex;
-      align-items: center;
-      padding-left: 1rem;
-      gap: 1rem;
-      .fa-settings{
-        transform: rotate(90deg);
-      }
-    }
     .container{
       display: flex;
       flex-direction: column;

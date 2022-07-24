@@ -69,7 +69,7 @@ export default {
     color: white;
     gap: 1rem;
     max-height: 100px;
-    padding: 0.6rem;
+    padding: 1rem;
     border-radius: $main-radius;
     box-shadow: 0px 8px 14px rgba(0, 0, 0, 0.22);
     .user-card__img{

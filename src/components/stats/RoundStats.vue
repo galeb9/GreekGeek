@@ -2,7 +2,7 @@
     <div class="stats-item">
 
         <div v-if="amount > goal" class="stats-item__round">
-            <p class="goal-achived">+ {{ surplus }} </p>
+            <p class="goal-achived">+ {{ ourSurplus }} </p>
             <font-awesome-icon class="fa-icon" :icon="['fa', 'check']" />
             <transition name="fade-in" mode="out-in">
                 <Loader v-if="loadActive" type="normal" /> 
@@ -30,26 +30,19 @@ export default {
         Loader
     },
     props:{
-        amount: {
-            type: Number,
-            default: 0
-        },
-        goal: {
-            type: Number,
-            default: 0
-        },
-        surplus: {
-            type: Number,
-            default: 0
-        }
+        amount: { type: Number, default: 0 },
+        goal: { type: Number, default: 0 },
+        surplus: { type: Number, default: 0 }
     },
     data(){
         return {
-            loadActive: true
+            loadActive: true,
+            ourSurplus: 0
         }
     },
     created() {
         setTimeout(() => this.loadActive = false, 1000)
+        setTimeout(() =>  this.ourSurplus = this.amount - this.goal ,400)
     }
 }
 </script>
