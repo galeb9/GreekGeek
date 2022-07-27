@@ -89,16 +89,18 @@ x make a function that will remove form an array our group we have removed in se
 
 
 ⭐ Functionalities:
+    ✅ PastData be by months
     ➡ Make color picker
     ➡ Change username
     ➡ Add arena admin to creator
     ➡ Automatic day finish / Option to finish for yesterday
         -> solution: save date to firebase, added it to vuex and check if(currentData !== new Date()){ finishDay() }
-    ✅ PastData be by months
     ➡ Remove wrong day in PastData
     ➡ Make friends be seen in a list if you tap on friends on user/your profile
     ➡ as you register send email of welcome to user (with link to page of this app maybe)
-
+    ➡ Able to make rounds for making pushups
+    ➡ type pushups should lead to special site with something said about it (difficulty in stars, what to watch, what it hits)
+    ➡ pushups streak !
 
 🐜 Bugs:
     ✅ Username already taken in register [promises]
@@ -107,6 +109,7 @@ x make a function that will remove form an array our group we have removed in se
     ➡ Othe users profile should show friends (count) + able to see the friends list + the user can look his list of friends (remove/add -> redirect to loupe)
     ➡ Finish day should be a popup full width screen
     ➡ Restyle add pushups style (animation itd.)
+    ➡ Fix the scss import to be global (like iOrder)
 
 
 👉 Tasks:
@@ -130,7 +133,7 @@ x make a function that will remove form an array our group we have removed in se
 🚀 use less firebase actions (use the store && only if not loaded yet), also make function that counts every time you call db.collections("users") so you know how many times it gets called (make it a smaller number)
 🚀 vuex folders
 🚀 in arenas make a voting system for adding players (like Greece)
-
+🚀 what to add to profile (more stuff) -> see in other apps
 
 Legend:
 

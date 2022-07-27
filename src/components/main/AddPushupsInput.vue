@@ -1,6 +1,6 @@
 <template>
     <div class="add-pushups__btn circle">
-        <span class="circle__btn" @click="toggleAnimation">
+        <span class="circle__btn">
           <slot></slot>
         </span>
         <span class="circle__back-1"></span>
@@ -12,6 +12,8 @@
 export default {
   methods: {
     toggleAnimation(e) {
+
+      // goes on <span class="circle__btn" @click="toggleAnimation">
       this.$emit('toggleAnimation')
       e.preventDefault();
       const playBtn = document.querySelector('.circle__btn');
