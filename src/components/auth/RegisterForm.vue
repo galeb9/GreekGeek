@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class="input-field ">
+                <!-- <div class="input-field ">
                     <label for="password">Confirm password</label>
                     <input 
                         class="input-field__not-password input-field__password-confirm  password input--password-confirm" 
@@ -34,7 +34,7 @@
                         id="password" 
                         v-model="confirmedPassword"
                     >
-                </div>
+                </div> -->
       
       
                 <AuthNotification :text="text"/>
@@ -83,7 +83,6 @@ export default {
                 'input--username',
                 'input--email',
                 'input--password',
-                'input--password-confirm',
             ],
             errorClass: "input--error",
             successClass: "input--success"
@@ -149,13 +148,13 @@ export default {
         },
         checkPassword() {
             if(this.password.length >= 8) {
-                if(this.password === this.confirmedPassword) {
+                // if(this.password === this.confirmedPassword) {
                     this.createUser() 
-                } else {
-                    this.text = "Your password does not match, please check."
-                    this.markErrorInput("password")
-                    this.markErrorInput("password-confirm")
-                }
+                // } else {
+                //     this.text = "Your password does not match, please check."
+                //     this.markErrorInput("password")
+                //     this.markErrorInput("password-confirm")
+                // }
             } else {
                 this.text = "Your password must be at least 8 characters long!"
                 this.markErrorInput("password")
@@ -200,7 +199,7 @@ export default {
         },
         registerUser(event){
             event.preventDefault();
-            if(this.username && this.email && this.password && this.confirmedPassword) {
+            if(this.username && this.email && this.password) {
                 let isUsernameOk = this.validateUsername(this.username)
                 if(isUsernameOk) {
                     this.checkPassword()

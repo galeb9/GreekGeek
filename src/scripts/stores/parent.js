@@ -127,6 +127,11 @@ const store = createStore({
         } 
     },
     getters: { // same as computed
+        /* call as in computed:
+            myUsername(){
+                return this.$store.getters.myUsername
+            },
+        */
         myAvatar(state) {
             return state.avatarImg
         },
