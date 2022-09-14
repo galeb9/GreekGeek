@@ -31,8 +31,9 @@
                         type="submit"
                         align="center"
                         width="100%"
-                        @btn-click="$router.push('/stats')"
                     />
+                        
+                    <!-- @btn-click="$router.push('/stats')" -->
                 </form>
             </BaseContainer>
         </div>
@@ -91,6 +92,7 @@ export default {
                 this.useNotification(this.successMessage, "success")
 
                 this.newPushups = null;
+                setTimeout(() => this.$router.push('/stats'), 1000)
             }else{
                 this.useNotification(this.warningMessage, "warning")
             }
