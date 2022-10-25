@@ -8,6 +8,10 @@ It is possible to add friends and make arenas (groups), where you can see who is
 
 Users must login or register for use of app.
 
+## Live link to project
+
+https://pushups-150a1.web.app/login?redirect=/home
+
 ## Project setup
 ```
 npm install
@@ -30,7 +34,3 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
-
-Live link to project: https://pushups-150a1.web.app/login?redirect=/home
