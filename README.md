@@ -11,3 +11,8 @@ Users must login or register for use of app.
 ## Live link to project
 
 https://pushups-150a1.web.app/login?redirect=/home
+
+## What I learned
+
+- Vue.js (vue 3)
+- Firebase (auth, database)
