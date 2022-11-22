@@ -8,7 +8,7 @@
             <div class="current-month__row">
                 <div class="current-month__item month__item--column">
                     <p>Avrage</p> 
-                    <p> {{ Math.floor(monthAvg) }} /set </p>
+                    <p> {{ monthAverage }} /set </p>
                 </div>
                 <div class="current-month__item month__item--column">
                     <p>Total</p> 
@@ -53,10 +53,15 @@ export default {
     },
     data() {
         return {
-            monthAvg: 0,
             days: [],
             total: 0,
-            loader: true
+            loader: true,
+            monthAvg: 0,
+        }
+    },
+    computed: {
+        monthAverage() {
+            return Math.floor(this.total / this.days.length)
         }
     },
     methods: {
@@ -64,15 +69,6 @@ export default {
             setTimeout(() => {
                 this.loader = false
             }, 1000);
-        },
-        getMonthAvrage() {
-            let avgs = 0
-            let count = 0
-            this.days.forEach((item) => {
-                avgs += (item.num / item.attempts)
-                count++
-            }) 
-            this.monthAvg =  avgs / count
         },
         getMonthDays(){
             db.collection("users")
@@ -98,9 +94,6 @@ export default {
     },
     created() {
         this.getMonthDays()
-        setTimeout(() => {
-            this.getMonthAvrage()
-        }, 1000);
         this.hideLoader()
     }
 }
@@ -109,11 +102,6 @@ export default {
 <style lang="scss">
 .past-stats__month {
     width: 80vw;
-    .past-list{
-        // height: 100%;
-        // overflow-y: scroll;
-        // padding: 0 0 40px;
-    }
     .current-month {
         margin-bottom: 2rem;
         .row--center {
