@@ -1,28 +1,18 @@
-# client
+# Greek Geek
 
-## Project setup
-```
-npm install
-```
+An app to inspire users to do pushups anywhere.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+You can use it to set you daily goal and track how much you do in a single day.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+It is possible to add friends and make arenas (groups), where you can see who is winning for most pushups today. You can also check your pushup history and status for each day by months.
 
-### Lints and fixes files
-```
-npm run lint
-```
+Users must login or register for use of app.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Live link to project
 
+https://pushups-150a1.web.app/login?redirect=/home
 
+## What I learned
 
-Live link to project: https://pushups-150a1.web.app/login?redirect=/home
+- Vue.js (vue 3)
+- Firebase (auth, database)
