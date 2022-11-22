@@ -1,6 +1,6 @@
 <template>
 <div class="past-stats-month__container" v-if="days.length">
-    <div class="past-stats__month" >
+    <div class="past-stats__month">
         <div class="current-month">
             <div class="current-month__row row--center">
                 <p class="current-month__item">{{ month }}</p>

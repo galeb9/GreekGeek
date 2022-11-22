@@ -109,7 +109,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    .user-pushups{ // test purposes only
+    .user-pushups{ 
         background: black;
         padding: .3rem;
     }

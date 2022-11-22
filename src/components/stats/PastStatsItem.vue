@@ -16,8 +16,7 @@
                 </div>
             </div>
             <div class="pushups-section stats-section">
-                <p v-if="!avrage">N/A</p>
-                <p v-else>{{ Math.floor(avrage) }}</p>
+                <p>{{ Math.floor(getAvrage) }}</p>
                 <p>avg.</p>
             </div>
         </div>
@@ -39,13 +38,13 @@ export default {
             avrage: null
         }
     },
-    methods: {
+    computed: {
         getAvrage() {
-            return this.num / this.attempts
+            return this.num / this.attempts || 0
         },
     },
     created() {
-        this.avrage = this.getAvrage()
+        // this.avrage = this.getAvrage()
     }
 }
 </script>
