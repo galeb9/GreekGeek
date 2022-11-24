@@ -42,8 +42,8 @@
                 <!-- <p v-for="(el, index) in data.members" :key="index">{{ el }}</p> -->
                 <transition name="move-in-bottom">
                     <div class="message__btns" v-if="messageBtnsVisible">
-                        <BaseButton text="Confirm" @click="confirmRequset" />
-                        <BaseButton text="Deny" @click="denyRequest"/>
+                        <BaseButton text="Confirm" align="" @click="confirmRequset" />
+                        <BaseButton text="Deny" align="" @click="denyRequest"/>
                     </div>
                 </transition>
             </div>
@@ -108,13 +108,12 @@ export default {
             }
         }
         .message__btns{
-            // padding: 1rem 0;
             padding-top: .8rem;
             display: flex;
             gap: 1rem;
-            // border-bottom: 1px solid black;
             .base-button{
                 border-radius: 8px;
+
             }
         }
     }

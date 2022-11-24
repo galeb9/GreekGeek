@@ -52,7 +52,8 @@ export default {
         display: flex;
         justify-content: center;
         position: fixed;
-        z-index: 1;
+        // z-index: 1;
+        z-index: 5;
         bottom: -2vh;
         left: 0;
         .bg-blur{

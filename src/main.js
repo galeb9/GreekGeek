@@ -24,7 +24,6 @@ import GoBack from '@/components/UI/GoBack.vue'
 import BaseIcon from '@/components/UI/BaseIcon.vue'
 import BasePopup from '@/components/UI/BasePopup.vue'
 import BaseOverlay from '@/components/UI/BaseOverlay.vue'
-
 import TheHeader from '@/components/layout/TheHeader.vue'
 
 

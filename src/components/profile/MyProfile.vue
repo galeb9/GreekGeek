@@ -246,11 +246,6 @@ export default {
         }
     },
     created(){
-        // if(this.myUsername === "user404"){
-        //     this.$store.dispatch("getUserData")
-        // }else{
-        //     console.log("Basic user data allready loaded from DB")
-        // }
         this.getUserData();
         this.getFriendMessages(); 
         this.getArenaMessages()
@@ -271,14 +266,15 @@ export default {
     }
     .notifications-container{
         padding: 1rem;
-        // height: 100%;
-        min-height: 100%;
+        overflow-y: scroll;
+        height: 75vh;
+        padding-bottom: 100px;
         background: $bg;
         position: absolute;
         left: 0;
         right: 0;
-        top: 20vh;
-        z-index: 4;
+        top: 25vh;
+        z-index: 3;
         h2{
             margin-bottom: 1rem;
         }
@@ -337,7 +333,6 @@ export default {
         }
     }
     .bg-image{
-        // position: absolute;
         top: 0;
         left: 0;
         z-index: 1;
