@@ -68,12 +68,8 @@
         :memebers="members"
         :img="img"
       /> 
-      <GroupFriends 
-        :members="members"
-      />
-      <RankedList   
-        :data="top3"
-      />
+      <GroupFriends :members="members" />
+      <RankedList :data="top3" />
       <TheScoreboard
         :data="friends"
         heading="Daily Scoreboard"
@@ -94,6 +90,7 @@ import { db, auth } from '@/components/firebaseInit.js';
 
 
 export default {
+  name: "SelectGroup",
   components: {
     GroupItem,
     GroupFriends,
@@ -153,7 +150,11 @@ export default {
           .collection("arenas")
           .doc(this.name)
           .delete()
-        this.$emit('clickBack')
+
+        this.$emit('clickBack',{
+          name: this.name,
+          img: this.img
+        })
       } 
       this.closePopup()
     },
@@ -208,7 +209,7 @@ export default {
       margin-top: 5rem;
       height: 100vh;
       overflow: scroll;
-      padding-bottom: 3rem;
+      padding-bottom: 200px;
     }
     .group-control__btns {
       display: flex;

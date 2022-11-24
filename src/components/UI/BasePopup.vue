@@ -42,7 +42,7 @@ export default {
         flex-direction: column;
         border-radius: 15px 15px 0px 0px ;
         .base-popup__body {
-            height: max-content;
+            min-height: 30vh ;
             overflow-y: scroll;
             padding: 0 1.8rem 3rem;
         }

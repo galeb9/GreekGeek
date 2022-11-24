@@ -40,7 +40,7 @@ export default {
     .memeber-item{
         background: black;
         padding: .8rem;
-        margin-bottom: 1rem;
+        // margin-bottom: 1rem;
         border-radius: $main-radius;
         display: flex;
         align-items: center;

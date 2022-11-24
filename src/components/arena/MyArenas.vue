@@ -117,15 +117,14 @@ export default {
       this.admin = admin
       console.log("Members: " + this.memebers)
     },
-    hideGroup(){
+    hideGroup(data){
       this.groupSelected = false;
-      // this.getData(); //so it refreshes
+      if(data) this.data = this.data.filter(item => item.name !== data.name)
     }
   },
   created(){
     this.getData();
     setTimeout(() => this.loadActive = false, 1600)
-
   }
 }
 </script>
