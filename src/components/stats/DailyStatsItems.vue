@@ -3,7 +3,7 @@
     <div class="stats__calories">
       <img src="@/assets/icons/fire.svg" alt="" />
       <div class="stats__info">
-        <p>{{ calories }}</p>
+        <p>{{ Math.ceil(this.userPushups * 0.45) }}</p>
         <h4>kcal Burnt</h4>
       </div>
     </div>
@@ -30,7 +30,6 @@
 export default {
   props: {
     attempts: { type: Number, default: 0 },
-    calories: { type: Number, default: 0 },
     userPushups: { type: Number, default: 0 }
   }
 };

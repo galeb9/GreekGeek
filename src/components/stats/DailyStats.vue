@@ -77,10 +77,6 @@ export default {
         return 'neg'
       }
     },
-    getBurntCalories(){
-      this.calories = Math.ceil(this.userPushups * 0.45)
-      console.log(this.calories)
-    },
     getTodaysDate(){
       return `${this.today.getDate()}-${this.today.getMonth() + 1}-${this.today.getFullYear()}`
     },
@@ -169,7 +165,6 @@ export default {
   },
   created(){
     this.getUserData();
-    setTimeout(this.getBurntCalories, 300)
     this.month = this.getMonthByWord(this.today.getMonth())
     // this.month = "May"
   },
