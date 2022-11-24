@@ -52,7 +52,6 @@ export default {
         display: flex;
         justify-content: center;
         position: fixed;
-        // z-index: 1;
         z-index: 5;
         bottom: -2vh;
         left: 0;
@@ -61,7 +60,6 @@ export default {
             background: rgba($bg, .4);
             border-top: 3px solid $secondary;
             backdrop-filter: blur(3px);
-            // border-radius: 10px 10px 0px 0px;
             width: 100%;
             height: 100%;            
         }
@@ -75,33 +73,24 @@ export default {
                 position: relative;
                 width: 100%;
                 height: 100%;
-                // padding: 2em ;
-                padding: 2em 5vw;
-                text-align: center;
-                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-bottom: 10px;
                 transition: all .5s ease-in-out;
                 color: $secondary;
-                .fa-icon{
-                    transform: scale(1.5);
-                }
+                font-size: 22px;
+                flex: 1;
                 &.router-link-active{
                     -webkit-tap-highlight-color: transparent; 
-
                     &>.fa-icon{
                         color: black;
                         border-bottom: 1px solid black;
                         padding-bottom: 10px;
                     }
-                    // &::after{
-                    // content: '';
-                    // width: 10px;
-                    // height: 10px;
-                    // border-radius: 50%;
-                    // background: black;
-                    // position: absolute;
-                    // bottom: 14px;
-                    // left: 47%;
-                    // }
+                    .profile-notification__alert{
+                        display: none;
+                    }
                 }
               
             }

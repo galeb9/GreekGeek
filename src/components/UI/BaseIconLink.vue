@@ -5,9 +5,7 @@
     >
         <!-- should look like this :icon="['fa', 'right-from-bracket']" -->
         <font-awesome-icon class="fa-icon" :icon="icon" :size="size"/>
-        <div v-if="areProfileNotifications && this.icon[1] === 'user'" class="profile-notification__alert">
-            <!-- <p>!</p> -->
-        </div>
+        <div v-if="areProfileNotifications && this.icon[1] === 'user'" class="profile-notification__alert"></div>
     </router-link>
 </template>
 
@@ -36,14 +34,14 @@ export default {
 @import '@/assets/scss/_variables.scss';
     .base-icon-link {
         position: relative;
+        display: flex;
         .profile-notification__alert{
             animation: breathe 1s infinite alternate ease-in-out;
             position: absolute;
-            top: 45px;
-            right: 20px;
+            bottom: 30px;
             background: $error;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             color: white;
             display: flex;

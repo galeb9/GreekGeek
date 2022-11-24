@@ -111,8 +111,6 @@ const router = createRouter({
         //         requiresAuth: true
         //     }
         // },
-
-        // catch all
         {
             path: '/:catchAll(.*)',
             name: 'NotFound',
