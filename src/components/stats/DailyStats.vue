@@ -8,41 +8,12 @@
         :surplus="surplus"
        />
 
-      <!-- <div class="stats-item">
-        <button @click="togglePopup" class="stats-item__button">Finish day</button>
-      </div> -->
-      <BaseButton 
-        text="Finish your day" margin="20" @btn-click="togglePopup" 
-      />
+      <BaseButton text="Finish your day" margin="20" @btn-click="togglePopup" />
       <DailyStatsItems 
         :attempts="attempts"
         :calories="calories"
         :userPushups="userPushups"
       />
-      <!-- <BasePopup 
-        heading="Finish day for" 
-        :isVisible="popupVisible"
-        type="blured"
-      >
-        <div class="group-control__btns">
-          <BaseButton 
-            text="Today" 
-            @click="resetToday(this.getTodaysDate(), month)" 
-            kind="icons"
-            margin="auto"
-            width="80%"
-          />
-          <p>or</p>
-          <BaseButton 
-            text="Yesterday" 
-            @click="resetYesterday(this.getYesterdayDate(), month)" 
-            kind="icons"
-            margin="auto"
-            width="80%"
-          />
-        </div>
-      </BasePopup>
-      <BaseOverlay v-if="popupVisible" @close="popupVisible = false" /> -->
 
       <transition name="move-in-bottom">
         <div class="popup-container" v-if="popupVisible">
