@@ -2,11 +2,23 @@
   <BaseContainer>
     <div class="stats__daily">
       <p class="stats__date">{{ `${today.getDate()} / ${today.getMonth() + 1}  / ${today.getFullYear()}` }}</p>
-      <RoundStats
+      <!-- <RoundStats
         :amount="userPushups"
         :goal="userGoal"
         :surplus="surplus"
-       />
+      /> -->
+
+
+      <BaseProgress :size="200" :progress="userPushups/userGoal * 100" >
+        <RoundStats
+          :amount="userPushups"
+          :goal="userGoal"
+          :surplus="surplus"
+          :size="180"
+        />
+      </BaseProgress>
+
+
 
       <BaseButton text="Finish your day" margin="20" @btn-click="togglePopup" />
       <DailyStatsItems 

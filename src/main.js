@@ -25,6 +25,7 @@ import BaseIcon from '@/components/UI/BaseIcon.vue'
 import BasePopup from '@/components/UI/BasePopup.vue'
 import BaseOverlay from '@/components/UI/BaseOverlay.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
+import BaseProgress from '@/components/UI/BaseProgress.vue'
 
 
 let app;
@@ -47,6 +48,9 @@ auth.onAuthStateChanged( user => {
             .component("BaseIcon", BaseIcon)
             .component("BasePopup", BasePopup)
             .component("BaseOverlay", BaseOverlay)
+            .component("BaseProgress", BaseProgress)
+
+
         app.use(store)
         app.use(router);
         app.mount('#app')
