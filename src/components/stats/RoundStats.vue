@@ -7,10 +7,10 @@
                     <p class="goal-achived">+ {{ this.amount - this.goal  }} </p>
                     <font-awesome-icon class="fa-icon" :icon="['fa', 'check']" />
                 </div>
-                 <div class="stats-info"  v-else>
-                    <h3 @click="showPercetages = !showPercetages">Goal</h3>
-                    <p v-if="showPercentages" class="stats-info__percentages">{{ Math.floor(amount / goal * 100) + "%" }} </p>
-                    <p v-else class="stats-info__comparison">{{ amount }} / {{ goal }} </p>
+                 <div class="stats-info" @click="togglePercent" v-else>
+                    <h3>Goal</h3>
+                    <p v-if="percentVisible" class="stats-info__percentages">{{ Math.floor(amount / goal * 100) + " %" }} </p>
+                    <p v-else class="stats-info__comparison">{{ count }} / {{ goal }} </p>
                 </div>
             </div>
         </transition>
@@ -18,12 +18,8 @@
 </template>
 
 <script>
-// import Loader from '@/components/UI/LoaderThingy.vue'
 
 export default {
-    components: {
-        // Loader
-    },
     props:{
         amount: { type: Number, default: 0 },
         goal: { type: Number, default: 0 },
@@ -32,17 +28,28 @@ export default {
     },
     data(){
         return {
-            loadActive: true,
-            showPercentages: false
+            percentVisible: false,
+            count: 0
         }
     },
+    watch: {
+		amount () {
+            console.log("amount")
+			if(this.amount) this.countProgress(this.amount)
+		}
+	},
     computed: {
         ourSurplus() {
             return  this.amount - this.goal 
         } 
     },
-    created() {
-        setTimeout(() => this.loadActive = false, 1000)
+    methods: {
+        togglePercent () {
+            this.percentVisible = !this.percentVisible
+        },
+        countProgress (end) {
+			let counter = setInterval(() => this.count <= end ? this.count++ : clearInterval(counter), Math.floor(1000 / end))
+		}
     }
 }
 </script>
@@ -61,11 +68,6 @@ export default {
     color: black;
     font-weight: 900 ;
     margin: 10px;
-    // border: 2px solid $secondary;
-
-    .stats-info {
-        // background: red;
-    }
     h3 {
         border-bottom: 2px solid $secondary;
         margin-bottom: 10px;
@@ -83,7 +85,6 @@ export default {
         color: $success;
         font-size: 20px;
         border-bottom: 2px solid $secondary;
-        // width: 70px;
         margin-bottom: 15px;
         padding-bottom: 10px;
     }

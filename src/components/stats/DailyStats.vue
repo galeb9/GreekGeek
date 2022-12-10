@@ -2,14 +2,7 @@
   <BaseContainer>
     <div class="stats__daily">
       <p class="stats__date">{{ `${today.getDate()} / ${today.getMonth() + 1}  / ${today.getFullYear()}` }}</p>
-      <!-- <RoundStats
-        :amount="userPushups"
-        :goal="userGoal"
-        :surplus="surplus"
-      /> -->
-
-
-      <BaseProgress :size="200" :progress="userPushups/userGoal * 100" >
+      <BaseProgress :progress="userPushups/userGoal * 100" :size="200">
         <RoundStats
           :amount="userPushups"
           :goal="userGoal"
@@ -17,8 +10,6 @@
           :size="180"
         />
       </BaseProgress>
-
-
 
       <BaseButton text="Finish your day" margin="20" @btn-click="togglePopup" />
       <DailyStatsItems 
@@ -72,7 +63,6 @@ export default {
     }
   },
   methods: {
-    //attempts work
     togglePopup(){
       this.popupVisible = !this.popupVisible
     },
@@ -105,8 +95,8 @@ export default {
       .doc(this.userId)
       .get()
       .then(user => {
-        this.userPushups = user.data().pushupsToday // users pushups today
-        this.userGoal = user.data().goal // users pushups today
+        this.userPushups = user.data().pushupsToday
+        this.userGoal = user.data().goal
         this.attempts = user.data().attempts
       })
     },
@@ -178,7 +168,6 @@ export default {
   created(){
     this.getUserData();
     this.month = this.getMonthByWord(this.today.getMonth())
-    // this.month = "May"
   },
 }
 </script>
@@ -186,12 +175,13 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/_variables.scss';
 .stats__daily{
-  min-height: 90vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding-bottom: 5rem;
+  gap: 20px;
 
   .stats__date{
     color: black;

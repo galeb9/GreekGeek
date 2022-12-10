@@ -26,6 +26,7 @@ import BasePopup from '@/components/UI/BasePopup.vue'
 import BaseOverlay from '@/components/UI/BaseOverlay.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
 import BaseProgress from '@/components/UI/BaseProgress.vue'
+import Loader from '@/components/UI/LoaderThingy.vue'
 
 
 let app;
@@ -49,6 +50,7 @@ auth.onAuthStateChanged( user => {
             .component("BasePopup", BasePopup)
             .component("BaseOverlay", BaseOverlay)
             .component("BaseProgress", BaseProgress)
+            .component("Loader", Loader)
 
 
         app.use(store)
