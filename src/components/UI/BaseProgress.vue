@@ -19,12 +19,8 @@ export default {
 	props: {
 		progress: { type: Number, default: 0},
 		size: { type: Number, default: 34},
-		bgColor: { type: String, default: "rgb(155, 167, 158)" }
-	},
-	data () {
-		return {
-			count: 0
-		}
+		count: { type: Number, default: 0}, // or use countProgress method in a watcher
+		bgColor: { type: String, default: "rgb(155, 167, 158)" }, // for slot only
 	},
 	computed: {
 		color() {
@@ -32,19 +28,9 @@ export default {
 			return `conic-gradient(rgb(${activeColor}) ${this.count}%, rgba(${activeColor}, 0.1) 0)`
 		}
 	},
-	watch: {
-		progress () {
-			if(this.progress) this.countProgress(Math.floor(this.progress))
-		}
-	},
-	methods: {
-		countProgress (end) {
-			let counter = setInterval(() => this.count <= end ? this.count++ : clearInterval(counter), Math.floor(1000 / end))
-		}
-	},
-	mounted() {
-		if(this.progress) this.countProgress(Math.floor(this.progress))
-	}
+	//	countProgress (end) {
+	// 		let counter = setInterval(() => this.count < end ? this.count++ :clearInterval(counter), Math.floor(1000 / end))
+	// 	},
 }
 </script>
 

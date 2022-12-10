@@ -2,16 +2,18 @@
   <BaseContainer>
     <div class="stats__daily">
       <p class="stats__date">{{ `${today.getDate()} / ${today.getMonth() + 1}  / ${today.getFullYear()}` }}</p>
-      <BaseProgress :progress="userPushups/userGoal * 100" :size="200">
+      <BaseProgress :progress="progress" :count="count" :size="200">
         <RoundStats
           :amount="userPushups"
           :goal="userGoal"
           :surplus="surplus"
           :size="180"
+          :count="count"
         />
       </BaseProgress>
 
       <BaseButton text="Finish your day" margin="20" @btn-click="togglePopup" />
+
       <DailyStatsItems 
         :attempts="attempts"
         :calories="calories"
@@ -53,31 +55,34 @@ export default {
       userGoal: 0,
       userPushups: 0,
       userId: auth.currentUser.uid,
-
       surplus: 0,
       rate: 0, 
       attempts: 0, // will have to add a counter of inputs into add pushups comp.
       calories: 0,
-
-      popupVisible: false
+      popupVisible: false,
+      count: 0,
+      progress: 0
     }
   },
+  watch: {
+		userPushups () {
+      this.progress = Math.floor(this.userPushups/this.userGoal * 100)
+      this.countProgress(this.userPushups)
+		}
+	},
   methods: {
+    countProgress (end) {
+			let counter = setInterval(() => this.count < end ? this.count++ :clearInterval(counter), Math.floor(1000 / end))
+		},
     togglePopup(){
       this.popupVisible = !this.popupVisible
     },
     getChar(num){
-      if(num === -1) {
-        num = this.daysChar.length-1
-      }
+      if(num === -1) num = this.daysChar.length - 1
       return this.daysChar[num]
     },
     isTodayWin(){
-      if(this.userPushups >= this.userGoal){
-        return 'pos'
-      }else{
-        return 'neg'
-      }
+      return this.userPushups >= this.userGoal ? 'pos':'neg'
     },
     getTodaysDate(){
       return `${this.today.getDate()}-${this.today.getMonth() + 1}-${this.today.getFullYear()}`
@@ -151,10 +156,11 @@ export default {
     },
     resetDay() {
       this.resetTodaysPushups();
-      this.userPushups = 0; 
-      this.attempts = 0;
-      this.calories = 0;
+      this.userPushups = 0
+      this.attempts = 0
+      this.calories = 0
       this.popupVisible = false
+      this.count = 0
     },
     resetToday(day, month){
       this.saveToday(day, month);

@@ -24,20 +24,14 @@ export default {
         amount: { type: Number, default: 0 },
         goal: { type: Number, default: 0 },
         surplus: { type: Number, default: 0 },
-        size: { type: Number, default: 180 },
+		count: { type: Number, default: 0},
+        size: { type: Number, default: 180 }
     },
     data(){
         return {
             percentVisible: false,
-            count: 0
         }
     },
-    watch: {
-		amount () {
-            console.log("amount")
-			if(this.amount) this.countProgress(this.amount)
-		}
-	},
     computed: {
         ourSurplus() {
             return  this.amount - this.goal 
@@ -46,10 +40,7 @@ export default {
     methods: {
         togglePercent () {
             this.percentVisible = !this.percentVisible
-        },
-        countProgress (end) {
-			let counter = setInterval(() => this.count <= end ? this.count++ : clearInterval(counter), Math.floor(1000 / end))
-		}
+        }
     }
 }
 </script>
