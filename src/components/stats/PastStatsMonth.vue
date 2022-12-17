@@ -1,10 +1,7 @@
 <template>
-<div class="past-stats-month__container" v-if="days.length">
+<div class="past-stats-month__container" v-if="monthData">
     <div class="past-stats__month">
         <div class="current-month">
-            <div class="current-month__row row--center">
-                <p class="current-month__item">{{ month }}</p>
-            </div>
             <div class="current-month__row">
                 <div class="current-month__item month__item--column">
                     <p>Avrage</p> 
@@ -12,25 +9,22 @@
                 </div>
                 <div class="current-month__item month__item--column">
                     <p>Total</p> 
-                    <p> {{ total }}</p>
+                    <p> {{ daysSum }}</p>
                 </div>
             </div>
         </div>
         <transition name="list">
             <div class="past-list">
                 <PastStatsItem 
-                    v-for="(item, index) in days"
+                    v-for="(item, index) in monthData"
                     :key="index"
-
                     :dateNum="item.dateNum"
                     :day="item.day"
                     :num="item.num"
                     :status="item.status"
                     :attempts="item.attempts"
                 />
-                <div v-if="loader && false">
-                    <LoaderThingy />
-                </div>
+                <!-- <LoaderThingy v-if="loader"/> -->
             </div>
         </transition>
     </div>
@@ -39,63 +33,30 @@
 </template>
 
 <script>
-import LoaderThingy from '@/components/UI/LoaderThingy.vue'
+// import LoaderThingy from '@/components/UI/LoaderThingy.vue'
 import PastStatsItem from '@/components/stats/PastStatsItem'
-import { db, auth } from '@/components/firebaseInit.js'
 
 export default {
     components: {
         PastStatsItem,
-        LoaderThingy
+        // LoaderThingy
     },
     props: {
-        month: { tpye: String, default: '' },
+        month: { type: String, default: '' },
+        daysSum: { type: Number, default: 0 },
+        monthData: { type: Array, default: () => [] }
     },
     data() {
         return {
-            days: [],
-            total: 0,
             loader: true,
-            monthAvg: 0,
         }
     },
     computed: {
         monthAverage() {
-            return Math.floor(this.total / this.days.length)
+            console.log(this.monthData)
+            return Math.floor(this.daysSum / this.monthData.length)
         }
     },
-    methods: {
-        hideLoader() {
-            setTimeout(() => {
-                this.loader = false
-            }, 1000);
-        },
-        getMonthDays(){
-            db.collection("users")
-                .doc(auth.currentUser.uid)
-                .collection("past")
-                .doc(this.month)
-                .collection("days")
-                .orderBy("dateNum","desc")
-                .get()
-                .then(snapshot => {
-                    snapshot.forEach((day) => {
-                        this.days.push({
-                            dateNum: day.data().dateNum,
-                            num: day.data().num,
-                            day: day.data().day,
-                            status: day.data().status,
-                            attempts: day.data().attempts
-                        })
-                        this.total += day.data().num
-                    })
-            })
-        },
-    },
-    created() {
-        this.getMonthDays()
-        this.hideLoader()
-    }
 }
 </script>
 
@@ -126,6 +87,9 @@ export default {
                 border-radius: 10px;
             }
         }
+    }
+    .past-list {
+        padding-bottom: 100px;
     }
     .list-enter-active,
     .list-leave-active {

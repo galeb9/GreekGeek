@@ -42,9 +42,6 @@ export default {
         getAvrage() {
             return this.num / this.attempts || 0
         },
-    },
-    created() {
-        // this.avrage = this.getAvrage()
     }
 }
 </script>
@@ -54,7 +51,6 @@ export default {
 
     .past-item{
         margin-bottom: 1.5rem;
-        border-bottom: black 5px double;
         padding-bottom: .3rem;
         display: flex;
         justify-content: space-between;
@@ -66,17 +62,14 @@ export default {
                 padding: 1rem;
                 text-align: center;
                 width: 80px;
-                p:first-child{
-                    margin-bottom: .5rem;
-                }
+                p:first-child{ margin-bottom: .5rem }
             }
             .date-section{
                 background: black;
+                border-radius: 8px;
                 color: white;
             }
-            .pushups-section{
-                color: black;
-            }
+            .pushups-section{ color: black }
             p{
                 font-size: 18px;
                 font-weight: 700;
@@ -85,15 +78,11 @@ export default {
         .status{
             width: 10px;
             height: 90px;
-            margin-right: 1%;
+            border-radius: 8px;
+
             align-self: center;
         }
-        .neg{
-            background: rgb(177, 89, 89);
-        }
-        .pos{
-            background: rgb(144, 202, 144);
-        }
-        
+        .neg{ background: rgb(177, 89, 89) }
+        .pos{ background: rgb(144, 202, 144) }
     }
 </style>
