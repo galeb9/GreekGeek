@@ -1,6 +1,6 @@
 <template>
 <div class="base-progress">
-	<div class="circle" :style="{ width: size + 'px', height: size + 'px', backgroundImage: color}">
+	<div class="circle" :style="{ width: circleSize + 'px', height: circleSize + 'px', backgroundImage: color}">
 		<div class="inner">
 			<slot>
 				<div class="inner__container" :style="{ background: bgColor }">
@@ -18,19 +18,17 @@ export default {
 	name: "BaseProgress",
 	props: {
 		progress: { type: Number, default: 0},
-		size: { type: Number, default: 34},
-		count: { type: Number, default: 0}, // or use countProgress method in a watcher
+		circleSize: { type: Number, default: 34},
+		count: { type: Number, default: 0},
 		bgColor: { type: String, default: "rgb(155, 167, 158)" }, // for slot only
 	},
 	computed: {
 		color() {
 			let activeColor = this.progress > 70 ? "33, 208, 122" : (this.progress > 30  ?  "210, 213, 49" : "216, 35, 95")
-			return `conic-gradient(rgb(${activeColor}) ${this.count}%, rgba(${activeColor}, 0.1) 0)`
+			return `conic-gradient(rgb(${activeColor}) ${this.progress}%, rgba(${activeColor}, 0.1) 0)`
 		}
 	},
-	//	countProgress (end) {
-	// 		let counter = setInterval(() => this.count < end ? this.count++ :clearInterval(counter), Math.floor(1000 / end))
-	// 	},
+
 }
 </script>
 

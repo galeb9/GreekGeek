@@ -2,7 +2,11 @@
   <BaseContainer>
     <div class="stats__daily">
       <p class="stats__date">{{ `${today.getDate()} / ${today.getMonth() + 1}  / ${today.getFullYear()}` }}</p>
-      <BaseProgress :progress="progress" :count="count" :size="200">
+      <BaseProgress 
+        :progress="progress"
+        :count="count" 
+        :circleSize="200"
+      >
         <RoundStats
           :amount="userPushups"
           :goal="userGoal"
@@ -61,19 +65,30 @@ export default {
       calories: 0,
       popupVisible: false,
       count: 0,
+      progressPercentage: 0,
       progress: 0
     }
   },
   watch: {
 		userPushups () {
-      this.progress = Math.floor(this.userPushups/this.userGoal * 100)
-      this.countProgress(this.userPushups)
+      // let interval1, interval2;
+      this.progressPercentage = Math.floor(this.userPushups / this.userGoal * 100)
+      this.countPushups(this.userPushups)
+      this.countProgress(this.progressPercentage)
+      // this.countNumber(interval1, this.count, this.userPushups)
+      // this.countNumber(interval2, this.progress, this.progressPercentage)
 		}
 	},
   methods: {
     countProgress (end) {
+			let counter = setInterval(() => this.progress < end ? this.progress++ :clearInterval(counter), Math.floor(1000 / end))
+		},
+    countPushups (end) {
 			let counter = setInterval(() => this.count < end ? this.count++ :clearInterval(counter), Math.floor(1000 / end))
 		},
+    // countNumber(variable, start, max) {
+		// 	variable = setInterval(() => start < max ? start++ :clearInterval(variable), Math.floor(1000 / max))
+    // },
     togglePopup(){
       this.popupVisible = !this.popupVisible
     },
@@ -96,9 +111,7 @@ export default {
     },
     //new user firebase code
     getUserData(){
-      db.collection("users")
-      .doc(this.userId)
-      .get()
+      db.collection("users").doc(this.userId).get()
       .then(user => {
         this.userPushups = user.data().pushupsToday
         this.userGoal = user.data().goal
