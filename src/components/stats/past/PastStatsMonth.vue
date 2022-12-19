@@ -34,7 +34,7 @@
 
 <script>
 // import LoaderThingy from '@/components/UI/LoaderThingy.vue'
-import PastStatsItem from '@/components/stats/PastStatsItem'
+import PastStatsItem from './PastStatsItem'
 
 export default {
     components: {

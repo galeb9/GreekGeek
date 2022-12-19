@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import DailyStats from '@/components/stats/DailyStats.vue'
-import PastStats from '@/components/stats/PastStats.vue'
+import DailyStats from '@/components/stats/present/DailyStats.vue'
+import PastStats from '@/components/stats/past/PastStats.vue'
 
 export default {
   components: {

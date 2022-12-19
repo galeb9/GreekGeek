@@ -43,8 +43,8 @@
 // import { db, auth, firebase } from '@/components/firebaseInit.js'
 
 import { db, auth } from '@/components/firebaseInit.js'
-import RoundStats from '@/components/stats/RoundStats.vue'
-import DailyStatsItems from '@/components/stats/DailyStatsItems.vue'
+import RoundStats from '../RoundStats.vue'
+import DailyStatsItems from './DailyStatsItems.vue'
 
 export default {
   components: {

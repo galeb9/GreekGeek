@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import PastStatsMonth from '@/components/stats/PastStatsMonth'
+import PastStatsMonth from './PastStatsMonth.vue'
 import { db, auth } from '@/components/firebaseInit.js'
 
 export default {
