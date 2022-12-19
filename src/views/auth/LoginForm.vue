@@ -41,9 +41,9 @@
 
 <script>
 import { auth } from '@/components/firebaseInit.js'
-import AuthInput from '@/components/auth/auth-items/AuthInput.vue'
-import AuthInputPassword from '@/components/auth/auth-items/AuthInputPassword.vue'
-import AuthNotification from '@/components/auth/auth-items/AuthNotification.vue'
+import AuthInput from '@/components/auth/AuthInput.vue'
+import AuthInputPassword from '@/components/auth/AuthInputPassword.vue'
+import AuthNotification from '@/components/auth/AuthNotification.vue'
 
 
 export default {

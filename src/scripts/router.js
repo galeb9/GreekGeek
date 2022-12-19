@@ -1,19 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import TheGoal from '@/components/settings/TheGoal';
-import AddPushups from '@/components/main/AddPushups';
-import TheStats from '@/components/stats/TheStats';
-import TheHome from '@/components/home/TheHome';
-import TheSettings from '@/components/settings/TheSettings.vue'
-import LoginForm from '@/components/auth/LoginForm'
-import RegisterForm from '@/components/auth/RegisterForm'
-import ResetPassword from '@/components/auth/ResetPassword'
-
-import TheFriends from '@/components/home/friends/TheFriends.vue'
-import MyProfile from '@/components/profile/MyProfile.vue'
-import MyArenas from '@/components/arena/MyArenas.vue'
-// import SelectedGroup from '@/components/arena/group/SelectedGroup.vue'
-import NotFound from '@/components/UI/NotFound.vue'
+import TheHome from '@/views/TheHome';
+import TheGoal from '@/views/TheGoal';
+import TheSettings from '@/views/TheSettings.vue'
+import AddPushups from '@/views/AddPushups';
+import TheStats from '@/views/TheStats';
+import LoginForm from '@/views/auth/LoginForm'
+import RegisterForm from '@/views/auth/RegisterForm'
+import ResetPassword from '@/views/auth/ResetPassword'
+import TheFriends from '@/views/TheFriends.vue'
+import MyProfile from '@/views/MyProfile.vue'
+import MyArenas from '@/views/MyArenas.vue'
+import NotFound from '@/views/NotFound.vue'
 
 import { auth } from '@/components/firebaseInit.js'
 

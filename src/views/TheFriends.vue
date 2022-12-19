@@ -21,8 +21,6 @@
           />
         </div>
       </div>
-
-
       <div 
         class="users__list-container"
         v-if="search === ''"
@@ -43,10 +41,7 @@
       </div>
 
 
-      <div 
-        v-else-if="search !== ''"
-        class="users__list-container"
-      >
+      <div v-else-if="search !== ''" class="users__list-container">
         <TransitionGroup 
           name="list" 
           tag="div" 

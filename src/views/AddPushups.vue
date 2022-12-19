@@ -45,7 +45,7 @@
 
 <script>
 import { db, auth } from '@/components/firebaseInit.js';
-import AddPushupsInput from './AddPushupsInput.vue'
+import AddPushupsInput from '@/components/main/AddPushupsInput.vue'
 
 export default {
     components: {
@@ -55,9 +55,7 @@ export default {
         return{
             newPushups: null,
             pushupsToShow: null,
-
             userId: auth.currentUser.uid,
-
             message: '',  
             successMessage: `Done some NICE pushups`,
             warningMessage: 'Please type in some reps...',
