@@ -9,31 +9,30 @@
       <TheHeader v-if="showHeader(this.$route.fullPath)" class="header" />
     </transition>
 
-    <transition name="fade-in" mode="out-in">
-      <Loader v-if="loadActive" type="fullscreen" />
-    </transition>
   </main>
 </template>
 
 <script>
-import Loader from '@/components/UI/LoaderThingy.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
 import { auth } from '@/components/firebaseInit.js'
-
-
 
 export default {
   name: 'App',
   components: { 
     TheHeader,
-    Loader
   },
   data(){
     return{
       headerVisible: true,
       loadActive: true,
       isLoggedIn: false,
-      friendsCount: 0
+      friendsCount: 0,
+      myName: null
+    }
+  },
+  watch: {
+    myUsername () {
+      this.myName = this.myUsername;
     }
   },
   computed: {
@@ -46,45 +45,31 @@ export default {
   },
   methods: {
     showHeader(route) {
-      const acceptableRoutes = [
-        'home',
-        'friends',
-        'profile',
-        'add',
-        'stats',
-        'settings',
-        'goal',
-        'arena'
-      ]
+      const acceptableRoutes = ['home','friends','profile','add','stats','settings','goal','arena']
       for(let i = 0; i < acceptableRoutes.length; i++) {
         if(route === ('/' + acceptableRoutes[i]) ) {
           return true
         }
       }
     },
+    loadInitialData() {
+      this.myName = this.myUsername;
+    },
     loadData() {
         if(auth.currentUser) {
           this.$store.dispatch("getMyFriendsCount")
-          if(this.myUsername === "user404"){
-            this.$store.dispatch("getUserData")
-          }else{
-            console.log("Basic user data allready loaded from DB")
-          }
+          this.myUsername === "user404" ? this.$store.dispatch("getUserData") : console.log("Basic user data allready loaded from DB")
         }
         setTimeout(() => {
           console.log(this.myFriendsCount)  
         }, 1400);
     },
     checkLoggedIn() {
-      if(auth.currentUser) {
-        this.isLoggedIn = true;
-      }
+      this.isLoggedIn = auth.currentUser ? true : false
     },
     showProfileNotifications() {
       this.checkLoggedIn()
-      if(this.isLoggedIn) {
-        this.$store.dispatch("profileNotificationsCheck")
-      }
+      if(this.isLoggedIn) this.$store.dispatch("profileNotificationsCheck")
     },
     firstTime() {
       if(window.history.state.back === "/register") {
@@ -93,19 +78,23 @@ export default {
     }
   }, 
   created(){
-    setTimeout(() => {
-    this.loadData()
-    }, 1000);
-    setTimeout(() => this.loadActive = false, 1600)
     this.showProfileNotifications()
     this.firstTime()
-    console.log(this.isLoggedIn)
-  }
+    // setTimeout(() => this.loadData(), 1000);
+    // console.log(this.isLoggedIn)
+  },
 }
 </script>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito Sans', sans-serif;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -115,7 +104,7 @@ export default {
   width: 100%;
   position: relative;
   background-color: $bg;
-  color: $fontColor;
+  // color: $fontColor;
   overflow: hidden;
   main{
     margin: 0 auto;
@@ -123,12 +112,6 @@ export default {
   }
 }
 
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Nunito Sans', sans-serif;
-}
 img{
   max-width: 100%;
 }

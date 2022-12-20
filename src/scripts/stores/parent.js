@@ -1,28 +1,28 @@
 import { createStore } from 'vuex';
 import { db, auth } from '@/components/firebaseInit.js'
 
-const usersModule = {
-    state() {
-        return {
+// const usersModule = {
+//     state() {
+//         return {
            
-        }
-    },
-    mutations: {
+//         }
+//     },
+//     mutations: {
 
-    },
-    actions: {
+//     },
+//     actions: {
    
-    },
-    getters: {
+//     },
+//     getters: {
 
-    }
-}
+//     }
+// }
 
 
 const store = createStore({
-    modules: {
-        users: usersModule
-    },
+    // modules: {
+    //     users: usersModule
+    // },
     state() {
         return {
             avatarImg: 'greek-geek.png',
@@ -47,7 +47,7 @@ const store = createStore({
                 })    
             } catch (error) {
                 console.log(error)
-                console.log("Napaka iz vuex")
+                console.log("Napaka iz vuex-a")
             }
         },
         getUsers(state){

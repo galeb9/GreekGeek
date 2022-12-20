@@ -60,7 +60,7 @@ export default {
       email: null,
       username: null,
       bg: "#E6EEFA",
-      complementary: "black"
+      complementary: "#000000"
     }
   },
   methods: {
@@ -86,7 +86,7 @@ export default {
 <style lang="scss">
 
   .settings{
-    color: black;
+    color: #000000;
     min-height: 70vh;
     .settings__items {
       display: flex;
