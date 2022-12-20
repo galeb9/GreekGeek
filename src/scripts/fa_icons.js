@@ -20,6 +20,7 @@ import {
     faEyeLowVision,
     faArrowDownLong,
     faTrashCan,
+    faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 // import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 const icons = [    
@@ -43,6 +44,7 @@ const icons = [
     faEyeLowVision,
     faArrowDownLong,
     faTrashCan,
+    faChevronRight
 ]
 
 for(let i = 0; i < icons.length; i++){

@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <div class="home__top"> 
-      {{}}
       <HomeHead />
       <TheWelcome />
       <HomeStats />

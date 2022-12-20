@@ -27,7 +27,6 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/_variables.scss';
     .go-back{
-
         display: flex;
         align-items: center;
         gap: 1.2rem;

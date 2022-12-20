@@ -7,7 +7,7 @@
                 class="filter__item-container"
                 @click="selectMonth(item)"
             >
-                <div :class="['filter__item', { 'filter--active': month === item }]">{{ month === item ? item : item.slice(0, 3) }}</div>
+                <div :class="['filter__item', { 'filter--active': month === item }]">{{ showMonth(item) }}</div>
             </div>
         </div>
         <PastStatsMonth 
@@ -41,16 +41,13 @@ export default {
             monthsReversed: ["December", "November", "October",  "September", "August", "July", "June", "May", "April", "March", "February", "January"]
         }
     },
-    computed: {
-        // showMonth(activeItem) {
-        //     return this.month === activeItem ? activeItem : activeItem.slice(0, 3)
-        // },
-    },
     methods: {
         getMonthByWord(month) {
             return this.months[month]
         },
- 
+        showMonth(item) {
+            return this.month === item ? item : item.slice(0, 3)
+        },
         selectMonth(month) {
             console.log(month)
             this.month = month

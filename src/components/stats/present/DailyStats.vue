@@ -174,6 +174,7 @@ export default {
       this.calories = 0
       this.popupVisible = false
       this.count = 0
+      this.progress = 0
     },
     resetToday(day, month){
       this.saveToday(day, month);

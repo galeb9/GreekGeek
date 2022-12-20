@@ -30,7 +30,6 @@ import Loader from '@/components/UI/LoaderThingy.vue'
 import BaseProductSlider from '@/components/UI/BaseProductSlider.vue'
 
 
-
 let app;
 //const app = createApp(App)
 auth.onAuthStateChanged( user => {

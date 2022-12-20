@@ -44,6 +44,28 @@ $orange: #f4a261;
   }
 }
 
+// move-in-top
+.move-in-top-enter-active{
+  animation: move-in-top .3s ease-in-out 
+}
+.move-in-top-leave-active {
+  animation: move-in-top .3s ease-in-out reverse
+}
+@keyframes move-in-top {
+  from{
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+  50%{
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
 // body {
 // 	background: linear-gradient(-45deg, black, $purple, $greyColor);
 // 	background-size: 400% 400%;
