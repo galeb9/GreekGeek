@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
     .past-item{
         margin-bottom: 1.5rem;

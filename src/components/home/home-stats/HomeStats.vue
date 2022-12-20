@@ -1,18 +1,15 @@
 <template>
   <div class="home-stats">
     <HomeCalendar />
-    <DailyProgress />
+    <!-- <DailyProgress /> -->
+    <TheScoreboard :data="list" title="Daily Best" />
     <HomeArena />
-    <TheScoreboard 
-      :data="list"
-      title="Daily Best"
-    />
   </div>
 </template>
 
 <script>
 import HomeCalendar from '@/components/home/home-stats/HomeCalendar'
-import DailyProgress from '@/components/home/home-stats/progress/DailyProgress'
+// import DailyProgress from '@/components/home/home-stats/progress/DailyProgress'
 import TheScoreboard from '@/components/home/home-stats/TheScoreboard'
 import HomeArena from '@/components/arena/HomeArena'
 import { db } from '@/components/firebaseInit.js';
@@ -21,7 +18,7 @@ import { db } from '@/components/firebaseInit.js';
 export default {
   components:{
     HomeCalendar,
-    DailyProgress,
+    // DailyProgress,
     TheScoreboard,
     HomeArena
   },

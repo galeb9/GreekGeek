@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
  .welcome-container{
     margin-top: 2rem;
     padding-bottom: 1rem;

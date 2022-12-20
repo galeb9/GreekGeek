@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
     .auth__input {
         .input-field{
             display: flex;

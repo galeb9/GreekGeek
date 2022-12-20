@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
 .base-dropdown {
   .base-dropdown__header {

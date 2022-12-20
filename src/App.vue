@@ -106,7 +106,6 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap');
-@import '@/assets/scss/_variables.scss';
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -151,16 +150,7 @@ button, img{
   cursor: pointer
 }
 
-// animation
-// fade-in
-.fade-in-enter-active,
-.fade-in-leave-active {
-transition: opacity .3s ease;
-}
-.fade-in-enter-from,
-.fade-in-leave-to {
-opacity: 0;
-}
+
 
 
 

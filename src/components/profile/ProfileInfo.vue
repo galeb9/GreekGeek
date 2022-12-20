@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
     .my-profile__info{
         display: flex;

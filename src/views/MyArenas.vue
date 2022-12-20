@@ -130,7 +130,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
   .my-arenas{
     min-height: 80vh;

@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 .progress{
   min-width: 200px;
   display: flex;

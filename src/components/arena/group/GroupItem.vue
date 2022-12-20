@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
     .group-item{
       margin-bottom: 1rem;

@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss">
-    @import '@/assets/scss/_variables.scss';
+    
 
     .notification__auth {
         margin: 0.5rem 1rem 0 ;

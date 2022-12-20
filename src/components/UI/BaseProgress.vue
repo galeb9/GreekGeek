@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
 .base-progress {
     border: 2px solid $secondary;

@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 .type-item{
     height: 110px;
     display: flex;

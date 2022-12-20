@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
     .base-icon{
         z-index: 3;
         position: absolute;

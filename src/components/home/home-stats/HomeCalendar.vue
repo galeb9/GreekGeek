@@ -85,7 +85,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 .calendar-list{
   margin-top: 1.5rem;
   display: flex;

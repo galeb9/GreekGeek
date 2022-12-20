@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
  .friends__list{
     padding: 0.5rem 0 1.5rem 0;

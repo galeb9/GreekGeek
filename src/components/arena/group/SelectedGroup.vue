@@ -194,7 +194,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
  .group-item-selected{
     background: $bg;

@@ -20,7 +20,7 @@ export default {
 
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
     .home-section{
         margin-top: 0.5rem;

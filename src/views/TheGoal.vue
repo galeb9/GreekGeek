@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
 .goal{
   min-height: 100vh;

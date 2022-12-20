@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 
   .home__head{

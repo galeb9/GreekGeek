@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
     .ranked__item{
         text-align: center;
         .ranked__img-container{

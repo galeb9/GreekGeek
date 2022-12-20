@@ -17,10 +17,7 @@
                 </div>
             </li>
 
-            <li 
-                v-for="(el, index) in data"
-                :key="index"
-            >
+            <li v-for="(el, index) in data" :key="index">
                 <div :class="['scoreboard__item', { 'first' : index === 0 }, { 'second' : index === 1 }, { 'third' : index === 2 },{ 'you' : el.name == this.myUsername } ]">
                     <div class="row">
                         <p class="scoreboard__item__place">{{index + 1}}</p>
@@ -69,7 +66,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 
     .scoreboard{
         padding-bottom: 20px;

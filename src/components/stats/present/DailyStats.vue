@@ -193,7 +193,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
 .stats__daily{
   min-height: 80vh;
   display: flex;

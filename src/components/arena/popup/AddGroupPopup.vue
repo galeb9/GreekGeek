@@ -215,7 +215,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_variables.scss';
+
     .add-group-popup{
         max-height: 102vh;
         background: rgba(126, 164, 220, 0.27);
