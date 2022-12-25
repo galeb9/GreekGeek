@@ -6,8 +6,8 @@ import './scripts/fa_icons.js'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 // firebase
-import { auth } from '@/components/firebaseInit.js'
-import './components/firebaseInit'
+import { auth } from '@/scripts/firebaseInit.js'
+import './scripts/firebaseInit'
 
 //Vuex
 import store from './scripts/stores/parent.js'

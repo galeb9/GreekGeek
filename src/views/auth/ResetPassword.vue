@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-import { auth } from '@/components/firebaseInit.js'
+import { auth } from '@/scripts/firebaseInit.js'
 
 export default {
   data() {

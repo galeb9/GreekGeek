@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { db, auth } from '@/components/firebaseInit.js';
+import { db, auth } from '@/scripts/firebaseInit.js';
 import FriendCard from '@/components/home/friends/FriendCard.vue'
 import GroupInput from '@/components/arena/popup/GroupInput.vue'
 import UserProfile from '@/components/profile/UserProfile.vue'

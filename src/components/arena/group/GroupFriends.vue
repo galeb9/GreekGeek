@@ -19,7 +19,7 @@
 
 <script>
 import PopupHeading from '@/components/arena/popup/PopupHeading.vue'
-import { db, auth } from '@/components/firebaseInit.js';
+import { db, auth } from '@/scripts/firebaseInit.js';
 
 export default {
     components: {

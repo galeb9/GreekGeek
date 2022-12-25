@@ -16,7 +16,7 @@
 
 <script>
 import WelcomeGreet from '@/components/home/welcome/WelcomeGreet'
-import { auth } from '@/components/firebaseInit.js'
+import { auth } from '@/scripts/firebaseInit.js'
 
 export default {
   name: 'TheHome',

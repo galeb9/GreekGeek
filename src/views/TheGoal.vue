@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { db, auth } from '@/components/firebaseInit.js';
+import { db, auth } from '@/scripts/firebaseInit.js';
 
 export default {
   components: {

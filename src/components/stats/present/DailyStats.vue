@@ -42,7 +42,7 @@
 <script>
 // import { db, auth, firebase } from '@/components/firebaseInit.js'
 
-import { db, auth } from '@/components/firebaseInit.js'
+import { db, auth } from '@/scripts/firebaseInit.js'
 import RoundStats from '../RoundStats.vue'
 import DailyStatsItems from './DailyStatsItems.vue'
 

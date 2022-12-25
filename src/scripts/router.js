@@ -13,7 +13,7 @@ import MyProfile from '@/views/MyProfile.vue'
 import MyArenas from '@/views/MyArenas.vue'
 import NotFound from '@/views/NotFound.vue'
 
-import { auth } from '@/components/firebaseInit.js'
+import { auth } from '@/scripts/firebaseInit.js'
 
 
 const router = createRouter({

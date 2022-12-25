@@ -78,7 +78,7 @@ import PhotoChoice from './photo/PhotoChoice.vue'
 import GroupItem from '../group/GroupItem.vue'
 import PopupHeading from './PopupHeading.vue'
 import MemberItem from './MemberItem.vue'
-import { db, auth } from '@/components/firebaseInit.js';
+import { db, auth } from '@/scripts/firebaseInit.js';
 
 
 

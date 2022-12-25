@@ -14,7 +14,7 @@
 
 <script>
 import TheHeader from '@/components/layout/TheHeader.vue'
-import { auth } from '@/components/firebaseInit.js'
+import { auth } from '@/scripts/firebaseInit.js'
 
 export default {
   name: 'App',

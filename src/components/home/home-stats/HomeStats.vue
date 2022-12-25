@@ -12,7 +12,7 @@ import HomeCalendar from '@/components/home/home-stats/HomeCalendar'
 // import DailyProgress from '@/components/home/home-stats/progress/DailyProgress'
 import TheScoreboard from '@/components/home/home-stats/TheScoreboard'
 import HomeArena from '@/components/arena/HomeArena'
-import { db } from '@/components/firebaseInit.js';
+import { db } from '@/scripts/firebaseInit.js';
 
 
 export default {

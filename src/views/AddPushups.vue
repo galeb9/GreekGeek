@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { db, auth } from '@/components/firebaseInit.js';
+import { db, auth } from '@/scripts/firebaseInit.js';
 import AddPushupsInput from '@/components/main/AddPushupsInput.vue'
 
 export default {

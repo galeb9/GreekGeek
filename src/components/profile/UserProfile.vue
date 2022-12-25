@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { db, auth } from '@/components/firebaseInit.js'
+import { db, auth } from '@/scripts/firebaseInit.js'
 import ProfileInfo from '@/components/profile/ProfileInfo.vue'
 
 export default {

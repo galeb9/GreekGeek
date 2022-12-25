@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { auth, db } from '@/components/firebaseInit.js';
+import { auth, db } from '@/scripts/firebaseInit.js';
 import BaseDropdown from '@/components/UI/BaseDropdown.vue'
 
 export default {

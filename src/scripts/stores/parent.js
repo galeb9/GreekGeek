@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { db, auth } from '@/components/firebaseInit.js'
+import { db, auth } from '@/scripts/firebaseInit.js'
 
 // const usersModule = {
 //     state() {

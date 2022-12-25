@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { auth } from '@/components/firebaseInit.js'
+import { auth } from '@/scripts/firebaseInit.js'
 import AuthInput from '@/components/auth/AuthInput.vue'
 import AuthInputPassword from '@/components/auth/AuthInputPassword.vue'
 import AuthNotification from '@/components/auth/AuthNotification.vue'

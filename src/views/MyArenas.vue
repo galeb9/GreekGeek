@@ -50,7 +50,7 @@ import GroupNotFound from '@/components/arena/group/GroupNotFound.vue'
 import Loader from '@/components/UI/LoaderThingy.vue'
 
 
-import { db, auth } from '@/components/firebaseInit.js';
+import { db, auth } from '@/scripts/firebaseInit.js';
 
 export default {
   components: {

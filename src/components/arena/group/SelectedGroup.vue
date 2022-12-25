@@ -86,7 +86,7 @@ import GroupFriends from './GroupFriends.vue'
 import RankedList from './ranked/RankedList.vue'
 
 import TheScoreboard from '@/components/home/home-stats/TheScoreboard.vue'
-import { db, auth } from '@/components/firebaseInit.js';
+import { db, auth } from '@/scripts/firebaseInit.js';
 
 
 export default {
