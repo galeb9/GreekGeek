@@ -194,8 +194,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-
  .group-item-selected{
     background: $bg;
     position: fixed;

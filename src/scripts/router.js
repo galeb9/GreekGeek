@@ -1,17 +1,34 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import TheHome from '@/views/TheHome';
-import TheGoal from '@/views/TheGoal';
-import TheSettings from '@/views/TheSettings.vue'
-import AddPushups from '@/views/AddPushups';
-import TheStats from '@/views/TheStats';
-import LoginForm from '@/views/auth/LoginForm'
-import RegisterForm from '@/views/auth/RegisterForm'
-import ResetPassword from '@/views/auth/ResetPassword'
-import TheFriends from '@/views/TheFriends.vue'
-import MyProfile from '@/views/MyProfile.vue'
-import MyArenas from '@/views/MyArenas.vue'
-import NotFound from '@/views/NotFound.vue'
+// import TheHome from '@/views/TheHome';
+// import TheGoal from '@/views/TheGoal';
+// import TheSettings from '@/views/TheSettings.vue'
+// import AddPushups from '@/views/AddPushups';
+// import TheStats from '@/views/TheStats';
+// import LoginForm from '@/views/auth/LoginForm';
+// import RegisterForm from '@/views/auth/RegisterForm';
+// import ResetPassword from '@/views/auth/ResetPassword';
+// import TheFriends from '@/views/TheFriends.vue';
+// import MyProfile from '@/views/MyProfile.vue';
+// import MyArenas from '@/views/MyArenas.vue';
+// import NotFound from '@/views/NotFound.vue';
+
+const TheHome = () => import('@/views/TheHome');
+
+const TheSettings = () => import('@/views/TheSettings');
+const TheGoal = () => import('@/views/TheGoal');
+const AddPushups = () => import('@/views/AddPushups');
+const TheStats = () => import('@/views/TheStats');
+const LoginForm = () => import('@/views/auth/LoginForm');
+const RegisterForm = () => import('@/views/auth/RegisterForm');
+const ResetPassword = () => import('@/views/auth/ResetPassword');
+const TheFriends = () => import('@/views/TheFriends');
+const MyProfile = () => import('@/views/MyProfile.vue');
+const MyArenas = () => import('@/views/MyArenas');
+const NotFound = () => import('@/views/NotFound');
+
+
+
 
 import { auth } from '@/scripts/firebaseInit.js'
 
@@ -21,7 +38,10 @@ const router = createRouter({
     routes: [
         { 
             path: '/', 
-            redirect: '/home'
+            redirect: '/home',
+            meta: {
+                requiresAuth: true
+            }
         },
         { 
             path: '/home',
