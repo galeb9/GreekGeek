@@ -39,26 +39,23 @@ export default {
 </script>
 
 <style lang="scss">
-
-
-    .home__head{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      h2{
-        letter-spacing: 1px;
-        font-weight: 400;
-      }
-      .fa-icon{
-        transform: scale(2);
-        padding-right: 0.4rem;
-        color: $fontColor;
-        opacity: .7;
-        transition: all .3s ease-in ;
-        &:hover{
-          opacity: 1;
-        }
-      }
+.home__head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2{
+    letter-spacing: 1px;
+    font-weight: 400;
+  }
+  .fa-icon{
+    transform: scale(2);
+    padding-right: 0.4rem;
+    color: $fontColor;
+    opacity: .7;
+    transition: all .3s ease-in ;
+    &:hover{
+      opacity: 1;
     }
-
+  }
+}
 </style>

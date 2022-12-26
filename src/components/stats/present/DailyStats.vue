@@ -2,11 +2,7 @@
   <BaseContainer>
     <div class="stats__daily">
       <p class="stats__date">{{ `${today.getDate()} / ${today.getMonth() + 1}  / ${today.getFullYear()}` }}</p>
-      <BaseProgress 
-        :progress="progress"
-        :count="count" 
-        :circleSize="200"
-      >
+      <BaseProgress :progress="progress" :count="count" :circleSize="200">
         <RoundStats
           :amount="userPushups"
           :goal="userGoal"
@@ -16,15 +12,10 @@
         />
       </BaseProgress>
 
-      <BaseButton text="Finish your day" margin="20" @btn-click="togglePopup" />
 
-      <DailyStatsItems 
-        :attempts="attempts"
-        :calories="calories"
-        :userPushups="userPushups"
-      />
-
-      <transition name="move-in-bottom">
+      <!-- <BaseButton text="Finish your day" margin="20" @btn-click="togglePopup" /> -->
+      <DailyStatsItems :attempts="attempts" :calories="calories" :userPushups="userPushups"/>
+      <!-- <transition name="move-in-bottom">
         <div class="popup-container" v-if="popupVisible">
           <div class="popup" >
             <h2>Finish for</h2>
@@ -34,14 +25,12 @@
           </div>
         </div>
       </transition>
-      <div class="popup-bg" v-if="popupVisible" @click="togglePopup"></div>
+      <div class="popup-bg" v-if="popupVisible" @click="togglePopup"></div> -->
     </div>
   </BaseContainer>
 </template>
 
 <script>
-// import { db, auth, firebase } from '@/components/firebaseInit.js'
-
 import { db, auth } from '@/scripts/firebaseInit.js'
 import RoundStats from '../RoundStats.vue'
 import DailyStatsItems from './DailyStatsItems.vue'
@@ -117,6 +106,7 @@ export default {
         this.userGoal = user.data().goal
         this.attempts = user.data().attempts
       })
+      .then(() => this.finishDay())
     },
     // saveUserDay(){ // not used, maybe later 
     //   const day = {
@@ -178,17 +168,30 @@ export default {
     },
     resetToday(day, month){
       this.saveToday(day, month);
-      this.resetDay()
+      this.resetDay();
     },
     resetYesterday(day, month){
       this.saveYesterday(day, month);
-      this.resetDay()
+      this.resetDay();
+    },
+    formatLocalDate(date) {
+      return String(date).split(" ").splice(1, 3).join("-");
+    },
+    finishDay () {
+      const today = this.formatLocalDate(new Date());
+      const localStorageToday = this.formatLocalDate(localStorage.getItem("today"));
+
+      if(today !== localStorageToday && this.userPushups > 0) {
+        this.resetYesterday(this.getYesterdayDate(), this.month)
+        localStorage.setItem("today", today)
+      } 
+      else console.log("Still the same day.")
     }
   },
   created(){
     this.getUserData();
     this.month = this.getMonthByWord(this.today.getMonth())
-  },
+  }
 }
 </script>
 

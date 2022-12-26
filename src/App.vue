@@ -8,7 +8,6 @@
     <transition name="move-in-bottom">
       <TheHeader v-if="showHeader(this.$route.fullPath)" class="header" />
     </transition>
-
   </main>
 </template>
 
@@ -92,13 +91,12 @@ export default {
         app.setProperty("--color", this.invertTextColor(bg, "white", "black"))
       }
       if(complementary) app.setProperty("--complementary", complementary)
-    }
+    },
   }, 
   created(){
     this.showProfileNotifications()
     this.firstTime()
     this.checkForTheme() 
-    // setTimeout(() => this.loadData(), 1000);
   },
 }
 </script>
@@ -112,30 +110,8 @@ export default {
   box-sizing: border-box;
   font-family: 'Nunito Sans', sans-serif;
 }
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
-  width: 100%;
-  position: relative;
-  // background-color: $bg;
-  background-color: var(--background);
-  color: var(--color);
-  overflow: hidden;
-  main{
-    margin: 0 auto;
-    max-width: 1000px;
-  }
-}
-
 img{
   max-width: 100%;
-}
-.gif{
-  border-radius: $radius;
-  margin: 1rem 0;
 }
 a{
   text-decoration: none;
@@ -144,10 +120,32 @@ a{
 ul{
   list-style: none;
 }
-.router-view{
-  padding: 1.5rem 1.3rem ;
-}
+
 button, img{
   cursor: pointer
 }
+
+
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background-color: var(--background);
+  color: var(--color);
+  overflow: hidden;
+  
+  main{
+    margin: 0 auto;
+    max-width: 1000px;
+    .router-view{
+      padding: 1.5rem 1.3rem ;
+    }
+  }
+}
+
+
 </style>
