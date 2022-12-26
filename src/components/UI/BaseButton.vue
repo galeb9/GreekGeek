@@ -84,10 +84,10 @@ export default {
         padding: 1em 2em;
         font-size: 14px;
         font-weight: 900;
-        color: $secondary;
+        color: var(--complementary);
         background: transparent;
         border-radius: 5px;
-        border: 10px double rgba($secondary, 1);
+        border: 10px double rgba(var(--complementary), 1);
         width: 100%;
         &:focus{
             background: black;
@@ -115,7 +115,7 @@ export default {
         text-align: center;
     }
     .secondary{
-        background: $secondary;
+        background: var(--complementary);
     }
 }
 //aligment

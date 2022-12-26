@@ -93,7 +93,7 @@ export default {
             height: 50px;
             align-self: center;
             background: transparent;
-            // border: 1px solid $secondary;
+            // border: 1px solid var(--complementary);
             border: none;
             font-size: 1.5rem;
             border-radius: 5px;

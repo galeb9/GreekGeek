@@ -94,11 +94,11 @@ export default {
       border-radius: 20px;
       outline: none;
       border: none;
-      border: 3px solid $secondary;
+      border: 3px solid var(--complementary);
     }
     .goal__button{
       background: transparent;
-      border: 8px $secondary double;
+      border: 8px var(--complementary) double;
       font-size: 20px;
       text-transform: uppercase;
       font-weight: 700;

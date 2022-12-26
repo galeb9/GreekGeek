@@ -67,7 +67,7 @@ export default {
     .input-field__password-confirm{
         border: none;
         background: transparent;
-        border: 2px solid $secondary;
+        border: 2px solid var(--complementary);
         border-radius: 10px;
         margin-top: .3rem;
         padding: 1rem;
@@ -78,7 +78,7 @@ export default {
         display: flex;
         align-items: center;
         border: none;
-        border: 2px solid $secondary;
+        border: 2px solid var(--complementary);
         border-radius: 10px;
         background: transparent;
         margin-top: .3rem;

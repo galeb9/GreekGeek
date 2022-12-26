@@ -55,7 +55,7 @@ export default {
     gap: 12px;
     margin: 1rem 0;
     padding: 1rem;
-    border: 2px solid $secondary;
+    border: 2px solid var(--complementary);
     img {
       width: 2rem;
     }

@@ -82,7 +82,7 @@ export default {
 
   .progress__btn{
     padding: 0.5rem 1.5rem;
-    border: 4px double $secondary;
+    border: 4px double var(--complementary);
     font-weight: 900;
     letter-spacing: 1px;
     font-size: 18px;

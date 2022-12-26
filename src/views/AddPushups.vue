@@ -125,7 +125,7 @@ export default {
             border: none;
             text-align: center;
             &::placeholder{
-                color: $secondary;
+                color: var(--complementary);
             }
         }
         /* Chrome, Safari, Edge, Opera */

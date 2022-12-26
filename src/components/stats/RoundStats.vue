@@ -60,7 +60,7 @@ export default {
     font-weight: 900 ;
     margin: 10px;
     h3 {
-        border-bottom: 2px solid $secondary;
+        border-bottom: 2px solid var(--complementary);
         margin-bottom: 10px;
         padding-bottom: 5px;
         margin-left: .1rem;
@@ -75,7 +75,7 @@ export default {
         padding: 0 5px 0 0;
         color: $success;
         font-size: 20px;
-        border-bottom: 2px solid $secondary;
+        border-bottom: 2px solid var(--complementary);
         margin-bottom: 15px;
         padding-bottom: 10px;
     }

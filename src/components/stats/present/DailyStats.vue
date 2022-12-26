@@ -214,7 +214,7 @@ export default {
     &__button{
       padding: 1.5rem 3rem;
       background: none;
-      border: 5px double $secondary;
+      border: 5px double var(--complementary);
       color: black;
       outline: none;
       text-transform: uppercase;
@@ -239,7 +239,7 @@ export default {
     height: 50vh;
     left: 10%;
     right: 10%;
-    border: 10px double $secondary;
+    border: 10px double var(--complementary);
     backdrop-filter: blur(8px);
     text-align: center;
     .popup{
@@ -260,7 +260,7 @@ export default {
     height: 120vh;
     z-index: 2;
     opacity: 0.3;
-    background: repeating-linear-gradient( 45deg, $secondary, black 2px, $bg 2px, $bg 10px );
+    background: repeating-linear-gradient( 45deg, var(--complementary), black 2px, $bg 2px, $bg 10px );
   }
 }
 @media only screen and (max-width: 340px) {

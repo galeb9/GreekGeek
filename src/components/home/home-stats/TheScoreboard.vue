@@ -120,7 +120,7 @@ export default {
                 }
             }
             .first--item{
-                border-bottom: 1px solid rgba( $secondary, 0.3);
+                border-bottom: 1px solid rgba( var(--complementary), 0.3);
                 margin-bottom: .3rem;
                 background: transparent;
                 border-radius: 0;

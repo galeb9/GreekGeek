@@ -58,7 +58,7 @@ export default {
         .bg-blur{
             position: absolute;
             background: rgba($bg, .4);
-            border-top: 3px solid $secondary;
+            border-top: 3px solid var(--complementary);
             backdrop-filter: blur(3px);
             width: 100%;
             height: 100%;            
@@ -78,7 +78,7 @@ export default {
                 align-items: center;
                 padding-bottom: 10px;
                 transition: all .5s ease-in-out;
-                color: $secondary;
+                color: var(--complementary);
                 font-size: 22px;
                 flex: 1;
                 &.router-link-active{

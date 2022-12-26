@@ -28,7 +28,7 @@ export default {
         padding: .5rem 0;
         border-bottom: 8px double $grey;
         .home-section__title{
-            color: $secondary;
+            color: var(--complementary);
             font-size: 1rem;
             padding-bottom: .5rem;
             text-transform: uppercase;

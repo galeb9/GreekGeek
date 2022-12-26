@@ -36,7 +36,7 @@ export default {
 
 
 .base-progress {
-    border: 2px solid $secondary;
+    border: 2px solid var(--complementary);
 	border-radius: 50%;
 	padding: 2px;
 	.circle {

@@ -38,7 +38,7 @@ export default {
                 color: white;
             }
             &[type=text]{
-                border: 2px solid $secondary;
+                border: 2px solid var(--complementary);
                 text-align: center;
             }
             &[type=number]{
@@ -46,7 +46,7 @@ export default {
                 margin: auto;
                 margin-top: 2rem;
                 text-align: center;
-                border: 2px solid $secondary;
+                border: 2px solid var(--complementary);
 
             }
         }

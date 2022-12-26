@@ -218,14 +218,14 @@ export default {
 
 
   .friends{
-    color: $secondary ;
+    color: var(--complementary) ;
     h2{
       margin-bottom: .5rem;
     }
     .search-user{
       display: flex;
       gap: .5rem;
-      border: 2px solid $secondary;
+      border: 2px solid var(--complementary);
       padding: .5rem ;
       input{
         background: none;

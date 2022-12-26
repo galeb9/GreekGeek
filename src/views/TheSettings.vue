@@ -68,7 +68,7 @@ export default {
       app.style.setProperty("--shadowSmall", this.invertTextColor(this.bg, "rgba(99, 99, 99, 0.39) 0px 2px 8px 0px", "rgba(255, 255, 255, 0.39) 0px 2px 8px 0px"))
     },
     complementary () {
-      // document.querySelector("#app").style.backgroundColor = this.complementary
+      document.querySelector("#app").style.setProperty("--complementary", this.complementary)
     }
   },
   methods: {

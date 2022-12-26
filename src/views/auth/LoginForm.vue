@@ -84,7 +84,7 @@ export default {
     max-width: 500px;
     // min-width: 300px;
     margin: 0 auto;
-    color: $secondary;
+    color: var(--complementary);
     position: relative;
     .greek-geek__title {
         text-align: center;
@@ -136,7 +136,7 @@ export default {
                     width: 12px;
                     height: 12px;
                     transform: rotate(45deg);
-                    background: $secondary;
+                    background: var(--complementary);
                     background: transparent;
                     border: 3px solid black;
                     border-radius: 3px;
