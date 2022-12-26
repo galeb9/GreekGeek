@@ -178,8 +178,13 @@ export default {
       return String(date).split(" ").splice(1, 3).join("-");
     },
     finishDay () {
-      const today = this.formatLocalDate(new Date());
-      const localStorageToday = this.formatLocalDate(localStorage.getItem("today"));
+      let today = this.formatLocalDate(new Date());
+      let localStorageToday = localStorage.getItem("today");
+
+      if(localStorageToday == null) { 
+        localStorage.setItem("today", today)
+        localStorageToday = localStorage.getItem("today")
+      } 
 
       if(today !== localStorageToday && this.userPushups > 0) {
         this.resetYesterday(this.getYesterdayDate(), this.month)
@@ -189,6 +194,7 @@ export default {
     }
   },
   created(){
+    // localStorage.removeItem("today")
     this.getUserData();
     this.month = this.getMonthByWord(this.today.getMonth())
   }
