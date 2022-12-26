@@ -3,10 +3,7 @@
         :class="[ 'base-button-container', align]" 
         :style="{ width: width, margin: getMargin}"
     >
-        <button 
-            @click="$emit('btnClick')" 
-            :class="['base-button', kind, { 'shadow': shadow}]"
-        >
+        <button @click="$emit('btnClick')" :class="['base-button', kind, { 'shadow': shadow}]">
             {{ text }}
             <BaseIcon 
                 v-if="iconType"
@@ -20,6 +17,7 @@
 
 <script>
 export default {
+    name: "BaseButton",
     props:{
         text: { type: String, default: "button" },
         kind: { type: String, default: 'kind1' },
@@ -53,18 +51,14 @@ export default {
             transform: translateY(1px);
         }
     }
-
     //button-styles
     .shadow{
         box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.42);
-        &:active{
-            box-shadow: 0 0 0  rgba(0, 0, 0, 0.42);
-        }
+        &:active{ box-shadow: 0 0 0  rgba(0, 0, 0, 0.42);}
     }
-
     // button types
     .kind1{
-        background: black;
+        background: var(--complementary);
         color: white;
         border-radius: 5px;
     }

@@ -80,7 +80,6 @@ export default {
     this.today = new Date();
     this.getDays()
   }
-
 }
 </script>
 
@@ -91,12 +90,12 @@ export default {
   display: flex;
   justify-content: space-between;  
   gap: 8px;
-  border-bottom: 8px double $grey;
+  border-bottom: 8px double var(--complementary);
   padding-bottom: 3rem;
   .calendar-item{
     flex-basis: 15%;
     flex-grow: 1;
-    border: 2px solid var(--color);
+    border: 2px solid var(--complementary);
     text-align: center;
     padding: 1.2rem 0;
     .char{
@@ -106,7 +105,7 @@ export default {
   
   }
   .active{
-    background: black;
+    background: var(--complementary);
     position: relative;
     border: none;
     .char,.num{
@@ -117,7 +116,7 @@ export default {
       width: 12px;
       height: 12px;
       transform: rotate(45deg);
-      background: black;
+      background: var(--complementary);
       position: absolute;
       bottom: -25px;
       left: 38.5%

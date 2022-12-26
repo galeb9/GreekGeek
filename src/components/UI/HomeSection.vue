@@ -17,18 +17,14 @@ export default {
 }
 </script>
 
-
-
 <style lang="scss">
-
-
     .home-section{
         margin-top: 0.5rem;
         gap: 1rem;
         padding: .5rem 0;
-        border-bottom: 8px double $grey;
+        border-bottom: 8px double var(--complementary);
         .home-section__title{
-            color: var(--complementary);
+            color: var(--color);
             font-size: 1rem;
             padding-bottom: .5rem;
             text-transform: uppercase;

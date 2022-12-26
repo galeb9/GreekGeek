@@ -52,7 +52,7 @@ export default {
  .welcome-container{
     margin-top: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 8px double var(--color);
+    border-bottom: 8px double var(--complementary);
     .welcome__item{
       display: flex;
       gap: 1.5rem;

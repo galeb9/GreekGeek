@@ -29,6 +29,10 @@
             <label for="complementary">Complementary</label>
             <input class="" type="color" id="complementary" name="complementary" v-model="complementary">
           </div>
+          <div class="color__actions">
+            <BaseButton text="Reset" @click="resetTheme" width="100%" :shadow="false"/>
+            <BaseButton text="Save" @click="saveTheme" width="100%" :shadow="false"/>
+          </div>
         </div>
       </BaseDropdown>
       <BaseDropdown title="Logout">
@@ -53,23 +57,30 @@ export default {
     return{
       email: null,
       username: null,
-      bg: "#E6EEFA",
-      complementary: "#000000", // black
+      bg: null,
+      complementary: null,
     }
   },
   // ideas: 
-  // change color input
   // reset colors btn (reset local storage)
   watch: {
     bg () {
-      const app = document.querySelector("#app");
-      app.style.setProperty("--background", this.bg)
-      app.style.setProperty("--color", this.invertTextColor(this.bg, "white", "black"))
-      app.style.setProperty("--shadowSmall", this.invertTextColor(this.bg, "rgba(99, 99, 99, 0.39) 0px 2px 8px 0px", "rgba(255, 255, 255, 0.39) 0px 2px 8px 0px"))
+      const app = document.querySelector("#app").style;
+      app.setProperty("--background", this.bg)
+      app.setProperty("--color", this.invertTextColor(this.bg, "white", "black"))
+      // app.setProperty("--shadowSmall", this.invertTextColor(this.bg, "rgba(99, 99, 99, 0.39) 0px 2px 8px 0px", "rgba(255, 255, 255, 0.39) 0px 2px 8px 0px"))
     },
     complementary () {
-      document.querySelector("#app").style.setProperty("--complementary", this.complementary)
+      const app = document.querySelector("#app").style;
+      app.setProperty("--complementary", this.complementary)
+      app.setProperty("--oppositeColor", this.invertTextColor(this.complementary, "black", "white"))
     }
+  },
+  created(){
+    this.email = auth.currentUser.email
+    this.getUsername();
+    this.bg = localStorage.getItem("bg") || "#E6EEFA"
+    this.complementary = localStorage.getItem("complementary") || "#000000"
   },
   methods: {
     logout(){
@@ -89,11 +100,21 @@ export default {
       let g = parseInt(color.substring(2, 4), 16);
       let b = parseInt(color.substring(4, 6), 16);
       return (((r * 0.299) + (g * 0.587) + (b * 0.114)) > changeBorder) ? darkColor : lightColor;
+    },
+    saveTheme () {
+      localStorage.setItem('bg', this.bg);
+      localStorage.setItem('complementary', this.complementary);
+    },
+    resetTheme () {
+      localStorage.removeItem('bg');
+      localStorage.removeItem('complementary');
+      this.bg = "#E6EEFA"
+      this.complementary = "#000000"
+      const app = document.querySelector("#app").style;
+      app.setProperty("--background", this.bg)
+      app.setProperty("--color", this.invertTextColor(this.bg, "white", "black"))
+      app.setProperty("--complementary", this.complementary)
     }
-  },
-  created(){
-    this.email = auth.currentUser.email
-    this.getUsername();
   }
 }
 </script>
@@ -138,6 +159,15 @@ export default {
             color: transparent;
             border: none;
             border-radius: 8px;
+          }
+        }
+        .color__actions {
+          padding-top: 20px;
+          display: flex;
+          justify-content: space-around;
+          gap: 16px;
+          .base-button {
+            width: 100%;
           }
         }
       } 

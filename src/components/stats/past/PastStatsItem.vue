@@ -65,11 +65,11 @@ export default {
                 p:first-child{ margin-bottom: .5rem }
             }
             .date-section{
-                background: black;
+                background: var(--complementary);
                 border-radius: 8px;
                 color: white;
             }
-            .pushups-section{ color: black }
+            .pushups-section{ color: var(--color) }
             p{
                 font-size: 18px;
                 font-weight: 700;

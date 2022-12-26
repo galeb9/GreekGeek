@@ -1,7 +1,6 @@
 <template>
   <HomeSection :title="title">
     <PopupHeading 
-        color="rgba(0,0,0, 0.6)"
         :text="heading"
     />
     <div class="scoreboard">
@@ -72,20 +71,15 @@ export default {
         padding-bottom: 20px;
         min-width: 220px;
         .scoreboard__list{
-
             .first{
                 background: $gold ;
                 background: rgba($gold, 0.77) ;
-
             }
             .second{
                 background: $silver;
             }
             .third{
                 background: rgba($bronze, 0.45);
-            }
-            .you{
-                color: red !important;
             }
             .scoreboard__item{
                 display: flex;
@@ -94,13 +88,11 @@ export default {
                 padding: 1rem ;
                 margin: 1.3rem 0;
                 border-radius: $main-radius;
+                color: var(--color);
                 .row{
                     display: flex;
                     align-items: center;
                     gap: 14px;
-                }
-                .scoreboard__item__place{
-                    color: black;
                 }
                 .scoreboard__item__num, 
                 .scoreboard__item__name{
@@ -109,14 +101,11 @@ export default {
                     text-align: center;
                     overflow-x: hidden;
                     font-weight: 700;
-                    color: black;
-
                 }
                 .scoreboard__item__name{
                     font-size: 1.2rem;
                     max-width: 50vw;
                     font-weight: 600;
-
                 }
             }
             .first--item{
@@ -133,7 +122,6 @@ export default {
                 .scoreboard__item__num{
                     font-weight: 400;
                 }
-
             }
         }
     }

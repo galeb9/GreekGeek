@@ -34,11 +34,10 @@ export default {
             width: 50px;
             height: 50px;
             border-radius: 3px;
-            background: $bg;
+            background: var(--background);
             display: flex;
             justify-content: center;
             align-items: center;
-            //box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.42);
             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.42);
             transition: all .1s ease-in;
             &:active{
@@ -53,10 +52,9 @@ export default {
             font-weight: 600;
             font-size: 20px;
             letter-spacing: 1.2px;
-            //text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.42);
         }
         .dark{
-            background: black;
+            background: var(--complementary);
             color: white;
         }
     }

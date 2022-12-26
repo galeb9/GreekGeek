@@ -80,7 +80,7 @@ export default {
                 align-items: center;
                 flex: 1;
                 font-weight: 700;
-                background: black;
+                background: var(--complementary);
                 color: white;
                 padding:  .8rem 2rem;
                 width: max-content;

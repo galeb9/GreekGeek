@@ -15,24 +15,11 @@
 </template>
 
 <script>
-// import UserProfile from '@/components/profile/UserProfile.vue'
 export default {
-    components: {
-        // UserProfile
-    },
     props: {
-        name: {
-            type: String,
-            default: 'user'
-        },
-        userImg: {
-            type: String,
-            default: 'greek-geek.png'
-        },
-        goal: {
-            type: Number,
-            default: 100
-        }
+        name: { type: String, default: 'user'},
+        userImg: { type: String, default: 'greek-geek.png'},
+        goal: { type: Number, default: 100}
     },
     data(){
       return{
@@ -45,12 +32,6 @@ export default {
         getImgUrl(pic) {
             return require('@/assets/img/avatars/' + pic)
         },
-        // togglePopup(){
-        //     return this.popupVisible = !this.popupVisible
-        // },
-        // closePopup(){
-        //     return this.popupVisible = false
-        // },
     },
     created(){
         this.username = this.name;
@@ -60,13 +41,11 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 .user-card{
     display: flex;
     align-items: center;
-    background: black;
-    color: white;
+    background: var(--complementary);
+    color: var(--oppositeColor);
     gap: 1rem;
     max-height: 100px;
     padding: 1rem;
@@ -93,7 +72,6 @@ export default {
             height: 50px;
             align-self: center;
             background: transparent;
-            // border: 1px solid var(--complementary);
             border: none;
             font-size: 1.5rem;
             border-radius: 5px;

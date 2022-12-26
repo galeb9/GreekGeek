@@ -1,10 +1,6 @@
 <template>
   <div class="friends">
-    <GroupInput 
-      icon="loupe" 
-      placeholder="Search for new alies"
-      v-model="search"
-    />
+    <GroupInput icon="loupe" placeholder="Search for new alies" v-model="search" />
     <div class="users">
       <div class="users__head">
         <h3 class="users__heading"> {{ wordFilter }}</h3>
@@ -21,15 +17,8 @@
           />
         </div>
       </div>
-      <div 
-        class="users__list-container"
-        v-if="search === ''"
-      >
-        <TransitionGroup 
-          name="list" 
-          tag="div" 
-          class="users__list" 
-        >
+      <div class="users__list-container" v-if="search === ''">
+        <TransitionGroup name="list" tag="div" class="users__list">
           <FriendCard
             v-for="(el, index) in usersFilter"
             :key="index" 
@@ -39,15 +28,8 @@
           />
         </TransitionGroup>
       </div>
-
-
       <div v-else-if="search !== ''" class="users__list-container">
-        <TransitionGroup 
-          name="list" 
-          tag="div" 
-          class="users__list" 
-          v-if="searchForUser"
-        >
+        <TransitionGroup v-if="searchForUser" name="list" tag="div" class="users__list">
           <FriendCard
             v-for="(el, index) in searchForUser"
             :key="index" 
@@ -60,16 +42,12 @@
     </div>
     <!-- user-profile on popup -->
     <transition name="move-in-bottom">
-      <div 
-        class="user-profile__popup" 
-        v-show="popupVisible"
-      >
+      <div class="user-profile__popup" v-show="popupVisible">
         <UserProfile
           @close-popup="closePopup"
           :img="img"
           :name="name"
           :goal="goal"
-
           :id="friendId"
           :request-sent="requestSent"
           :are-we-friends="isFriend"
@@ -81,7 +59,7 @@
 
 <script>
 import { db, auth } from '@/scripts/firebaseInit.js';
-import FriendCard from '@/components/home/friends/FriendCard.vue'
+import FriendCard from '@/components/friends/FriendCard.vue'
 import GroupInput from '@/components/arena/popup/GroupInput.vue'
 import UserProfile from '@/components/profile/UserProfile.vue'
 
@@ -190,7 +168,6 @@ export default {
           else{
             this.requestSent = false
           }
-          // console.log("is friend request sent? " + this.requestSent)
         })
     },
     getFriendData(name, img, goal){
@@ -215,66 +192,47 @@ export default {
 }
 </script>
 <style lang="scss">
+.friends{
 
-
-  .friends{
-    color: var(--complementary) ;
-    h2{
-      margin-bottom: .5rem;
-    }
-    .search-user{
+    h2 { margin-bottom: .5rem }
+    .search-user {
       display: flex;
       gap: .5rem;
       border: 2px solid var(--complementary);
-      padding: .5rem ;
-      input{
-        background: none;
-        border: none;
-        outline: none;
-        width: 100%;
-      }
+      padding: .5rem;
     }
-    .users{
+    .users {
       margin-top: 2rem;
       padding-bottom: 5rem;
       min-height: 75vh;
       overflow-x: scroll;
-      .users__head{
+      .users__head {
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-        .users__heading{
+        .users__heading {
           font-size: 1.5rem;
         }
-        .users__head__btn{
+        .users__head__btn {
           margin-right: .5rem;
-          border: 1px solid black;
+          box-shadow: var(--shadowSmall);
+          border-radius: 4px;
           padding: .5rem;
-          &:hover{
-            cursor: pointer;
-          }
+          &:hover{ cursor: pointer }
         }
       }
-      .users__list{
+      .users__list {
         padding-top: 1rem;
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
       }
-      .list-enter-active,
-      .list-leave-active {
-        transition: all 0.5s ease;
-      }
-      .list-enter-from,
-      .list-leave-to {
-        opacity: 0;
-        transform: translateY(30px);
-      }
+
     }
-    .user-profile__popup{
+    .user-profile__popup {
       position: absolute;
       top: 0;
       left: 0;
     }
-  }
+}
 </style>

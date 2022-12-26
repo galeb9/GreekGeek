@@ -84,8 +84,7 @@ export default {
                 &.router-link-active{
                     -webkit-tap-highlight-color: transparent; 
                     &>.fa-icon{
-                        color: black;
-                        border-bottom: 1px solid black;
+                        border-bottom: 2px solid var(--complementary);
                         padding-bottom: 10px;
                     }
                     .profile-notification__alert{

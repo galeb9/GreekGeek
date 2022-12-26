@@ -75,13 +75,30 @@ export default {
       if(window.history.state.back === "/register") {
         window.location.reload()
       } 
+    },
+    invertTextColor(bgColor, lightColor, darkColor, changeBorder = 186) {
+      const color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor;
+      let r = parseInt(color.substring(0, 2), 16);
+      let g = parseInt(color.substring(2, 4), 16);
+      let b = parseInt(color.substring(4, 6), 16);
+      return (((r * 0.299) + (g * 0.587) + (b * 0.114)) > changeBorder) ? darkColor : lightColor;
+    },
+    checkForTheme() {
+      const app = document.querySelector("#app").style;
+      const bg = localStorage.getItem("bg")
+      const complementary = localStorage.getItem("complementary")
+      if (bg) {
+        app.setProperty("--background", bg)
+        app.setProperty("--color", this.invertTextColor(bg, "white", "black"))
+      }
+      if(complementary) app.setProperty("--complementary", complementary)
     }
   }, 
   created(){
     this.showProfileNotifications()
     this.firstTime()
+    this.checkForTheme() 
     // setTimeout(() => this.loadData(), 1000);
-    // console.log(this.isLoggedIn)
   },
 }
 </script>

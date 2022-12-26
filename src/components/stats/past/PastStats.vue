@@ -100,7 +100,7 @@ export default {
         padding-bottom: 20px;
         margin-bottom: 15px;
         .filter__item {
-            border: 2px solid black;
+            border: 2px solid var(--complementary);
             width: max-content;
             padding: 14px;
             border-radius: 8px;
@@ -118,7 +118,7 @@ export default {
         }
         .filter--active {
             transition: all 0.2s ease-in;
-            background: black;
+            background: var(--complementary);
             color: white;
         }
     }
