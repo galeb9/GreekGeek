@@ -103,8 +103,9 @@ export default {
   min-height: 100vh;
   width: 100%;
   position: relative;
-  background-color: $bg;
-  // color: $fontColor;
+  // background-color: $bg;
+  background-color: var(--background);
+  color: var(--color);
   overflow: hidden;
   main{
     margin: 0 auto;
@@ -132,11 +133,4 @@ ul{
 button, img{
   cursor: pointer
 }
-
-
-
-
-
-
-
 </style>

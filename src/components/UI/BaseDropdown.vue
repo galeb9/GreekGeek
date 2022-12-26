@@ -50,7 +50,7 @@ export default {
     align-items: center;
     cursor: pointer;
     border-radius: 10px;
-    box-shadow: rgba(99, 99, 99, 0.39) 0px 2px 8px 0px;
+    box-shadow: var(--shadowSmall);
     transition: all 0.2s ease-in;
 
     .base-dropdown__header-heading {
@@ -69,7 +69,8 @@ export default {
     padding: 18px 20px;
     margin-top: 10px;
     border-radius: 2px 2px 10px 10px;
-    box-shadow: rgba(99, 99, 99, 0.39) 0px 2px 8px 0px;
+    box-shadow: var(--shadowSmall);
+
   }
 }
 </style>

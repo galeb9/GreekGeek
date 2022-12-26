@@ -12,8 +12,6 @@
       <Loader v-if="myUsername === null || myUsername === 'user404'" type="fullscreen" />
     </transition>
   </div>
-
-
 </template>
 
 <script>

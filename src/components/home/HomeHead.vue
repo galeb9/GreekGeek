@@ -44,7 +44,6 @@ export default {
       letter-spacing: 2px;
       font-weight: 400;
       font-size: 30px;
-      color: #161515e7;
       font-family: 'Staatliches', cursive;
     }
   }

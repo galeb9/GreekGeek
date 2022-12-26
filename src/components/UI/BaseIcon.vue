@@ -1,7 +1,7 @@
 <template>
     <div :class="[ aligment, kind ]">
         <div :class="['base-icon__icon', type]" @click="goTo(link)" >
-            <font-awesome-icon class="fa-arrow-left" :icon="getIcon()"/>
+            <font-awesome-icon class="fa-base-icon" :icon="getIcon()"/>
         </div>
     </div>
 
@@ -55,6 +55,7 @@ export default {
             height: 50px;
             border-radius: 3px;
             background: $bg;
+            color: black;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -63,9 +64,6 @@ export default {
             &:active{
                 transform: translateY(3px);
                 box-shadow:  0 0 0  rgba(0, 0, 0, 0.42);
-            }
-            .fa-back{
-                font-size: 1.1rem;
             }
         }
         //types
@@ -94,10 +92,5 @@ export default {
     // what kind is it?
     .in-btn {
         position: relative;
-        .base-icon__icon{
-
-        }
     }
-
-
 </style>

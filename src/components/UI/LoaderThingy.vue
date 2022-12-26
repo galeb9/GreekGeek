@@ -63,7 +63,7 @@ export default {
 
 <style lang="scss">
     .loader-thingy{
-        background: $bg;
+        background: var(--background);
         display: flex;
         justify-content: center;
         .spinner {

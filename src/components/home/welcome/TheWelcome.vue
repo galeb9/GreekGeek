@@ -19,7 +19,7 @@ import WelcomeGreet from '@/components/home/welcome/WelcomeGreet'
 import { auth } from '@/scripts/firebaseInit.js'
 
 export default {
-  name: 'TheHome',
+  name: 'TheWelcome',
   components:{
     WelcomeGreet,
   },
@@ -52,7 +52,7 @@ export default {
  .welcome-container{
     margin-top: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 8px double $grey;
+    border-bottom: 8px double var(--color);
     .welcome__item{
       display: flex;
       gap: 1.5rem;
@@ -61,7 +61,6 @@ export default {
         .welcome__img{
           max-width: 100%;
           width: 6rem;
-          //border-radius: 50%;
           border-radius: 5px;
         }
         .dot{
@@ -70,7 +69,6 @@ export default {
           position: absolute;
           bottom: 3px;
           right: -3px;
-          //border-radius: 50%;
           transform: rotate(45deg);
         }
         .online{

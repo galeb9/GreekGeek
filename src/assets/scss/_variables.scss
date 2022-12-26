@@ -1,22 +1,23 @@
+:root {
+    --background: #E6EEFA;
+    --color: black;
+    --shadowSmall: rgba(99, 99, 99, 0.39) 0px 2px 8px 0px;
+    --complementary: black;
+}
+
 $bg: #E6EEFA;
 $radius: 20px;
 $gold: rgb(200, 156, 24);
 $silver: #D3D3D3;
 $bronze: rgb(189, 131, 74);
-
 $secondary : black;
 $fontColor: $secondary;
-
 $navActive: rgb(31, 10, 48);
-
-
 $greyColor : #1f1b1b2c;
 $grey : rgba( $greyColor, 1);
-
-$fontColorInvert: white;
+$main-radius: 8px;
 $success: #2d6a4f;
 $error: red;
-$main-radius: 8px;
 $dark: #484256;
 $purple: #8280EB;
 $blue: #5790DF;

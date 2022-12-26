@@ -96,10 +96,9 @@ export default {
   .calendar-item{
     flex-basis: 15%;
     flex-grow: 1;
-    border: 2px solid $secondary;
+    border: 2px solid var(--color);
     text-align: center;
     padding: 1.2rem 0;
-    color: $secondary;
     .char{
       margin-bottom: .2rem;
       font-weight: 900;
@@ -109,6 +108,7 @@ export default {
   .active{
     background: black;
     position: relative;
+    border: none;
     .char,.num{
       color: white;
     }
@@ -119,7 +119,7 @@ export default {
       transform: rotate(45deg);
       background: black;
       position: absolute;
-      bottom: -20px;
+      bottom: -25px;
       left: 38.5%
     }
   }

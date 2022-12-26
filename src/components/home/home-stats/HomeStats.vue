@@ -1,7 +1,6 @@
 <template>
   <div class="home-stats">
     <HomeCalendar />
-    <!-- <DailyProgress /> -->
     <TheScoreboard :data="list" title="Daily Best" />
     <HomeArena />
   </div>
@@ -9,11 +8,9 @@
 
 <script>
 import HomeCalendar from '@/components/home/home-stats/HomeCalendar'
-// import DailyProgress from '@/components/home/home-stats/progress/DailyProgress'
 import TheScoreboard from '@/components/home/home-stats/TheScoreboard'
 import HomeArena from '@/components/arena/HomeArena'
 import { db } from '@/scripts/firebaseInit.js';
-
 
 export default {
   components:{

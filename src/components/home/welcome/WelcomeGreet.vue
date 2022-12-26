@@ -8,7 +8,7 @@
 <script>
 
 export default {
-    name: 'TheHome',
+    name: 'WelcomeGreet',
     computed: {
         myUsername(){
             return this.$store.getters.myUsername
@@ -18,11 +18,8 @@ export default {
 </script>
 
 <style lang="scss">
-
     .welcome__greet{
         margin-top: 1rem;
-        h2{
-            margin: .2rem  0;
-        }
+        h2{ margin: .2rem  0 }
     }
 </style>
