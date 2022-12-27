@@ -6,11 +6,12 @@ module.exports = defineConfig({
     workboxPluginMode: 'GenerateSW',
     manifestOptions: {
       name: "Greek Geek",
-      short_name: "GG",
+      short_name: "gReek",
       icons: [
         {"src":"./img/icons/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}
       ],
       background_color: "#E6EEFA",
+      theme_color: "#E6EEFA"
     }
   },
   css: {
