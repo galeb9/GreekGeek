@@ -73,6 +73,8 @@ export default {
     complementary () {
       const app = document.querySelector("#app").style;
       app.setProperty("--complementary", this.complementary)
+
+      // must create color for font inside complementery colored stuff
       app.setProperty("--oppositeColor", this.invertTextColor(this.complementary, "black", "white"))
     }
   },
