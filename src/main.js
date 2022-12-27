@@ -1,18 +1,21 @@
 import { createApp } from 'vue'
 import router from './scripts/router.js'
 import App from './App.vue'
-// fontawesome
+// Fontawesome
 import './scripts/fa_icons.js'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-// firebase
+// Firebase
 import { auth } from '@/scripts/firebaseInit.js'
 import './scripts/firebaseInit'
 
-//Vuex
+// Vuex
 import store from './scripts/stores/parent.js'
 
-// component imports
+// PWA
+import './registerServiceWorker'
+
+// Component imports
 import BaseButton from './components/UI/BaseButton.vue'
 import BaseContainer from './components/UI/BaseContainer.vue'
 import BaseInput from './components/UI/BaseInput.vue'
@@ -29,12 +32,9 @@ import BaseProgress from '@/components/UI/BaseProgress.vue'
 import Loader from '@/components/UI/LoaderThingy.vue'
 import BaseProductSlider from '@/components/UI/BaseProductSlider.vue'
 
-
 let app;
-//const app = createApp(App)
 auth.onAuthStateChanged( user => {
     console.log(user)
-    // console.log(user.uid)
     if(!app) {
         app = createApp(App)
         app.component("font-awesome-icon", FontAwesomeIcon)
@@ -53,7 +53,6 @@ auth.onAuthStateChanged( user => {
             .component("BaseProgress", BaseProgress)
             .component("BaseProductSlider", BaseProductSlider)
             .component("Loader", Loader)
-
 
         app.use(store)
         app.use(router);
