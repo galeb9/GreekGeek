@@ -14,9 +14,6 @@ const MyProfile = () => import('@/views/MyProfile.vue');
 const MyArenas = () => import('@/views/MyArenas');
 const NotFound = () => import('@/views/NotFound');
 
-
-
-
 import { auth } from '@/scripts/firebaseInit.js'
 
 
