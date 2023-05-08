@@ -1,7 +1,13 @@
 <template>
   <BaseContainer>
     <div class="stats__daily">
-      <p class="stats__date">{{ `${today.getDate()} / ${today.getMonth() + 1}  / ${today.getFullYear()}` }}</p>
+      <p class="stats__date">
+        {{
+          `${today.getDate()} / ${
+            today.getMonth() + 1
+          }  / ${today.getFullYear()}`
+        }}
+      </p>
       <BaseProgress :progress="progress" :count="count" :circleSize="200">
         <RoundStats
           :amount="userPushups"
@@ -12,9 +18,12 @@
         />
       </BaseProgress>
 
-
       <!-- <BaseButton text="Finish your day" margin="20" @btn-click="togglePopup" /> -->
-      <DailyStatsItems :attempts="attempts" :calories="calories" :userPushups="userPushups"/>
+      <DailyStatsItems
+        :attempts="attempts"
+        :calories="calories"
+        :userPushups="userPushups"
+      />
       <!-- <transition name="move-in-bottom">
         <div class="popup-container" v-if="popupVisible">
           <div class="popup" >
@@ -31,84 +40,111 @@
 </template>
 
 <script>
-import { db, auth } from '@/scripts/firebaseInit.js'
-import RoundStats from '../RoundStats.vue'
-import DailyStatsItems from './DailyStatsItems.vue'
+import { db, auth } from "@/scripts/firebaseInit.js";
+import RoundStats from "../RoundStats.vue";
+import DailyStatsItems from "./DailyStatsItems.vue";
 
 export default {
   components: {
     RoundStats,
-    DailyStatsItems
+    DailyStatsItems,
   },
-  data(){
-    return{
-      daysChar: ["Sun", "Mon", "Tue","Wed", "Thu", "Fri", "Sat"],
+  data() {
+    return {
+      daysChar: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       today: new Date(),
       month: null,
       userGoal: 0,
       userPushups: 0,
       userId: auth.currentUser.uid,
       surplus: 0,
-      rate: 0, 
+      rate: 0,
       attempts: 0, // will have to add a counter of inputs into add pushups comp.
       calories: 0,
       popupVisible: false,
       count: 0,
       progressPercentage: 0,
-      progress: 0
-    }
+      progress: 0,
+    };
   },
   watch: {
-		userPushups () {
+    userPushups() {
       // let interval1, interval2;
-      this.progressPercentage = Math.floor(this.userPushups / this.userGoal * 100)
-      this.countPushups(this.userPushups)
-      this.countProgress(this.progressPercentage)
+      this.progressPercentage = Math.floor(
+        (this.userPushups / this.userGoal) * 100
+      );
+      this.countPushups(this.userPushups);
+      this.countProgress(this.progressPercentage);
       // this.countNumber(interval1, this.count, this.userPushups)
       // this.countNumber(interval2, this.progress, this.progressPercentage)
-		}
-	},
+    },
+  },
   methods: {
-    countProgress (end) {
-			let counter = setInterval(() => this.progress < end ? this.progress++ :clearInterval(counter), Math.floor(1000 / end))
-		},
-    countPushups (end) {
-			let counter = setInterval(() => this.count < end ? this.count++ :clearInterval(counter), Math.floor(1000 / end))
-		},
+    countProgress(end) {
+      let counter = setInterval(
+        () => (this.progress < end ? this.progress++ : clearInterval(counter)),
+        Math.floor(1000 / end)
+      );
+    },
+    countPushups(end) {
+      let counter = setInterval(
+        () => (this.count < end ? this.count++ : clearInterval(counter)),
+        Math.floor(1000 / end)
+      );
+    },
     // countNumber(variable, start, max) {
-		// 	variable = setInterval(() => start < max ? start++ :clearInterval(variable), Math.floor(1000 / max))
+    // 	variable = setInterval(() => start < max ? start++ :clearInterval(variable), Math.floor(1000 / max))
     // },
-    togglePopup(){
-      this.popupVisible = !this.popupVisible
+    togglePopup() {
+      this.popupVisible = !this.popupVisible;
     },
-    getChar(num){
-      if(num === -1) num = this.daysChar.length - 1
-      return this.daysChar[num]
+    getChar(num) {
+      if (num === -1) num = this.daysChar.length - 1;
+      return this.daysChar[num];
     },
-    isTodayWin(){
-      return this.userPushups >= this.userGoal ? 'pos':'neg'
+    isTodayWin() {
+      return this.userPushups >= this.userGoal ? "pos" : "neg";
     },
-    getTodaysDate(){
-      return `${this.today.getDate()}-${this.today.getMonth() + 1}-${this.today.getFullYear()}`
+    getTodaysDate() {
+      return `${this.today.getDate()}-${
+        this.today.getMonth() + 1
+      }-${this.today.getFullYear()}`;
     },
-    getYesterdayDate(){
-      return `${this.today.getDate() - 1}-${this.today.getMonth() + 1}-${this.today.getFullYear()}`
+    getYesterdayDate() {
+      return `${this.today.getDate() - 1}-${
+        this.today.getMonth() + 1
+      }-${this.today.getFullYear()}`;
     },
     getMonthByWord(month) {
-      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-      return months[month]
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      return months[month];
     },
     //new user firebase code
-    getUserData(){
-      db.collection("users").doc(this.userId).get()
-      .then(user => {
-        this.userPushups = user.data().pushupsToday
-        this.userGoal = user.data().goal
-        this.attempts = user.data().attempts
-      })
-      .then(() => this.finishDay())
+    getUserData() {
+      db.collection("users")
+        .doc(this.userId)
+        .get()
+        .then((user) => {
+          this.userPushups = user.data().pushupsToday;
+          this.userGoal = user.data().goal;
+          this.attempts = user.data().attempts;
+        })
+        .then(() => this.finishDay());
     },
-    // saveUserDay(){ // not used, maybe later 
+    // saveUserDay(){ // not used, maybe later
     //   const day = {
     //     dateNum: this.today.getDate(),
     //     day: this.getChar(this.today.getDay()),
@@ -120,17 +156,20 @@ export default {
     //     days : firebase.firestore.FieldValue.arrayUnion(day)
     //   })
     // },
-    resetTodaysPushups(){
-      db.collection("users").doc(this.userId).get()
-      .then(user => {
-        user.ref.update({
-          pushupsToday: 0,
-          attempts: 0
-        })
-      })
+    resetTodaysPushups() {
+      db.collection("users")
+        .doc(this.userId)
+        .get()
+        .then((user) => {
+          user.ref.update({
+            pushupsToday: 0,
+            attempts: 0,
+          });
+        });
     },
-    saveToday(day, month){
-      db.collection("users").doc(this.userId)
+    saveToday(day, month) {
+      db.collection("users")
+        .doc(this.userId)
         .collection("past")
         .doc(month)
         .collection("days")
@@ -140,70 +179,70 @@ export default {
           day: this.getChar(this.today.getDay()),
           num: this.userPushups,
           status: this.isTodayWin(),
-          attempts: this.attempts
-        })
+          attempts: this.attempts,
+        });
     },
-    saveYesterday(day, month){
-      db.collection("users").doc(this.userId)
+    saveYesterday(day, month) {
+      db.collection("users")
+        .doc(this.userId)
         .collection("past")
         .doc(month)
         .collection("days")
         .doc(day)
         .set({
-          dateNum: this.today.getDate() -1,
-          day: this.getChar(this.today.getDay() -1),
+          dateNum: this.today.getDate() - 1,
+          day: this.getChar(this.today.getDay() - 1),
           num: this.userPushups,
           status: this.isTodayWin(),
-          attempts: this.attempts
-        })
+          attempts: this.attempts,
+        });
     },
     resetDay() {
       this.resetTodaysPushups();
-      this.userPushups = 0
-      this.attempts = 0
-      this.calories = 0
-      this.popupVisible = false
-      this.count = 0
-      this.progress = 0
+      this.userPushups = 0;
+      this.attempts = 0;
+      this.calories = 0;
+      this.popupVisible = false;
+      this.count = 0;
+      this.progress = 0;
     },
-    resetToday(day, month){
+    resetToday(day, month) {
       this.saveToday(day, month);
       this.resetDay();
     },
-    resetYesterday(day, month){
+    resetYesterday(day, month) {
       this.saveYesterday(day, month);
       this.resetDay();
     },
     formatLocalDate(date) {
       return String(date).split(" ").splice(1, 3).join("-");
     },
-    finishDay () {
+    finishDay() {
       let today = this.formatLocalDate(new Date());
       let localStorageToday = localStorage.getItem("today");
 
-      if(localStorageToday == null) { 
-        localStorage.setItem("today", today)
-        localStorageToday = localStorage.getItem("today")
-      } 
+      if (localStorageToday == null) {
+        localStorage.setItem("today", today);
+        localStorageToday = localStorage.getItem("today");
+      }
 
-      if(today !== localStorageToday && this.userPushups > 0) {
-        this.resetYesterday(this.getYesterdayDate(), this.month)
-        localStorage.setItem("today", today)
-      } 
-      else console.log("Still the same day.")
-    }
+      if (today !== localStorageToday && this.userPushups > 0) {
+        this.resetYesterday(this.getYesterdayDate(), this.month);
+        localStorage.setItem("today", today);
+      } else console.log("Still the same day.");
+    },
   },
-  created(){
+  created() {
     // localStorage.removeItem("today")
     this.getUserData();
-    this.month = this.getMonthByWord(this.today.getMonth())
-  }
-}
+    this.month = this.getMonthByWord(this.today.getMonth());
+    this.finishDay();
+  },
+};
 </script>
 
 <style lang="scss">
-
-.stats__daily{
+.stats__daily {
   min-height: 80vh;
   display: flex;
   flex-direction: column;
@@ -212,15 +251,15 @@ export default {
   padding-bottom: 5rem;
   gap: 20px;
 
-  .stats__date{
+  .stats__date {
     color: black;
     font-weight: 900;
     letter-spacing: 5px;
     margin-bottom: 20px;
   }
-  .stats-item{
+  .stats-item {
     position: relative;
-    &__button{
+    &__button {
       padding: 1.5rem 3rem;
       background: none;
       border: 5px double var(--complementary);
@@ -230,14 +269,14 @@ export default {
       letter-spacing: 1px;
       font-weight: 900;
       margin-top: 1rem;
-      transition: all .3s ease-in-out;
-      &:hover{
+      transition: all 0.3s ease-in-out;
+      &:hover {
         background: $black;
         color: white;
       }
     }
   }
-  .popup-container{
+  .popup-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -251,33 +290,39 @@ export default {
     border: 10px double var(--complementary);
     backdrop-filter: blur(8px);
     text-align: center;
-    .popup{
-      h2{
+    .popup {
+      h2 {
         margin-bottom: 1rem;
         font-weight: 900;
       }
-      p{
+      p {
         margin: 1rem 0;
         font-weight: 900;
       }
     }
   }
-  .popup-bg{
+  .popup-bg {
     position: absolute;
     top: -150px;
     width: 100vw;
     height: 120vh;
     z-index: 2;
     opacity: 0.3;
-    background: repeating-linear-gradient( 45deg, var(--complementary), black 2px, $bg 2px, $bg 10px );
+    background: repeating-linear-gradient(
+      45deg,
+      var(--complementary),
+      black 2px,
+      $bg 2px,
+      $bg 10px
+    );
   }
 }
 @media only screen and (max-width: 340px) {
-  .stats-row{
-    .stats__info h4{
+  .stats-row {
+    .stats__info h4 {
       display: none;
     }
-    .stats__calories{
+    .stats__calories {
       flex-grow: 1;
     }
   }
