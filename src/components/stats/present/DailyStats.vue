@@ -236,7 +236,6 @@ export default {
     // localStorage.removeItem("today")
     this.getUserData();
     this.month = this.getMonthByWord(this.today.getMonth());
-    this.finishDay();
   },
 };
 </script>
