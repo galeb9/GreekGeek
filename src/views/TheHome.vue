@@ -1,7 +1,7 @@
 <template>
-  <div class="home-page__container" >
+  <div class="home-page__container">
     <div class="home-page">
-      <div class="home-page__top"> 
+      <div class="home-page__top">
         <HomeHead />
         <TheWelcome />
         <HomeStats />
@@ -9,39 +9,60 @@
       <PushupTypes />
     </div>
     <transition name="fade-in" mode="out-in">
-      <Loader v-if="myUsername === null || myUsername === 'user404'" type="fullscreen" />
+      <Loader
+        v-if="myUsername === null || myUsername === 'user404'"
+        type="fullscreen"
+      />
     </transition>
   </div>
 </template>
 
 <script>
-import HomeHead from '@/components/home/HomeHead'
-import TheWelcome from '@/components/home/welcome/TheWelcome'
-import HomeStats from '@/components/home/home-stats/HomeStats'
-import PushupTypes from '@/components/home/types/PushupTypes'
-import Loader from '@/components/UI/LoaderThingy.vue'
+import HomeHead from "@/components/home/HomeHead";
+import TheWelcome from "@/components/home/welcome/TheWelcome";
+import HomeStats from "@/components/home/home-stats/HomeStats";
+import PushupTypes from "@/components/home/types/PushupTypes";
+import Loader from "@/components/UI/LoaderThingy.vue";
+
+// pinia
+import { /*mapStores, mapState, */ mapActions } from "pinia";
+import { useMainStore } from "@/scripts/stores/parent-pinia";
 
 export default {
-  name: 'TheHome',
-  components:{
+  name: "TheHome",
+  components: {
     HomeHead,
     TheWelcome,
     HomeStats,
     PushupTypes,
-    Loader
+    Loader,
   },
   computed: {
-    myUsername (){
-      return this.$store.getters.myUsername
+    myUsername() {
+      return this.$store.getters.myUsername;
     },
+    // ...mapStores(useMainStore),
+    // ...mapState(useMainStore, [
+    //   "username",
+    //   "avatarImg",
+    //   "goal",
+    //   "pushupsToday",
+    // ]),
   },
-  created () { // checks if user logged call user data from db
-    if (this.myUsername === "user404"){
-      this.$store.dispatch("getUserData")
-      this.$store.dispatch("getMyFriendsCount")
+  methods: {
+    ...mapActions(useMainStore, ["getUserData"]),
+  },
+  created() {
+    // checks if user logged call user data from db
+    // vuex implementation
+    if (this.myUsername === "user404") {
+      this.$store.dispatch("getUserData");
+      this.$store.dispatch("getMyFriendsCount");
     } else {
-      console.log("Basic user data allready loaded from DB")
+      console.log("Basic user data allready loaded from DB");
     }
-  }
-}
+    this.getUserData();
+    // console.log(this.username, this.avatarImg, this.goal, this.pushupsToday);
+  },
+};
 </script>

@@ -12,42 +12,51 @@
 </template>
 
 <script>
-import TheHeader from '@/components/layout/TheHeader.vue'
-import { auth } from '@/scripts/firebaseInit.js'
+import TheHeader from "@/components/layout/TheHeader.vue";
+import { auth } from "@/scripts/firebaseInit.js";
 
 export default {
-  name: 'App',
-  components: { 
+  name: "App",
+  components: {
     TheHeader,
   },
-  data(){
-    return{
+  data() {
+    return {
       headerVisible: true,
       loadActive: true,
       isLoggedIn: false,
       friendsCount: 0,
-      myName: null
-    }
+      myName: null,
+    };
   },
   watch: {
-    myUsername () {
+    myUsername() {
       this.myName = this.myUsername;
-    }
+    },
   },
   computed: {
-    myUsername(){
-      return this.$store.getters.myUsername
+    myUsername() {
+      return this.$store.getters.myUsername;
     },
     myFriendsCount() {
-      return this.$store.getters.myFriendsCount
-    }
+      return this.$store.getters.myFriendsCount;
+    },
   },
   methods: {
     showHeader(route) {
-      const acceptableRoutes = ['home','friends','profile','add','stats','settings','goal','arena']
-      for(let i = 0; i < acceptableRoutes.length; i++) {
-        if(route === ('/' + acceptableRoutes[i]) ) {
-          return true
+      const acceptableRoutes = [
+        "home",
+        "friends",
+        "profile",
+        "add",
+        "stats",
+        "settings",
+        "goal",
+        "arena",
+      ];
+      for (let i = 0; i < acceptableRoutes.length; i++) {
+        if (route === "/" + acceptableRoutes[i]) {
+          return true;
         }
       }
     },
@@ -55,77 +64,85 @@ export default {
       this.myName = this.myUsername;
     },
     loadData() {
-        if(auth.currentUser) {
-          this.$store.dispatch("getMyFriendsCount")
-          this.myUsername === "user404" ? this.$store.dispatch("getUserData") : console.log("Basic user data allready loaded from DB")
-        }
-        setTimeout(() => {
-          console.log(this.myFriendsCount)  
-        }, 1400);
+      if (auth.currentUser) {
+        this.$store.dispatch("getMyFriendsCount");
+        this.myUsername === "user404"
+          ? this.$store.dispatch("getUserData")
+          : console.log("Basic user data allready loaded from DB");
+      }
+      setTimeout(() => {
+        console.log(this.myFriendsCount);
+      }, 1400);
+      console.log("happens??");
     },
     checkLoggedIn() {
-      this.isLoggedIn = auth.currentUser ? true : false
+      this.isLoggedIn = auth.currentUser ? true : false;
     },
     showProfileNotifications() {
-      this.checkLoggedIn()
-      if(this.isLoggedIn) this.$store.dispatch("profileNotificationsCheck")
+      // use pinia!
+      this.checkLoggedIn();
+      if (this.isLoggedIn) this.$store.dispatch("profileNotificationsCheck");
     },
     firstTime() {
-      if(window.history.state.back === "/register") {
-        window.location.reload()
-      } 
+      // this is so you get data when you regiester
+      // quick hack, find better solution
+      if (window.history.state.back === "/register") {
+        window.location.reload();
+      }
     },
     invertTextColor(bgColor, lightColor, darkColor, changeBorder = 186) {
-      const color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor;
+      const color =
+        bgColor.charAt(0) === "#" ? bgColor.substring(1, 7) : bgColor;
       let r = parseInt(color.substring(0, 2), 16);
       let g = parseInt(color.substring(2, 4), 16);
       let b = parseInt(color.substring(4, 6), 16);
-      return (((r * 0.299) + (g * 0.587) + (b * 0.114)) > changeBorder) ? darkColor : lightColor;
+      return r * 0.299 + g * 0.587 + b * 0.114 > changeBorder
+        ? darkColor
+        : lightColor;
     },
     checkForTheme() {
       const app = document.querySelector("#app").style;
-      const bg = localStorage.getItem("bg")
-      const complementary = localStorage.getItem("complementary")
+      const bg = localStorage.getItem("bg");
+      const complementary = localStorage.getItem("complementary");
       if (bg) {
-        app.setProperty("--background", bg)
-        app.setProperty("--color", this.invertTextColor(bg, "white", "black"))
+        app.setProperty("--background", bg);
+        app.setProperty("--color", this.invertTextColor(bg, "white", "black"));
       }
-      if(complementary) app.setProperty("--complementary", complementary)
+      if (complementary) app.setProperty("--complementary", complementary);
     },
-  }, 
-  created(){
-    this.showProfileNotifications()
-    this.firstTime()
-    this.checkForTheme() 
   },
-}
+  created() {
+    this.showProfileNotifications();
+    this.firstTime();
+    this.checkForTheme();
+  },
+};
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap");
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
-img{
+img {
   max-width: 100%;
 }
-a{
+a {
   text-decoration: none;
-  color:inherit;
+  color: inherit;
 }
-ul{
+ul {
   list-style: none;
 }
 
-button, img{
-  cursor: pointer
+button,
+img {
+  cursor: pointer;
 }
-
-
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -137,15 +154,13 @@ button, img{
   background-color: var(--background);
   color: var(--color);
   overflow: hidden;
-  
-  main{
+
+  main {
     margin: 0 auto;
     max-width: 1000px;
-    .router-view{
-      padding: 1.5rem 1.3rem ;
+    .router-view {
+      padding: 1.5rem 1.3rem;
     }
   }
 }
-
-
 </style>
