@@ -8,43 +8,31 @@
           }  / ${today.getFullYear()}`
         }}
       </p>
-      <BaseProgress :progress="progress" :count="count" :circleSize="200">
-        <RoundStats
-          :amount="userPushups"
-          :goal="userGoal"
-          :surplus="surplus"
-          :size="180"
-          :count="count"
-        />
+      <BaseProgress :progress="progress" :circleSize="200">
+        <RoundStats :pushups="pushupsToday" :goal="goal" :surplus="surplus" />
       </BaseProgress>
 
-      <!-- <BaseButton text="Finish your day" margin="20" @btn-click="togglePopup" /> -->
       <DailyStatsItems
         :attempts="attempts"
         :calories="calories"
-        :userPushups="userPushups"
+        :userPushups="pushupsToday"
       />
-      <!-- <transition name="move-in-bottom">
-        <div class="popup-container" v-if="popupVisible">
-          <div class="popup" >
-            <h2>Finish for</h2>
-            <BaseButton text="Today" @click="resetToday(this.getTodaysDate(), month)" />
-            <p>or</p>
-            <BaseButton text="Yesterday" @click="resetYesterday(this.getYesterdayDate(), month)" />
-          </div>
-        </div>
-      </transition>
-      <div class="popup-bg" v-if="popupVisible" @click="togglePopup"></div> -->
     </div>
   </BaseContainer>
 </template>
 
 <script>
-import { db, auth } from "@/scripts/firebaseInit.js";
 import RoundStats from "../RoundStats.vue";
 import DailyStatsItems from "./DailyStatsItems.vue";
 
+import { db, auth } from "@/scripts/firebaseInit.js";
+
+import { formatLocalDate } from "@/mixins/utils/formatLocalDate";
+import { getUserDataState } from "@/mixins/pinia/main/getUserData";
+
 export default {
+  name: "DailyStats",
+  mixins: [/* getUserDataAction, */ getUserDataState, formatLocalDate],
   components: {
     RoundStats,
     DailyStatsItems,
@@ -54,32 +42,31 @@ export default {
       daysChar: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       today: new Date(),
       month: null,
-      userGoal: 0,
-      userPushups: 0,
       userId: auth.currentUser.uid,
       surplus: 0,
       rate: 0,
-      attempts: 0, // will have to add a counter of inputs into add pushups comp.
       calories: 0,
       popupVisible: false,
       count: 0,
-      progressPercentage: 0,
       progress: 0,
+      initialProgressAnimation: false,
     };
   },
   watch: {
-    userPushups() {
-      // let interval1, interval2;
-      this.progressPercentage = Math.floor(
-        (this.userPushups / this.userGoal) * 100
-      );
-      this.countPushups(this.userPushups);
-      this.countProgress(this.progressPercentage);
-      // this.countNumber(interval1, this.count, this.userPushups)
-      // this.countNumber(interval2, this.progress, this.progressPercentage)
+    pushupsToday() {
+      // this watcher happens when the pushups are changed
+      this.circleProgressAnimation();
     },
   },
   methods: {
+    circleProgressAnimation() {
+      let progressPercentage = Math.floor(
+        (this.pushupsToday / this.goal) * 100
+      );
+      // gives counting animation
+      this.countPushups(this.pushupsToday);
+      this.countProgress(progressPercentage);
+    },
     countProgress(end) {
       let counter = setInterval(
         () => (this.progress < end ? this.progress++ : clearInterval(counter)),
@@ -92,9 +79,6 @@ export default {
         Math.floor(1000 / end)
       );
     },
-    // countNumber(variable, start, max) {
-    // 	variable = setInterval(() => start < max ? start++ :clearInterval(variable), Math.floor(1000 / max))
-    // },
     togglePopup() {
       this.popupVisible = !this.popupVisible;
     },
@@ -103,7 +87,7 @@ export default {
       return this.daysChar[num];
     },
     isTodayWin() {
-      return this.userPushups >= this.userGoal ? "pos" : "neg";
+      return this.pushupsToday >= this.goal ? "pos" : "neg";
     },
     getTodaysDate() {
       return `${this.today.getDate()}-${
@@ -132,23 +116,11 @@ export default {
       ];
       return months[month];
     },
-    //new user firebase code
-    getUserData() {
-      db.collection("users")
-        .doc(this.userId)
-        .get()
-        .then((user) => {
-          this.userPushups = user.data().pushupsToday;
-          this.userGoal = user.data().goal;
-          this.attempts = user.data().attempts;
-        })
-        .then(() => this.finishDay());
-    },
     // saveUserDay(){ // not used, maybe later
     //   const day = {
     //     dateNum: this.today.getDate(),
     //     day: this.getChar(this.today.getDay()),
-    //     num: this.userPushups,
+    //     num: this.pushupsToday,
     //     status: this.isTodayWin()
     //   }
 
@@ -156,6 +128,32 @@ export default {
     //     days : firebase.firestore.FieldValue.arrayUnion(day)
     //   })
     // },
+    saveYesterday(day, month) {
+      db.collection("users")
+        .doc(this.userId)
+        .collection("past")
+        .doc(month)
+        .collection("days")
+        .doc(day)
+        .set({
+          dateNum: this.today.getDate() - 1,
+          day: this.getChar(this.today.getDay() - 1),
+          num: this.pushupsToday,
+          status: this.isTodayWin(),
+          attempts: this.attempts,
+        })
+        .then(() => this.resetDay());
+    },
+    resetDay() {
+      this.resetTodaysPushups();
+
+      this.pushupsToday = 0;
+      this.attempts = 0;
+      this.calories = 0;
+      this.popupVisible = false;
+      this.count = 0;
+      this.progress = 0;
+    },
     resetTodaysPushups() {
       db.collection("users")
         .doc(this.userId)
@@ -167,56 +165,6 @@ export default {
           });
         });
     },
-    saveToday(day, month) {
-      db.collection("users")
-        .doc(this.userId)
-        .collection("past")
-        .doc(month)
-        .collection("days")
-        .doc(day)
-        .set({
-          dateNum: this.today.getDate(),
-          day: this.getChar(this.today.getDay()),
-          num: this.userPushups,
-          status: this.isTodayWin(),
-          attempts: this.attempts,
-        });
-    },
-    saveYesterday(day, month) {
-      db.collection("users")
-        .doc(this.userId)
-        .collection("past")
-        .doc(month)
-        .collection("days")
-        .doc(day)
-        .set({
-          dateNum: this.today.getDate() - 1,
-          day: this.getChar(this.today.getDay() - 1),
-          num: this.userPushups,
-          status: this.isTodayWin(),
-          attempts: this.attempts,
-        });
-    },
-    resetDay() {
-      this.resetTodaysPushups();
-      this.userPushups = 0;
-      this.attempts = 0;
-      this.calories = 0;
-      this.popupVisible = false;
-      this.count = 0;
-      this.progress = 0;
-    },
-    resetToday(day, month) {
-      this.saveToday(day, month);
-      this.resetDay();
-    },
-    resetYesterday(day, month) {
-      this.saveYesterday(day, month);
-      this.resetDay();
-    },
-    formatLocalDate(date) {
-      return String(date).split(" ").splice(1, 3).join("-");
-    },
     finishDay() {
       let today = this.formatLocalDate(new Date());
       let localStorageToday = localStorage.getItem("today");
@@ -226,16 +174,17 @@ export default {
         localStorageToday = localStorage.getItem("today");
       }
 
-      if (today !== localStorageToday && this.userPushups > 0) {
-        this.resetYesterday(this.getYesterdayDate(), this.month);
+      if (today !== localStorageToday && this.pushupsToday > 0) {
+        this.saveYesterday(this.getYesterdayDate(), this.month);
         localStorage.setItem("today", today);
       } else console.log("Still the same day.");
     },
   },
   created() {
-    // localStorage.removeItem("today")
-    this.getUserData();
     this.month = this.getMonthByWord(this.today.getMonth());
+    this.finishDay();
+    // console.log(this.goal, this.attempts, this.pushupsToday);
+    this.circleProgressAnimation();
   },
 };
 </script>

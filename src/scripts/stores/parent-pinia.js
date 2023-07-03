@@ -1,13 +1,32 @@
 import { defineStore } from "pinia";
 import { db, auth } from "@/scripts/firebaseInit.js";
 
+// How to add states and use actions (methods)?
+// -> call actions in views to get data that you need in components
+// -> use states in components where needed
+
 // export const useRootnStore = defineStore("root", {
 //   state: () => ({
 //     dbUser: db.collection("users").doc(auth.currentUser.uid),
-//     username: "" // should get username somehow global
+//     username: "", // should get username somehow global
 //   }),
 //   actions: {
-//     // Shared actions can be defined here
+//     //     // Shared actions can be defined here
+//     optionalApiCall(condition, cb) {
+//       if (condition) cb();
+//     },
+// universal functions
+// use for (getMyFriendsCount, ... )
+// goThroughCollection(collectionName, action, condition = true) {
+//   this.dbUser
+//     .collection(collectionName)
+//     .get()
+//     .then((documents) => {
+//       documents.forEach(() => {
+//         if (condition) action;
+//       });
+//     });
+// },
 //   },
 // });
 
@@ -17,21 +36,13 @@ export const useMainStore = defineStore("main", {
     // test
     counter: 0,
     name: "Matej",
-    // api calls
-    dbUser: db.collection("users").doc(auth.currentUser.uid),
     // app
-    // -> must get info from api at the load/reload of app
+    dbUser: db.collection("users").doc(auth.currentUser.uid),
     avatarImg: "404-avatar-img.png",
     username: "",
     goal: null,
+    attempts: 0,
     pushupsToday: null,
-    // -> must get when you get to a certain page and save it to a variable so you do not need to call api no more
-    // add friends
-    allUsers: [],
-    sampleUsers: [],
-    // profile
-    areProfileNotifications: false,
-    myFriendsCount: 0,
   }),
   // like computed properties
   getters: {
@@ -41,30 +52,41 @@ export const useMainStore = defineStore("main", {
   // methods
   actions: {
     // main functions
-    async getUserData() {
+    getUserData(getOnlyPushups = false) {
+      // if data is loaded and you only want to update pushups value
+      if (getOnlyPushups && this.username) this.updateUserPushups();
+      if (!this.username) this.getAllUserData();
+    },
+    async updateUserPushups() {
+      await this.dbUser.get().then((user) => {
+        this.pushupsToday = user.data().pushupsToday;
+        this.attempts = user.data().attempts;
+      });
+      // temp
+      console.log(
+        "updateUserPushups",
+        this.goal,
+        this.attempts,
+        this.pushupsToday
+      );
+    },
+    async getAllUserData() {
       await this.dbUser.get().then((user) => {
         let u = user.data();
         this.avatarImg = u.userImg;
         this.username = u.username;
         this.goal = u.goal;
         this.pushupsToday = u.pushupsToday;
+        this.attempts = u.attempts;
       });
+      // temp
+      console.log(
+        "getAllUserData",
+        this.goal,
+        this.attempts,
+        this.pushupsToday
+      );
     },
-    logToConsole(item) {
-      console.log(item);
-    },
-    // universal functions
-    // use for (getMyFriendsCount, ... )
-    // goThroughCollection(collectionName, action, condition = true) {
-    //   this.dbUser
-    //     .collection(collectionName)
-    //     .get()
-    //     .then((documents) => {
-    //       documents.forEach(() => {
-    //         if (condition) action;
-    //       });
-    //     });
-    // },
   },
 });
 
@@ -139,6 +161,9 @@ export const useMyProfileStore = defineStore("myProfile", {
   getters: {},
   actions: {
     getMyFriendsCount() {
+      if (!this.myFriendsCount) this.fbGetMyFriendsCount();
+    },
+    fbGetMyFriendsCount() {
       this.dbUser
         .collection("friends")
         .get()

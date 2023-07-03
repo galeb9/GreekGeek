@@ -29,19 +29,6 @@ export default {
       myName: null,
     };
   },
-  watch: {
-    myUsername() {
-      this.myName = this.myUsername;
-    },
-  },
-  computed: {
-    myUsername() {
-      return this.$store.getters.myUsername;
-    },
-    myFriendsCount() {
-      return this.$store.getters.myFriendsCount;
-    },
-  },
   methods: {
     showHeader(route) {
       const acceptableRoutes = [
@@ -62,18 +49,6 @@ export default {
     },
     loadInitialData() {
       this.myName = this.myUsername;
-    },
-    loadData() {
-      if (auth.currentUser) {
-        this.$store.dispatch("getMyFriendsCount");
-        this.myUsername === "user404"
-          ? this.$store.dispatch("getUserData")
-          : console.log("Basic user data allready loaded from DB");
-      }
-      setTimeout(() => {
-        console.log(this.myFriendsCount);
-      }, 1400);
-      console.log("happens??");
     },
     checkLoggedIn() {
       this.isLoggedIn = auth.currentUser ? true : false;

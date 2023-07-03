@@ -9,10 +9,7 @@
       <PushupTypes />
     </div>
     <transition name="fade-in" mode="out-in">
-      <Loader
-        v-if="myUsername === null || myUsername === 'user404'"
-        type="fullscreen"
-      />
+      <Loader v-if="!username" type="fullscreen" />
     </transition>
   </div>
 </template>
@@ -25,11 +22,17 @@ import PushupTypes from "@/components/home/types/PushupTypes";
 import Loader from "@/components/UI/LoaderThingy.vue";
 
 // pinia
-import { /*mapStores, mapState, */ mapActions } from "pinia";
-import { useMainStore } from "@/scripts/stores/parent-pinia";
+
+import {
+  getUserDataAction,
+  getUserDataState,
+} from "@/mixins/pinia/main/getUserData";
+
+import { myProfileAction } from "@/mixins/pinia/profile/myProfile";
 
 export default {
   name: "TheHome",
+  mixins: [getUserDataAction, getUserDataState, myProfileAction],
   components: {
     HomeHead,
     TheWelcome,
@@ -37,32 +40,18 @@ export default {
     PushupTypes,
     Loader,
   },
-  computed: {
-    myUsername() {
-      return this.$store.getters.myUsername;
-    },
-    // ...mapStores(useMainStore),
-    // ...mapState(useMainStore, [
-    //   "username",
-    //   "avatarImg",
-    //   "goal",
-    //   "pushupsToday",
-    // ]),
-  },
-  methods: {
-    ...mapActions(useMainStore, ["getUserData"]),
-  },
   created() {
-    // checks if user logged call user data from db
     // vuex implementation
-    if (this.myUsername === "user404") {
-      this.$store.dispatch("getUserData");
-      this.$store.dispatch("getMyFriendsCount");
-    } else {
-      console.log("Basic user data allready loaded from DB");
-    }
+    // if (this.myUsername === "user404") {
+    //   this.$store.dispatch("getUserData");
+    //   this.$store.dispatch("getMyFriendsCount");
+    // } else {
+    //   console.log("Basic user data allready loaded from DB");
+    // }
+
+    // pinia solution
     this.getUserData();
-    // console.log(this.username, this.avatarImg, this.goal, this.pushupsToday);
+    this.getMyFriendsCount();
   },
 };
 </script>

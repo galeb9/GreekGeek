@@ -1,77 +1,69 @@
 <template>
-    <div class="progress">
-      <div class="bar-container">
-        <div class="progress-bar">
-          <div class="progress-state" :style="{'width' :  rate + '%'}"></div>
-        </div>
-        <p>{{ rate }} %</p>
+  <div class="progress">
+    <div class="bar-container">
+      <div class="progress-bar">
+        <div class="progress-state" :style="{ width: rate + '%' }"></div>
       </div>
+      <p>{{ rate }} %</p>
     </div>
+  </div>
 </template>
 
-
 <script>
-import { db, auth } from '@/scripts/firebaseInit.js'
+import {
+  getUserDataAction,
+  getUserDataState,
+} from "@/mixins/pinia/main/getUserData";
 
 export default {
- data(){
-    return{
-      rate: 0, 
-
-      userId: auth.currentUser.uid,
+  name: "ProgressBar",
+  mixins: [getUserDataAction, getUserDataState],
+  data() {
+    return {
+      rate: 0,
       userPushups: 0,
-      userGoal: 100
-    }
+      userGoal: 100,
+    };
   },
   methods: {
-    successRate(){
-      this.rate =  Math.floor((this.userPushups / this.userGoal) * 100)
-      if(this.rate > 100){
-        return this.rate = 100 
-      }
-      return this.rate 
+    calculateSuccessRate() {
+      this.rate = Math.floor((this.userPushups / this.userGoal) * 100);
+      this.rate = this.rate > 100 ? 100 : this.rate;
     },
+  },
+  created() {
+    this.userPushups = this.pushupsToday;
+    this.userGoal = this.goal;
 
-    getUserData(){
-      db.collection("users").doc(this.userId).get()
-      .then(user => {
-        this.userPushups = user.data().pushupsToday;
-        this.userGoal = user.data().goal;
-      })
-    }
+    this.calculateSuccessRate();
   },
-  created(){
-    this.getUserData();
-    setTimeout(this.successRate, 300)
-  },
-}
+};
 </script>
 
 <style lang="scss">
-
-.progress{
+.progress {
   min-width: 200px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   align-items: center;
   margin-bottom: 1rem;
-  .bar-container{
+  .bar-container {
     display: flex;
     align-items: center;
     flex-direction: column-reverse;
     flex: 1;
     gap: 1rem;
 
-    .progress-bar{
+    .progress-bar {
       display: flex;
-      max-width:70%;
+      max-width: 70%;
       width: 160px;
       height: 10px;
       background: rgba($grey, 0.3);
       border-radius: 30px;
-      margin-right: .5rem;
-      .progress-state{
+      margin-right: 0.5rem;
+      .progress-state {
         width: 0;
         border-radius: 30px;
         height: 100%;
@@ -80,7 +72,7 @@ export default {
     }
   }
 
-  .progress__btn{
+  .progress__btn {
     padding: 0.5rem 1.5rem;
     border: 4px double var(--complementary);
     font-weight: 900;
@@ -91,14 +83,13 @@ export default {
   }
 }
 @media only screen and (max-width: 540px) {
-  .progress{
-    .bar-container{
-      
-      .progress-bar{
+  .progress {
+    .bar-container {
+      .progress-bar {
         margin-right: 0;
         max-width: 400px;
       }
-      p{
+      p {
         transform: translateX(0.5rem);
       }
     }
