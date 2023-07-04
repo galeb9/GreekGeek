@@ -14,9 +14,11 @@
 <script>
 import TheHeader from "@/components/layout/TheHeader.vue";
 import { auth } from "@/scripts/firebaseInit.js";
+import { getUserDataAction } from "@/mixins/pinia/main/getUserData";
 
 export default {
   name: "App",
+  mixins: [getUserDataAction],
   components: {
     TheHeader,
   },
@@ -90,6 +92,8 @@ export default {
     this.showProfileNotifications();
     this.firstTime();
     this.checkForTheme();
+    this.getUserData();
+    console.log("app reloaded");
   },
 };
 </script>

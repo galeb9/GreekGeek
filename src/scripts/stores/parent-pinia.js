@@ -52,23 +52,32 @@ export const useMainStore = defineStore("main", {
   // methods
   actions: {
     // main functions
-    getUserData(getOnlyPushups = false) {
+    getUserData(getType = "") {
       // if data is loaded and you only want to update pushups value
-      if (getOnlyPushups && this.username) this.updateUserPushups();
+      if (getType === "pushups" && this.username) this.getUserPushups();
+      if (getType === "goal" && this.username) this.getUserGoal();
+
+      // if no username get all basic usr data
       if (!this.username) this.getAllUserData();
     },
-    async updateUserPushups() {
+    async getUserGoal() {
+      // get newsest userGoal
+      await this.dbUser.get().then((user) => {
+        this.goal = user.data().goal;
+      });
+    },
+    async getUserPushups() {
       await this.dbUser.get().then((user) => {
         this.pushupsToday = user.data().pushupsToday;
         this.attempts = user.data().attempts;
       });
       // temp
-      console.log(
-        "updateUserPushups",
-        this.goal,
-        this.attempts,
-        this.pushupsToday
-      );
+      // console.log(
+      //   "updateUserPushups",
+      //   this.goal,
+      //   this.attempts,
+      //   this.pushupsToday
+      // );
     },
     async getAllUserData() {
       await this.dbUser.get().then((user) => {
@@ -80,12 +89,12 @@ export const useMainStore = defineStore("main", {
         this.attempts = u.attempts;
       });
       // temp
-      console.log(
-        "getAllUserData",
-        this.goal,
-        this.attempts,
-        this.pushupsToday
-      );
+      // console.log(
+      //   "getAllUserData",
+      //   this.goal,
+      //   this.attempts,
+      //   this.pushupsToday
+      // );
     },
   },
 });

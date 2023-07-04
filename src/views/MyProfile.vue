@@ -59,9 +59,9 @@
     <!-- used vuex for avatar img -->
     <ProfileInfo
       v-if="!messagesVisible"
-      :username="myUsername"
-      :goal="myGoal"
-      :img="getImgUrl(myAvatarImg)"
+      :username="username"
+      :goal="goal"
+      :img="getImgUrl(avatarImg)"
       :friends="myFriendsCount"
     />
     <BaseButton text="Change Goal" align="center" @click="goToGoal" />
@@ -72,11 +72,15 @@
 import { db, auth } from "@/scripts/firebaseInit.js";
 import MessageItem from "@/components/profile/MessageItem.vue";
 import ProfileInfo from "@/components/profile/ProfileInfo.vue";
-
-// import { mapState } from "pinia";
-// import { useMyProfileStore } from "@/scripts/stores/parent-pinia";
+import {
+  getUserDataState,
+  getUserDataAction,
+} from "@/mixins/pinia/main/getUserData";
+// import { myProfileState, myProfileAction } from "@/mixins/pinia/profile/myProfile";
 
 export default {
+  name: "MyProfile",
+  mixins: [getUserDataState, getUserDataAction],
   components: {
     MessageItem,
     ProfileInfo,
@@ -84,9 +88,6 @@ export default {
   data() {
     return {
       user: db.collection("users").doc(auth.currentUser.uid),
-      userImg: "greek-geek.png",
-      username: "user",
-      goal: 100,
       requests: [],
       messagesVisible: false,
       friendCount: 0,
@@ -94,15 +95,6 @@ export default {
     };
   },
   computed: {
-    myUsername() {
-      return this.$store.getters.myUsername;
-    },
-    myAvatarImg() {
-      return this.$store.getters.myAvatar;
-    },
-    myGoal() {
-      return this.$store.getters.myGoal;
-    },
     areProfileNotifications() {
       return this.$store.getters.areProfileNotifications;
     },
@@ -130,17 +122,6 @@ export default {
       return oldArr;
     },
     // firebase code
-    getUserData() {
-      // for profile info
-      db.collection("users")
-        .doc(auth.currentUser.uid)
-        .get()
-        .then((user) => {
-          this.userImg = user.data().userImg;
-          this.username = user.data().username;
-          this.goal = user.data().goal;
-        });
-    },
     getFriendMessages() {
       db.collection("users")
         .doc(auth.currentUser.uid)
@@ -185,7 +166,7 @@ export default {
         .doc(this.username)
         .set({
           friends: true,
-          profileImage: this.userImg,
+          profileImage: this.avatarImg,
           username: this.username,
           friendID: auth.currentUser.uid,
         });
@@ -258,7 +239,8 @@ export default {
     },
   },
   created() {
-    this.getUserData();
+    // call to update goal (still have to make it)
+    // move messages code to pinia?
     this.getFriendMessages();
     this.getArenaMessages();
   },

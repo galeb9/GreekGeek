@@ -23,16 +23,12 @@ import Loader from "@/components/UI/LoaderThingy.vue";
 
 // pinia
 
-import {
-  getUserDataAction,
-  getUserDataState,
-} from "@/mixins/pinia/main/getUserData";
-
+import { getUserDataState } from "@/mixins/pinia/main/getUserData";
 import { myProfileAction } from "@/mixins/pinia/profile/myProfile";
 
 export default {
   name: "TheHome",
-  mixins: [getUserDataAction, getUserDataState, myProfileAction],
+  mixins: [getUserDataState, myProfileAction],
   components: {
     HomeHead,
     TheWelcome,
@@ -50,7 +46,6 @@ export default {
     // }
 
     // pinia solution
-    this.getUserData();
     this.getMyFriendsCount();
   },
 };
