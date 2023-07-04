@@ -56,7 +56,8 @@ export default {
   }
   //button-styles
   .shadow {
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.42);
+    // box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.42);
+    box-shadow: var(--boxShadow);
     &:active {
       box-shadow: 0 0 0 rgba(0, 0, 0, 0.42);
     }

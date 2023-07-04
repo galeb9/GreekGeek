@@ -222,9 +222,9 @@ export default {
       .users__heading {
         font-size: 1.5rem;
       }
-      .users__head__btn {
-        margin-right: 0.5rem;
-        box-shadow: var(--shadowSmall);
+      &__btn {
+        margin-right: 1rem;
+        box-shadow: var(--boxShadow);
         border-radius: 4px;
         padding: 0.5rem;
         &:hover {

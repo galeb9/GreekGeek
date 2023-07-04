@@ -1,5 +1,5 @@
 <template>
-  <div class="welcome-container">
+  <div class="welcome-container basic-container">
     <div class="welcome__item">
       <div class="img-container">
         <img
@@ -46,9 +46,6 @@ export default {
 
 <style lang="scss">
 .welcome-container {
-  margin-top: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 8px double var(--complementary);
   .welcome__item {
     display: flex;
     gap: 1.5rem;

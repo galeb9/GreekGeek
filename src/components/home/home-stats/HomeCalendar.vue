@@ -1,13 +1,16 @@
 <template>
-  <div class="calendar-list">
-    <div
-      class="calendar-item"
-      v-for="(el, i) in days"
-      :key="i"
-      :class="{ active: el.active }"
-    >
-      <h3 class="char">{{ el.char }}</h3>
-      <h3 class="num">{{ el.num }}</h3>
+  <div class="calendar-list basic-container">
+    <div class="calendar-item__container" v-for="(el, i) in days" :key="i">
+      <div
+        class="calendar-item"
+        :class="{ 'calendar-item__active-item': el.active }"
+      >
+        <h3 class="char">{{ el.char }}</h3>
+        <h3 class="num">{{ el.num }}</h3>
+      </div>
+      <div class="calendar-item__active" v-if="el.active">
+        <div class="calendar-item__active-cube"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -92,40 +95,36 @@ export default {
 
 <style lang="scss">
 .calendar-list {
-  margin-top: 1.5rem;
   display: flex;
   justify-content: space-between;
   gap: 8px;
-  border-bottom: 8px double var(--complementary);
-  padding-bottom: 3rem;
-  .calendar-item {
+  .calendar-item__container {
     flex-basis: 15%;
     flex-grow: 1;
-    border: 2px solid var(--complementary);
-    text-align: center;
-    padding: 1.2rem 0;
-    .char {
-      margin-bottom: 0.2rem;
-      font-weight: 900;
+    .calendar-item {
+      border: 2px solid var(--complementary);
+      text-align: center;
+      padding: 1.2rem 0;
+      .char {
+        margin-bottom: 0.2rem;
+        font-weight: 900;
+      }
     }
-  }
-  .active {
-    background: var(--complementary);
-    position: relative;
-    border: none;
-    .char,
-    .num {
-      color: white;
-    }
-    &::after {
-      content: "";
+    .calendar-item__active-cube {
+      background: var(--complementary);
+      margin: 10px auto 0 auto;
       width: 12px;
       height: 12px;
       transform: rotate(45deg);
       background: var(--complementary);
-      position: absolute;
-      bottom: -25%;
-      left: calc(50% - 6px);
+    }
+    .calendar-item__active-item {
+      background: var(--complementary);
+      border: none;
+      .char,
+      .num {
+        color: white;
+      }
     }
   }
 }

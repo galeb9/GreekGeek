@@ -1,6 +1,7 @@
 <template>
   <HomeSection :title="title">
     <PopupHeading :text="heading" />
+    <!-- <hr /> -->
     <div class="scoreboard">
       <ul class="scoreboard__list">
         <li v-if="displayTableHead">

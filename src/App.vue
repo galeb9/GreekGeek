@@ -101,12 +101,27 @@ export default {
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap");
 
+:root {
+  --background: #e6eefa;
+  --color: black;
+  --oppositeColor: white; // color oposite to --color
+  --shadowSmall: rgba(99, 99, 99, 0.39) 0px 2px 8px 0px;
+  --complementary: black;
+  --boxShadow: 5px 5px 10px rgba(0, 0, 0, 0.42);
+  --radius: 4px;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Nunito Sans", sans-serif;
 }
+
+*:focus-visible {
+  outline: 5px double black;
+}
+
 img {
   max-width: 100%;
 }
@@ -134,11 +149,18 @@ img {
   color: var(--color);
   overflow: hidden;
 
+  .basic-container {
+    box-shadow: var(--boxShadow);
+    margin-top: 2rem;
+    padding: 25px 15px;
+    border-radius: var(--radius);
+  }
+
   main {
     margin: 0 auto;
     max-width: 1000px;
     .router-view {
-      padding: 1.5rem 1.3rem;
+      padding: 25px 15px;
     }
   }
 }

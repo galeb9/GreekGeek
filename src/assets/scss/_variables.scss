@@ -1,26 +1,18 @@
-:root {
-    --background: #E6EEFA;
-    --color: black;
-    --oppositeColor: white; // color oposite to --color
-    --shadowSmall: rgba(99, 99, 99, 0.39) 0px 2px 8px 0px;
-    --complementary: black;
-}
-
-$bg: #E6EEFA;
+$bg: #e6eefa;
 $radius: 20px;
 $gold: rgb(200, 156, 24);
-$silver: #D3D3D3;
+$silver: #d3d3d3;
 $bronze: rgb(189, 131, 74);
-$secondary : black;
+$secondary: black;
 $fontColor: $secondary;
 $navActive: rgb(31, 10, 48);
-$greyColor : #1f1b1b2c;
-$grey : rgba( $greyColor, 1);
+$greyColor: #1f1b1b2c;
+$grey: rgba($greyColor, 1);
 $main-radius: 8px;
 $success: #2d6a4f;
 $error: red;
 $dark: #484256;
-$purple: #8280EB;
-$blue: #5790DF;
+$purple: #8280eb;
+$blue: #5790df;
 $black: black;
 $orange: #f4a261;
