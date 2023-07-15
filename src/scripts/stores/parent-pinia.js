@@ -71,13 +71,6 @@ export const useMainStore = defineStore("main", {
         this.pushupsToday = user.data().pushupsToday;
         this.attempts = user.data().attempts;
       });
-      // temp
-      // console.log(
-      //   "updateUserPushups",
-      //   this.goal,
-      //   this.attempts,
-      //   this.pushupsToday
-      // );
     },
     async getAllUserData() {
       await this.dbUser.get().then((user) => {
@@ -102,16 +95,18 @@ export const useMainStore = defineStore("main", {
 export const useFriendsStore = defineStore("friends", {
   state: () => ({
     dbUser: db.collection("users").doc(auth.currentUser.uid),
-    username: "", // must get from global/root
     allUsers: [],
     sampleUsers: [],
   }),
   getters: {},
   actions: {
     // could remove self in code not here
-    getUsers() {
+    getUsers(userName) {
+      if (this.allUsers.length < 1) this.getAllUsers(userName);
+    },
+    getAllUsers(userName) {
       db.collection("users")
-        .where("username", "!=", this.username)
+        .where("username", "!=", userName)
         .orderBy("username", "asc")
         .get()
         .then((snapshot) => {

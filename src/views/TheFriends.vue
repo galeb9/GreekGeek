@@ -63,15 +63,20 @@
 </template>
 
 <script>
-import { db, auth } from "@/scripts/firebaseInit.js";
 import FriendCard from "@/components/friends/FriendCard.vue";
 import GroupInput from "@/components/arena/popup/GroupInput.vue";
 import UserProfile from "@/components/profile/UserProfile.vue";
+import { db, auth } from "@/scripts/firebaseInit.js";
+
 import { getUserDataState } from "@/mixins/pinia/main/getUserData";
+import {
+  userFriendsAction,
+  userFriendsState,
+} from "@/mixins/pinia/friends/userFriends";
 
 export default {
   name: "TheFriends",
-  mixins: [getUserDataState],
+  mixins: [getUserDataState, userFriendsAction, userFriendsState],
   components: {
     FriendCard,
     GroupInput,
@@ -99,13 +104,6 @@ export default {
         (user) =>
           user.username.toLowerCase().indexOf(this.search.toLowerCase()) != -1
       );
-    },
-
-    allUsers() {
-      return this.$store.getters.allUsers;
-    },
-    sampleUsers() {
-      return this.$store.getters.sampleUsers;
     },
     usersFilter() {
       if (this.seeAllUsers) {
@@ -188,14 +186,12 @@ export default {
       this.areFriends(name);
       this.isFriendRequestSent(name);
     },
-    loadUser() {
-      if (this.allUsers.length === 0) {
-        this.$store.dispatch("getUsers");
-      }
+    loadInitialData() {
+      this.getUsers(this.username);
     },
   },
   created() {
-    this.loadUser();
+    this.loadInitialData();
   },
 };
 </script>
