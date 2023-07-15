@@ -15,10 +15,14 @@
 import TheHeader from "@/components/layout/TheHeader.vue";
 import { auth } from "@/scripts/firebaseInit.js";
 import { getUserDataAction } from "@/mixins/pinia/main/getUserData";
+import {
+  notificationsAction,
+  notificationsState,
+} from "@/mixins/pinia/notifications/socialNotifications";
 
 export default {
   name: "App",
-  mixins: [getUserDataAction],
+  mixins: [getUserDataAction, notificationsAction, notificationsState],
   components: {
     TheHeader,
   },
@@ -56,9 +60,8 @@ export default {
       this.isLoggedIn = auth.currentUser ? true : false;
     },
     showProfileNotifications() {
-      // use pinia!
       this.checkLoggedIn();
-      if (this.isLoggedIn) this.$store.dispatch("profileNotificationsCheck");
+      if (this.isLoggedIn) this.profileNotificationsCheck();
     },
     firstTime() {
       // this is so you get data when you regiester

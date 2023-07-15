@@ -30,6 +30,7 @@ import { db, auth } from "@/scripts/firebaseInit.js";
 //   },
 // });
 
+// basic main data
 export const useMainStore = defineStore("main", {
   // a function that returns a fresh state aka data of the store
   state: () => ({
@@ -92,6 +93,7 @@ export const useMainStore = defineStore("main", {
   },
 });
 
+// Friends
 export const useFriendsStore = defineStore("friends", {
   state: () => ({
     dbUser: db.collection("users").doc(auth.currentUser.uid),
@@ -132,6 +134,7 @@ export const useFriendsStore = defineStore("friends", {
   },
 });
 
+// Notifications
 export const useNotificationsStore = defineStore("notifications", {
   state: () => ({
     dbUser: db.collection("users").doc(auth.currentUser.uid),
@@ -139,6 +142,12 @@ export const useNotificationsStore = defineStore("notifications", {
   }),
   getters: {},
   actions: {
+    profileNotificationsCheck() {
+      this.goThroughNotifications("friend-requests");
+      if (!this.hasNotifications) this.goThroughNotifications("arena-requests");
+      // maybe should change that on app init it checks for notifications
+      // also gets them in the same go?
+    },
     goThroughNotifications(collectionName) {
       this.dbUser
         .collection(collectionName)
@@ -149,14 +158,10 @@ export const useNotificationsStore = defineStore("notifications", {
           });
         });
     },
-    profileNotificationsCheck() {
-      this.goThroughNotifications("friend-requests");
-      if (!this.hasNotifications) this.goThroughNotifications("arena-requests");
-      // maybe should change that on app init it checks for notifications and also gets them in the same go?
-    },
   },
 });
 
+// users profile
 export const useMyProfileStore = defineStore("myProfile", {
   state: () => ({
     dbUser: db.collection("users").doc(auth.currentUser.uid),
