@@ -5,9 +5,16 @@
         <div class="current-month__row">
           <!-- make this an select where you can pick year -->
           <div class="current-month__item">
-            <p>2023</p>
+            <select name="calendar__year" id="calendar__year">
+              <option>2021</option>
+              <option>2022</option>
+              <option selected>2023</option>
+            </select>
           </div>
         </div>
+
+        <BaseCalendar></BaseCalendar>
+
         <div class="current-month__row">
           <div class="current-month__item month__item--column">
             <p>Average</p>
@@ -36,12 +43,14 @@
 <script>
 import LoaderThingy from "@/components/UI/LoaderThingy.vue";
 import PastStatsItem from "./PastStatsItem";
+import BaseCalendar from "@/components/UI/BaseCalendar.vue";
 
 export default {
   name: "PastStatsMonth",
   components: {
     PastStatsItem,
     LoaderThingy,
+    BaseCalendar,
   },
   props: {
     month: { type: String, default: "" },
@@ -109,7 +118,16 @@ export default {
         color: white;
         padding: 0.8rem 2rem;
         width: max-content;
-        border-radius: 10px;
+        border-radius: var(--radius);
+        select {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          background: var(--complementary);
+          color: white;
+          outline: none;
+          border: none;
+        }
       }
     }
   }

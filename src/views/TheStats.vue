@@ -38,7 +38,8 @@ export default {
   },
   data() {
     return {
-      currentTab: "DailyStats",
+      // currentTab: "DailyStats",
+      currentTab: "PastStats",
       tabs: ["DailyStats", "PastStats"],
     };
   },

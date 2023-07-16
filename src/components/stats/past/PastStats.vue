@@ -23,8 +23,6 @@
 
 <script>
 import PastStatsMonth from "./PastStatsMonth.vue";
-// import { db, auth } from "@/scripts/firebaseInit.js";
-
 import {
   pastStatsAction,
   pastStatsState,
