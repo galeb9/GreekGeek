@@ -30,8 +30,8 @@
 export default {
   props: {
     attempts: { type: Number, default: 0 },
-    userPushups: { type: Number, default: 0 }
-  }
+    userPushups: { type: Number, default: 0 },
+  },
 };
 </script>
 
@@ -55,7 +55,8 @@ export default {
     gap: 12px;
     margin: 1rem 0;
     padding: 1rem;
-    border: 2px solid var(--complementary);
+    border-radius: var(--radius);
+    box-shadow: var(--boxShadow);
     img {
       width: 2rem;
     }

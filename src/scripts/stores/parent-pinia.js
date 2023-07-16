@@ -114,12 +114,8 @@ export const useFriendsStore = defineStore("friends", {
         .then((snapshot) => {
           let count = 0;
           snapshot.forEach((user) => {
-            let u = user.data();
-            let item = {
-              username: u.username,
-              userImg: u.userImg,
-              goal: u.goal,
-            };
+            // let u = user.data();
+            let item = user.data();
             // the real list user will search for friends
             this.allUsers.push(item);
 
@@ -181,6 +177,41 @@ export const useMyProfileStore = defineStore("myProfile", {
             this.myFriendsCount++;
           });
         });
+    },
+  },
+});
+
+// past data
+export const usePastStatsStore = defineStore("pastData", {
+  state: () => ({
+    dbUser: db.collection("users").doc(auth.currentUser.uid),
+    monthsDataObj: {},
+  }),
+  getters: {},
+  actions: {
+    async getPastMonthData(month) {
+      const days = [];
+      // const months = {};
+
+      if (this.monthsDataObj[month] == undefined) {
+        await this.dbUser
+          .collection("past")
+          .doc(month)
+          .collection("days")
+          .orderBy("dateNum", "desc")
+          .get()
+          .then((snapshot) => {
+            snapshot.forEach((day) => {
+              const data = day.data();
+              data.date = day.id;
+              days.push(data);
+              // console.log("day", day.id);
+            });
+            this.monthsDataObj[month] = days;
+            // console.log("went to db to get");
+          });
+      }
+      // else console.log(`month - ${month}  ${this.monthsDataObj[this.month]}`);
     },
   },
 });

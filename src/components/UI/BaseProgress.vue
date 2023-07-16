@@ -47,7 +47,8 @@ export default {
 
 <style lang="scss">
 .base-progress {
-  border: 2px solid var(--complementary);
+  // border: 2px solid var(--complementary);
+  box-shadow: var(--boxShadow);
   border-radius: 50%;
   padding: 2px;
   .circle {
