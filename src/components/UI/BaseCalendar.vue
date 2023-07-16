@@ -27,21 +27,42 @@
 
       <div class="calendar__body">
         <div class="calendar__days">
+          <div>S</div>
           <div>M</div>
           <div>T</div>
           <div>W</div>
           <div>T</div>
           <div>F</div>
           <div>S</div>
-          <div>S</div>
         </div>
 
         <div class="calendar__dates">
+          <!-- last month days -->
+          <div
+            v-for="day in previous_days"
+            :key="day"
+            class="calendar__date calendar__date--grey"
+          >
+            <span>{{ day }}</span>
+          </div>
+          <!-- 
           <div class="calendar__date calendar__date--grey"><span>27</span></div>
           <div class="calendar__date calendar__date--grey"><span>28</span></div>
           <div class="calendar__date calendar__date--grey"><span>29</span></div>
-          <div class="calendar__date calendar__date--grey"><span>30</span></div>
-          <div class="calendar__date"><span>1</span></div>
+          <div class="calendar__date calendar__date--grey"><span>30</span></div> -->
+          <!-- will have to make calc to count 35 spaces - num_of_days and get previous month num_of_days and loop them here -->
+          <!-- end of last month days -->
+          <!-- current month days -->
+          <div
+            v-for="day in num_of_days"
+            :key="day"
+            class="calendar__date"
+            @click="getDayName(2023, 7, day)"
+          >
+            <span>{{ day }}</span>
+          </div>
+
+          <!-- <div class="calendar__date"><span>1</span></div>
           <div class="calendar__date"><span>2</span></div>
           <div class="calendar__date"><span>3</span></div>
           <div class="calendar__date"><span>4</span></div>
@@ -55,8 +76,8 @@
           <div class="calendar__date"><span>12</span></div>
           <div class="calendar__date"><span>13</span></div>
           <div class="calendar__date"><span>14</span></div>
-          <div class="calendar__date"><span>15</span></div>
-          <div
+          <div class="calendar__date"><span>15</span></div> -->
+          <!-- <div
             class="calendar__date calendar__date--selected calendar__date--first-date calendar__date--range-start"
           >
             <span>16</span>
@@ -81,8 +102,8 @@
             class="calendar__date calendar__date--selected calendar__date--last-date calendar__date--range-end"
           >
             <span>21</span>
-          </div>
-          <div class="calendar__date"><span>22</span></div>
+          </div> -->
+          <!-- <div class="calendar__date"><span>22</span></div>
           <div class="calendar__date"><span>23</span></div>
           <div class="calendar__date"><span>24</span></div>
           <div class="calendar__date"><span>25</span></div>
@@ -91,17 +112,17 @@
           <div class="calendar__date"><span>28</span></div>
           <div class="calendar__date"><span>29</span></div>
           <div class="calendar__date"><span>30</span></div>
-          <div class="calendar__date"><span>31</span></div>
+          <div class="calendar__date"><span>31</span></div> -->
         </div>
       </div>
 
-      <div class="calendar__buttons">
+      <!-- <div class="calendar__buttons">
         <button class="calendar__button calendar__button--grey">Back</button>
 
         <button class="calendar__button calendar__button--primary">
           Apply
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -109,6 +130,89 @@
 <script>
 export default {
   name: "BaseCalendar",
+  props: {
+    monthNum: { type: Number, default: 0 },
+    monthData: { type: Array, default: () => [] },
+    currentYear: { type: Number, default: 0 },
+  },
+  data() {
+    return {
+      num_of_days: 0,
+      previous_days: 0,
+    };
+  },
+  watch: {
+    monthData() {
+      console.log(this.monthData);
+    },
+  },
+  methods: {
+    getDaysInMonth(year, month) {
+      // Month value in JavaScript is zero-based (0 for January, 1 for February, etc.)
+      // So we decrement the month value by 1
+      //   let date = new Date(year, month - 1, 1);
+      let lastDay = new Date(year, month - 1, 0).getDate();
+      return lastDay;
+    },
+    getDayName(year, month, day) {
+      var date = new Date(year, month - 1, day);
+      var options = { weekday: "long" };
+      return date.toLocaleDateString(undefined, options);
+    },
+    getWeekIndexOfMonth(dayName) {
+      const week = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ];
+
+      return week.findIndex((el) => el === dayName);
+    },
+    makeNumberArray(max, start = 0) {
+      const arr = [];
+      while (start <= max) {
+        arr.push(start);
+        start++;
+      }
+      return arr;
+    },
+    setCalendarValues() {
+      // current days
+      this.num_of_days = this.getDaysInMonth(this.currentYear, this.monthNum);
+
+      // previous day
+      let num_of_previous_days = this.getDaysInMonth(
+        this.currentYear,
+        this.monthNum - 1
+      );
+
+      let free_fields_count_start =
+        num_of_previous_days - (35 - this.num_of_days);
+
+      this.previous_days = this.makeNumberArray(
+        num_of_previous_days,
+        free_fields_count_start
+      );
+      //   let month = this.makeNumberArray(this.num_of_days + 1, 1);
+      //   month = month.fitler((el, index) => {
+
+      //   });
+
+      //   for(let i = 0; i < month; i++) {
+      //     let item = month[i]
+      //     // for(let j
+      //   }
+
+      //   console.log(month);
+    },
+  },
+  mounted() {
+    this.setCalendarValues();
+  },
 };
 </script>
 
@@ -127,19 +231,19 @@ export default {
       padding: 15px 20px;
     }
 
-    &__opts,
-    &__buttons {
-      background-color: #fff;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 15px;
-    }
+    // &__opts,
+    // &__buttons {
+    //   background-color: #fff;
+    //   display: grid;
+    //   grid-template-columns: 1fr 1fr;
+    //   column-gap: 15px;
+    // }
 
-    &__opts {
-      border-top-left-radius: var(--border-radius);
-      border-top-right-radius: var(--border-radius);
-      padding: 20px var(--side-padding);
-    }
+    // &__opts {
+    //   border-top-left-radius: var(--border-radius);
+    //   border-top-right-radius: var(--border-radius);
+    //   padding: 20px var(--side-padding);
+    // }
 
     &__days {
       //   background-color: #fff;

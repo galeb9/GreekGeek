@@ -13,7 +13,11 @@
           </div>
         </div>
 
-        <BaseCalendar></BaseCalendar>
+        <BaseCalendar
+          :monthNum="7"
+          :monthData="monthData"
+          :currentYear="2023"
+        ></BaseCalendar>
 
         <div class="current-month__row">
           <div class="current-month__item month__item--column">
