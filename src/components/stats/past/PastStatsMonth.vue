@@ -98,6 +98,7 @@ export default {
       gap: 10px;
       margin-bottom: 1rem;
       .current-month__item {
+        box-shadow: var(--boxShadow);
         display: flex;
         flex-direction: column;
         justify-content: center;

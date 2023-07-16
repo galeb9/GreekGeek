@@ -113,7 +113,8 @@ export default {
     padding-bottom: 20px;
     margin-bottom: 15px;
     .filter__item {
-      border: 2px solid var(--complementary);
+      // border: 2px solid var(--complementary);
+      box-shadow: var(--boxShadow);
       width: max-content;
       padding: 14px;
       border-radius: 8px;

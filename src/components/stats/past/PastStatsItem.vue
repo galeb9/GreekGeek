@@ -57,9 +57,12 @@ export default {
 <style lang="scss">
 .past-item {
   margin-bottom: 1.5rem;
-  padding-bottom: 0.3rem;
+  // padding-bottom: 0.3rem;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
+  box-shadow: var(--boxShadow);
+  border-radius: var(--radius);
   .stat-items {
     display: flex;
     align-items: center;
